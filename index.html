@@ -8,18 +8,18 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #08070f;
-      --surface: #110f1e;
-      --surface2: #1a1730;
-      --accent: #a855f7;
-      --accent2: #06b6d4;
-      --accent3: #ec4899;
+      --bg: #080b14;
+      --surface: #111726;
+      --surface2: #1a2236;
+      --accent: #3b82f6;
+      --accent2: #f5b324;
+      --accent3: #ef4444;
       --text: #ffffff;
-      --muted: #c4c0e0;
-      --border: #2a2545;
+      --muted: #9aa8c7;
+      --border: #232d44;
       --radius: 12px;
-      --grad: linear-gradient(135deg, #a855f7, #ec4899);
-      --grad2: linear-gradient(135deg, #a855f7, #06b6d4);
+      --grad: linear-gradient(135deg, #3b82f6, #f5b324);
+      --grad2: linear-gradient(135deg, #ef4444, #3b82f6);
     }
 
     html { scroll-behavior: smooth; }
@@ -50,7 +50,7 @@
     }
     .cursor-ring {
       width: 36px; height: 36px;
-      border: 2px solid rgba(168,85,247,0.5);
+      border: 2px solid rgba(59,130,246,0.5);
       border-radius: 50%;
       position: fixed;
       pointer-events: none;
@@ -64,12 +64,76 @@
     .cursor-ring.hovering { transform: translate(-50%,-50%) scale(0.5); opacity: 0; }
     @media (hover: none) { .cursor, .cursor-ring { display: none; } body { cursor: auto; } }
 
+    /* ── COMMAND PALETTE (ToyFight-style) ── */
+    .cmdk-overlay {
+      position: fixed; inset: 0; z-index: 10000;
+      background: rgba(4,6,12,0.7);
+      backdrop-filter: blur(6px);
+      display: none;
+      align-items: flex-start; justify-content: center;
+      padding-top: 14vh;
+    }
+    .cmdk-overlay.open { display: flex; }
+    .cmdk {
+      width: min(560px, 92vw);
+      background: #0a0e18;
+      border: 1px solid var(--accent);
+      border-radius: 14px;
+      box-shadow: 0 0 0 1px rgba(59,130,246,0.2), 0 30px 80px rgba(0,0,0,0.6);
+      overflow: hidden;
+      font-family: 'Courier New', monospace;
+      animation: cmdk-in 0.18s cubic-bezier(0.16,1,0.3,1);
+    }
+    @keyframes cmdk-in { from { opacity:0; transform: translateY(-12px) scale(0.98);} to {opacity:1; transform:none;} }
+    .cmdk-input-row {
+      display: flex; align-items: center; gap: 0.6rem;
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .cmdk-prompt { color: var(--accent); font-weight: 700; font-size: 1.1rem; }
+    .cmdk-input {
+      flex: 1; background: transparent; border: none; outline: none;
+      color: #fff; font-family: 'Courier New', monospace; font-size: 1.05rem;
+    }
+    .cmdk-hint { font-size: 0.7rem; color: var(--muted); }
+    .cmdk-list { max-height: 320px; overflow-y: auto; padding: 0.5rem; }
+    .cmdk-item {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.6rem 0.9rem; border-radius: 8px;
+      color: var(--muted); cursor: pointer; font-size: 0.9rem;
+    }
+    .cmdk-item .ci-key { color: var(--accent2); font-weight: 700; min-width: 92px; }
+    .cmdk-item .ci-desc { color: var(--muted); font-size: 0.8rem; }
+    .cmdk-item.active, .cmdk-item:hover { background: rgba(59,130,246,0.14); color: #fff; }
+    .cmdk-item.active .ci-desc { color: #cdd6ec; }
+    .cmdk-group-label {
+      font-size: 0.64rem; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--muted); padding: 0.6rem 0.9rem 0.3rem; opacity: 0.6;
+    }
+    .cmdk-fab {
+      position: fixed; bottom: 22px; left: 22px; z-index: 900;
+      background: var(--surface2); border: 1px solid var(--border);
+      color: var(--muted); padding: 0.4rem 0.8rem; border-radius: 20px;
+      font-family: 'Courier New', monospace; font-size: 0.74rem;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .cmdk-fab:hover { border-color: var(--accent); color: var(--accent); }
+    .cmdk-fab kbd {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 4px; padding: 0 0.35rem; color: var(--accent2);
+    }
+
+    /* ── THEME FILTERS ── */
+    html.theme-negative { filter: invert(1) hue-rotate(180deg); }
+    html.theme-bw { filter: grayscale(1) contrast(1.05); }
+    html.theme-negative img, html.theme-negative .bug-egg { filter: invert(1) hue-rotate(180deg); }
+
     /* ── SCROLL PROGRESS ── */
     #scroll-progress {
       position: fixed;
       top: 0; left: 0;
       height: 3px;
-      background: linear-gradient(90deg, #a855f7, #ec4899, #06b6d4);
+      background: linear-gradient(90deg, #3b82f6, #f5b324, #ef4444);
       z-index: 999;
       width: 0%;
       transition: width 0.1s linear;
@@ -101,35 +165,35 @@
     }
     .orb-1 {
       width: 600px; height: 600px;
-      background: radial-gradient(circle, #a855f7, transparent 70%);
+      background: radial-gradient(circle, #3b82f6, transparent 70%);
       opacity: 0.28;
       top: -150px; left: -150px;
       animation-duration: 18s; animation-delay: 0s;
     }
     .orb-2 {
       width: 500px; height: 500px;
-      background: radial-gradient(circle, #ec4899, transparent 70%);
+      background: radial-gradient(circle, #f5b324, transparent 70%);
       opacity: 0.22;
       bottom: -100px; right: -100px;
       animation-duration: 22s; animation-delay: -7s;
     }
     .orb-3 {
       width: 350px; height: 350px;
-      background: radial-gradient(circle, #06b6d4, transparent 70%);
+      background: radial-gradient(circle, #ef4444, transparent 70%);
       opacity: 0.2;
       top: 35%; left: 55%;
       animation-duration: 15s; animation-delay: -4s;
     }
     .orb-4 {
       width: 280px; height: 280px;
-      background: radial-gradient(circle, #a855f7, transparent 70%);
+      background: radial-gradient(circle, #3b82f6, transparent 70%);
       opacity: 0.18;
       top: 65%; left: 8%;
       animation-duration: 20s; animation-delay: -11s;
     }
     .orb-5 {
       width: 200px; height: 200px;
-      background: radial-gradient(circle, #ec4899, transparent 70%);
+      background: radial-gradient(circle, #f5b324, transparent 70%);
       opacity: 0.15;
       top: 20%; left: 80%;
       animation-duration: 13s; animation-delay: -3s;
@@ -140,6 +204,25 @@
       50%  { transform: translate(-40px,50px) scale(0.92); }
       75%  { transform: translate(70px,30px)  scale(1.06); }
       100% { transform: translate(0,0)        scale(1);    }
+    }
+
+    /* Relatable test-grid overlay (Apple-style depth) */
+    .grid-overlay {
+      position: fixed;
+      inset: -50%;
+      z-index: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(59,130,246,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59,130,246,0.05) 1px, transparent 1px);
+      background-size: 46px 46px;
+      mask-image: radial-gradient(ellipse 60% 60% at 50% 40%, #000 0%, transparent 80%);
+      -webkit-mask-image: radial-gradient(ellipse 60% 60% at 50% 40%, #000 0%, transparent 80%);
+      animation: grid-pan 40s linear infinite;
+    }
+    @keyframes grid-pan {
+      0%   { transform: translate(0,0); }
+      100% { transform: translate(46px,46px); }
     }
 
     /* Floating QA symbols */
@@ -257,7 +340,7 @@
       transform: translateX(-50%);
       width: min(800px, 100vw);
       height: min(800px, 100vw);
-      background: radial-gradient(circle, rgba(168,85,247,0.12) 0%, rgba(236,72,153,0.06) 40%, transparent 70%);
+      background: radial-gradient(circle, rgba(59,130,246,0.12) 0%, rgba(245,179,36,0.06) 40%, transparent 70%);
       pointer-events: none;
       animation: pulse-glow 4s ease-in-out infinite;
     }
@@ -267,9 +350,9 @@
     }
     .hero-badge {
       display: inline-block;
-      background: rgba(168,85,247,0.12);
+      background: rgba(59,130,246,0.12);
       color: var(--accent);
-      border: 1px solid rgba(168,85,247,0.35);
+      border: 1px solid rgba(59,130,246,0.35);
       border-radius: 999px;
       padding: 0.35rem 1rem;
       font-size: 0.78rem;
@@ -400,9 +483,11 @@
     }
     .btn:hover::after { opacity: 1; }
     .btn-primary { background: var(--grad); color: #fff; }
-    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(168,85,247,0.45); }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(59,130,246,0.45); }
+    .btn-gold { background: transparent; color: var(--accent2); border: 1px solid var(--accent2); }
+    .btn-gold:hover { background: var(--accent2); color: #1a1206; transform: translateY(-3px); box-shadow: 0 8px 24px rgba(245,179,36,0.35); }
     .btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
-    .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(168,85,247,0.2); }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(59,130,246,0.2); }
     .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; animation: hero-in 0.7s 0.7s ease both; }
 
     /* ── SECTIONS ── */
@@ -411,14 +496,88 @@
       font-size: 0.72rem; font-weight: 700; letter-spacing: 2px;
       text-transform: uppercase; color: var(--accent); margin-bottom: 0.4rem;
     }
-    .section-title { font-size: clamp(1.5rem, 4vw, 2.1rem); font-weight: 700; margin-bottom: 0.6rem; }
+    .section-title { font-size: clamp(2.2rem, 7vw, 4rem); font-weight: 900; margin-bottom: 0.6rem; letter-spacing: -1.5px; line-height: 1.02; }
     .section-divider {
       width: 48px; height: 3px;
-      background: linear-gradient(90deg, #a855f7, #ec4899);
+      background: linear-gradient(90deg, #3b82f6, #f5b324);
       border-radius: 2px; margin-bottom: 2.5rem;
     }
 
     /* ── ABOUT ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    .about-grid.single { grid-template-columns: 1fr; }
+    .about-photo-wrap {
+      position: relative;
+      width: 280px; height: 280px;
+      margin: 0 auto;
+      perspective: 800px;
+    }
+    .about-photo-ring {
+      position: absolute; inset: -14px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, var(--accent), var(--accent2), var(--accent3), var(--accent));
+      animation: ring-spin 6s linear infinite;
+      filter: blur(2px);
+      opacity: 0.85;
+    }
+    @keyframes ring-spin { to { transform: rotate(360deg); } }
+    .about-photo-tilt {
+      position: relative;
+      width: 280px; height: 280px;
+      border-radius: 50%;
+      overflow: visible;
+      transform-style: preserve-3d;
+      transition: transform 0.15s ease-out;
+    }
+    .about-photo {
+      width: 280px; height: 280px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center top;
+      border: 4px solid var(--bg);
+      position: relative; z-index: 2;
+      display: block;
+    }
+    .about-photo-fallback {
+      display: none;
+      width: 280px; height: 280px;
+      border-radius: 50%;
+      background: var(--grad);
+      color: #fff;
+      font-size: 5rem; font-weight: 800;
+      align-items: center; justify-content: center;
+      border: 4px solid var(--bg);
+      position: relative; z-index: 2;
+    }
+    .about-photo-wrap.no-photo .about-photo-fallback { display: flex; }
+    .float-badge {
+      position: absolute;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 0.74rem; font-weight: 600;
+      padding: 0.35rem 0.7rem;
+      border-radius: 20px;
+      white-space: nowrap;
+      z-index: 4;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+      transform: translateZ(40px);
+      animation: badge-float 4s ease-in-out infinite;
+    }
+    .fb1 { top: 4%;  left: -22%; border-color: var(--accent);  animation-delay: 0s; }
+    .fb2 { top: 32%; right: -28%; border-color: var(--accent3); animation-delay: 0.8s; }
+    .fb3 { bottom: 22%; left: -26%; border-color: var(--accent2); animation-delay: 1.6s; }
+    .fb4 { bottom: 0%; right: -16%; border-color: var(--accent); animation-delay: 2.4s; }
+    @keyframes badge-float {
+      0%,100% { transform: translateZ(40px) translateY(0); }
+      50%     { transform: translateZ(40px) translateY(-8px); }
+    }
+
     .about-card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -431,9 +590,27 @@
     }
     .about-card:hover {
       border-color: var(--accent);
-      box-shadow: 0 0 40px rgba(168,85,247,0.12);
+      box-shadow: 0 0 40px rgba(59,130,246,0.12);
     }
     .about-card strong { color: var(--text); }
+    @media (max-width: 820px) {
+      .about-grid { grid-template-columns: 1fr; gap: 4rem; }
+      .float-badge { font-size: 0.68rem; }
+    }
+
+    /* ── APPLE-STYLE SCROLL REVEAL ── */
+    .reveal-up, .reveal-left, .reveal-right, .reveal-scale {
+      opacity: 0;
+      transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1);
+      will-change: transform, opacity;
+    }
+    .reveal-up    { transform: translateY(60px); }
+    .reveal-left  { transform: translateX(-60px); }
+    .reveal-right { transform: translateX(60px); }
+    .reveal-scale { transform: scale(0.85); }
+    .reveal-up.in, .reveal-left.in, .reveal-right.in, .reveal-scale.in {
+      opacity: 1; transform: none;
+    }
 
     /* ── SKILLS ── */
     .skills-grid {
@@ -451,7 +628,7 @@
     .skill-group:hover {
       border-color: var(--accent);
       transform: translateY(-4px);
-      box-shadow: 0 12px 32px rgba(168,85,247,0.15);
+      box-shadow: 0 12px 32px rgba(59,130,246,0.15);
     }
     .skill-group-title {
       font-size: 0.72rem; font-weight: 700; letter-spacing: 1.5px;
@@ -475,31 +652,77 @@
       transform: scale(1.05);
     }
     .skill-tag.highlight {
-      background: rgba(168,85,247,0.12);
-      border-color: rgba(168,85,247,0.4);
+      background: rgba(59,130,246,0.12);
+      border-color: rgba(59,130,246,0.4);
       color: var(--accent);
     }
-    /* ── ECOSYSTEM ── */
-    .ecosystem-wrap {
-      width: 100%;
-      max-width: 900px;
-      margin: 0 auto;
-      border-radius: 20px;
-      overflow: hidden;
+    /* ── TEST RUNNER TERMINAL ── */
+    .terminal-wrap {
+      max-width: 860px; margin: 0 auto;
+      background: #0d0c1a;
       border: 1px solid var(--border);
-      background: var(--surface);
-      box-shadow: 0 0 60px rgba(168,85,247,0.08);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 0 60px rgba(59,130,246,0.12), 0 24px 64px rgba(0,0,0,0.4);
     }
-    #ecosystemCanvas {
-      display: block;
-      width: 100%;
-      height: 540px;
-      cursor: grab;
+    .terminal-titlebar {
+      background: #1a1730;
+      padding: 0.75rem 1.25rem;
+      display: flex; align-items: center; gap: 0.5rem;
+      border-bottom: 1px solid var(--border);
     }
-    #ecosystemCanvas:active { cursor: grabbing; }
+    .terminal-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .terminal-dot.red   { background: #ff5f57; }
+    .terminal-dot.yellow{ background: #febc2e; }
+    .terminal-dot.green { background: #28c840; }
+    .terminal-title {
+      margin-left: 0.5rem; font-size: 0.78rem;
+      color: var(--muted); font-family: 'Courier New', monospace;
+    }
+    .terminal-rerun {
+      margin-left: auto;
+      background: rgba(59,130,246,0.15);
+      border: 1px solid rgba(59,130,246,0.4);
+      color: var(--accent);
+      padding: 0.2rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      font-family: 'Courier New', monospace;
+      transition: all 0.2s;
+    }
+    .terminal-rerun:hover { background: rgba(59,130,246,0.3); }
+    .terminal-body {
+      padding: 1.5rem;
+      font-family: 'Courier New', monospace;
+      font-size: 0.82rem;
+      line-height: 1.9;
+      min-height: 420px;
+      color: #c4c0e0;
+      overflow-y: auto;
+      max-height: 520px;
+    }
+    .t-suite  { color: #3b82f6; font-weight: 700; }
+    .t-pass   { color: #10b981; }
+    .t-fail   { color: #ef4444; }
+    .t-info   { color: #ef4444; }
+    .t-dim    { color: #4a4570; }
+    .t-white  { color: #ffffff; }
+    .t-pink   { color: #f5b324; }
+    .t-cursor { display: inline-block; width: 8px; height: 14px; background: var(--accent); animation: blink 1s step-end infinite; vertical-align: text-bottom; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+    .terminal-summary {
+      margin-top: 1rem; padding: 1rem 1.5rem;
+      background: rgba(16,185,129,0.06);
+      border-top: 1px solid rgba(16,185,129,0.2);
+      display: flex; gap: 2rem; flex-wrap: wrap;
+    }
+    .t-stat { display: flex; flex-direction: column; gap: 0.2rem; }
+    .t-stat-val { font-size: 1.4rem; font-weight: 700; font-family: 'Courier New', monospace; color: #10b981; }
+    .t-stat-label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
 
     .skill-tag.highlight:hover {
-      background: rgba(168,85,247,0.22);
+      background: rgba(59,130,246,0.22);
       transform: scale(1.05);
     }
 
@@ -537,7 +760,7 @@
     .project-card:hover {
       border-color: var(--accent);
       transform: translateY(-5px);
-      box-shadow: 0 16px 40px rgba(168,85,247,0.15);
+      box-shadow: 0 16px 40px rgba(59,130,246,0.15);
     }
     .project-card-top {
       display: flex;
@@ -546,8 +769,8 @@
     }
     .project-icon {
       width: 40px; height: 40px;
-      background: rgba(168,85,247,0.1);
-      border: 1px solid rgba(168,85,247,0.25);
+      background: rgba(59,130,246,0.1);
+      border: 1px solid rgba(59,130,246,0.25);
       border-radius: 10px;
       display: flex;
       align-items: center;
@@ -598,8 +821,8 @@
       font-size: 0.72rem;
       padding: 0.2rem 0.55rem;
       border-radius: 999px;
-      background: rgba(168,85,247,0.1);
-      border: 1px solid rgba(168,85,247,0.25);
+      background: rgba(59,130,246,0.1);
+      border: 1px solid rgba(59,130,246,0.25);
       color: var(--accent);
       font-weight: 600;
     }
@@ -615,7 +838,7 @@
       position: absolute;
       left: 0; top: 0; bottom: 0;
       width: 2px;
-      background: linear-gradient(to bottom, #a855f7, #ec4899, #06b6d4, var(--border));
+      background: linear-gradient(to bottom, #3b82f6, #f5b324, #ef4444, var(--border));
     }
     .timeline-item { position: relative; margin-bottom: 2.5rem; }
     .timeline-item::before {
@@ -623,14 +846,14 @@
       position: absolute;
       left: -1.5rem; top: 0.55rem;
       width: 10px; height: 10px;
-      background: linear-gradient(135deg, #a855f7, #ec4899);
+      background: linear-gradient(135deg, #3b82f6, #f5b324);
       border-radius: 50%;
       transform: translateX(-4px);
-      box-shadow: 0 0 0 3px rgba(168,85,247,0.2);
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
       transition: box-shadow 0.3s, transform 0.3s;
     }
     .timeline-item:hover::before {
-      box-shadow: 0 0 0 6px rgba(168,85,247,0.25);
+      box-shadow: 0 0 0 6px rgba(59,130,246,0.25);
       transform: translateX(-4px) scale(1.3);
     }
     .timeline-card {
@@ -643,7 +866,7 @@
     .timeline-card:hover {
       border-color: var(--accent);
       transform: translateX(6px);
-      box-shadow: -4px 0 28px rgba(168,85,247,0.15);
+      box-shadow: -4px 0 28px rgba(59,130,246,0.15);
     }
     .timeline-header {
       display: flex; justify-content: space-between;
@@ -656,6 +879,15 @@
       border-radius: 6px; white-space: nowrap;
     }
     .timeline-company { color: var(--accent); font-size: 0.88rem; font-weight: 600; margin-bottom: 1rem; }
+    .company-logo-wrap {
+      display: flex; align-items: center; gap: 1rem; margin-bottom: 0.75rem;
+    }
+    .company-logo {
+      height: 36px; width: auto; max-width: 130px;
+      object-fit: contain; border-radius: 6px;
+      background: white; padding: 4px 8px;
+      flex-shrink: 0;
+    }
     .timeline-points { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
     .timeline-points li { display: flex; gap: 0.6rem; font-size: 0.88rem; color: var(--muted); }
     .timeline-points li::before { content: '→'; color: var(--accent2); flex-shrink: 0; margin-top: 2px; }
@@ -681,7 +913,7 @@
     .edu-card:hover {
       border-color: var(--accent);
       transform: translateY(-3px);
-      box-shadow: 0 8px 24px rgba(168,85,247,0.15);
+      box-shadow: 0 8px 24px rgba(59,130,246,0.15);
     }
     .edu-degree { font-weight: 700; font-size: 0.97rem; margin-bottom: 0.25rem; }
     .edu-institution { color: var(--accent); font-size: 0.86rem; }
@@ -721,7 +953,7 @@
     }
     .contact-form-card:focus-within {
       border-color: var(--accent);
-      box-shadow: 0 0 40px rgba(168,85,247,0.12);
+      box-shadow: 0 0 40px rgba(59,130,246,0.12);
     }
     .form-group { margin-bottom: 1.25rem; }
     .form-group label {
@@ -738,7 +970,7 @@
     .form-group input:focus,
     .form-group textarea:focus {
       border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(168,85,247,0.18);
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.18);
     }
     .form-group textarea { min-height: 130px; }
     .form-submit {
@@ -747,7 +979,7 @@
       font-size: 0.95rem; font-weight: 700; cursor: none;
       transition: all 0.25s; display: flex; align-items: center; justify-content: center; gap: 0.5rem;
     }
-    .form-submit:hover { opacity: 0.88; transform: translateY(-2px); box-shadow: 0 8px 28px rgba(168,85,247,0.45); }
+    .form-submit:hover { opacity: 0.88; transform: translateY(-2px); box-shadow: 0 8px 28px rgba(59,130,246,0.45); }
     .form-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; box-shadow: none; }
     .form-success {
       display: none; text-align: center; padding: 2rem;
@@ -778,7 +1010,7 @@
       pointer-events: auto;
       z-index: 9000;
       cursor: none;
-      filter: drop-shadow(0 0 6px rgba(168,85,247,0.7));
+      filter: drop-shadow(0 0 6px rgba(59,130,246,0.7));
       user-select: none;
       will-change: left, top, transform;
       touch-action: none;
@@ -917,12 +1149,26 @@
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
+<!-- Command Palette -->
+<div class="cmdk-overlay" id="cmdkOverlay">
+  <div class="cmdk" role="dialog" aria-label="Command menu">
+    <div class="cmdk-input-row">
+      <span class="cmdk-prompt">&gt;</span>
+      <input class="cmdk-input" id="cmdkInput" placeholder="Type a command… (try: projects, negative, bw)" autocomplete="off" spellcheck="false" />
+      <span class="cmdk-hint">ESC to close</span>
+    </div>
+    <div class="cmdk-list" id="cmdkList"></div>
+  </div>
+</div>
+<button class="cmdk-fab" id="cmdkFab">Press <kbd>/</kbd> for commands</button>
+
 <!-- Scroll progress -->
 <div id="scroll-progress"></div>
 
 <!-- Background -->
 <div id="bg-canvas">
   <canvas id="net-canvas"></canvas>
+  <div class="grid-overlay"></div>
   <div class="orb orb-1"></div>
   <div class="orb orb-2"></div>
   <div class="orb orb-3"></div>
@@ -947,8 +1193,8 @@
   <ul class="nav-links" id="navLinks">
     <li><a href="#about">About</a></li>
     <li><a href="#skills">Skills</a></li>
-    <li><a href="#ecosystem">Career Map</a></li>
-    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#terminal">Experience</a></li>
     <li><a href="#education">Education</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
@@ -995,7 +1241,8 @@
     </a>
   </div>
   <div class="hero-ctas">
-    <a href="#experience" class="btn btn-primary">View Experience</a>
+    <a href="#terminal" class="btn btn-primary">View Experience</a>
+    <a href="#projects" class="btn btn-gold">See Projects</a>
     <a href="#contact" class="btn btn-outline">Get in Touch</a>
   </div>
 </section>
@@ -1005,13 +1252,15 @@
   <div class="section-label">About</div>
   <h2 class="section-title">Who I Am</h2>
   <div class="section-divider"></div>
-  <div class="about-card">
-    I'm a <strong>QA Engineer with 3+ years of experience</strong> across product-based and service-based companies.
-    I specialise in <strong>manual testing, test automation with Cypress, API testing with Postman</strong>, and
-    <strong>performance testing with JMeter</strong>. I've built QA processes from the ground up, defined bug tracking
-    workflows, and embedded quality early in agile development lifecycles. I have a proven track record of
-    <strong>reducing production defects</strong> and collaborating cross-functionally to ship high-quality software.
-    I'm actively looking for QA Engineer opportunities after a planned study break.
+  <div class="about-grid single">
+    <div class="about-card reveal-up">
+      I'm a <strong>QA Engineer with 3+ years of experience</strong> across product-based and service-based companies.
+      I specialise in <strong>manual testing, test automation with Cypress, API testing with Postman</strong>, and
+      <strong>performance testing with JMeter</strong>. I've built QA processes from the ground up, defined bug tracking
+      workflows, and embedded quality early in agile development lifecycles. I have a proven track record of
+      <strong>reducing production defects</strong> and collaborating cross-functionally to ship high-quality software.
+      I'm actively looking for QA Engineer opportunities after a planned study break.
+    </div>
   </div>
 </section>
 
@@ -1061,17 +1310,6 @@
         <span class="skill-tag">Bug Reporting</span>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- TECH ECOSYSTEM -->
-<section id="ecosystem" class="fade-in">
-  <div class="section-label">Career Map</div>
-  <h2 class="section-title">My Tech Ecosystem</h2>
-  <div class="section-divider"></div>
-  <p style="text-align:center;color:var(--muted);margin-bottom:2rem;font-size:0.95rem;">Hover over nodes to explore · Drag to rearrange</p>
-  <div class="ecosystem-wrap">
-    <canvas id="ecosystemCanvas"></canvas>
   </div>
 </section>
 
@@ -1151,6 +1389,31 @@
   </div>
 </section>
 
+<!-- TEST RUNNER TERMINAL -->
+<section id="terminal" class="fade-in">
+  <div class="section-label">Experience · Run 1/1</div>
+  <h2 class="section-title">Career.spec.js</h2>
+  <div class="section-divider"></div>
+  <p style="text-align:center;color:var(--muted);margin-bottom:2rem;font-size:0.95rem;">Running my career as a test suite — full work history below ↓</p>
+  <div class="terminal-wrap">
+    <div class="terminal-titlebar">
+      <div class="terminal-dot red"></div>
+      <div class="terminal-dot yellow"></div>
+      <div class="terminal-dot green"></div>
+      <span class="terminal-title">ishan-rai/career.spec.js — QA Test Runner v1.0</span>
+      <button class="terminal-rerun" id="terminalRerun">▶ Re-run</button>
+    </div>
+    <div class="terminal-body" id="terminalBody"></div>
+    <div class="terminal-summary" id="terminalSummary" style="display:none;">
+      <div class="t-stat"><span class="t-stat-val">3+</span><span class="t-stat-label">Years Exp.</span></div>
+      <div class="t-stat"><span class="t-stat-val">3</span><span class="t-stat-label">Companies</span></div>
+      <div class="t-stat"><span class="t-stat-val">500+</span><span class="t-stat-label">Test Cases</span></div>
+      <div class="t-stat"><span class="t-stat-val">100%</span><span class="t-stat-label">Pass Rate</span></div>
+      <div class="t-stat"><span class="t-stat-val">0</span><span class="t-stat-label">Prod Defects</span></div>
+    </div>
+  </div>
+</section>
+
 <!-- EXPERIENCE -->
 <section id="experience" class="fade-in">
   <div class="section-label">Experience</div>
@@ -1164,7 +1427,10 @@
           <span class="timeline-role">QA Engineer</span>
           <span class="timeline-date">Mar 2025 – Oct 2025</span>
         </div>
-        <div class="timeline-company">Progressive Labs · Kalopul, Kathmandu</div>
+        <div class="company-logo-wrap">
+          <img class="company-logo" alt="Progressive Labs" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 260 80'%3E%3Crect width='260' height='80' rx='8' fill='%233bbfbf'/%3E%3Ctext x='20' y='38' font-family='Arial Black,sans-serif' font-size='22' font-weight='900' fill='white'%3EProgressive%3C/text%3E%3Ctext x='20' y='62' font-family='Arial Black,sans-serif' font-size='18' font-weight='900' fill='white'%3E%E2%9A%A1Labs%3C/text%3E%3C/svg%3E" />
+          <div class="timeline-company">Progressive Labs · Kalopul, Kathmandu</div>
+        </div>
         <ul class="timeline-points">
           <li>Pioneered and built the entire QA process from the ground up, establishing QA as a formal function within the organisation.</li>
           <li>Designed comprehensive test suites covering functional, regression, smoke, and UI testing.</li>
@@ -1182,7 +1448,10 @@
           <span class="timeline-role">Associate QA Officer</span>
           <span class="timeline-date">Mar 2024 – Mar 2025</span>
         </div>
-        <div class="timeline-company">Khalti Digital Wallet · Lalitpur, Nepal</div>
+        <div class="company-logo-wrap">
+          <img class="company-logo" alt="Khalti" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 70'%3E%3Crect width='220' height='70' rx='8' fill='white'/%3E%3Cpolygon points='15,10 42,35 28,48' fill='%23e63030'/%3E%3Cpolygon points='15,10 42,35 38,12' fill='%23c0201f'/%3E%3Cpolygon points='28,48 42,35 44,52' fill='%23c0201f'/%3E%3Ctext x='52' y='42' font-family='Arial,sans-serif' font-size='26' font-weight='700' fill='%23e63030'%3Ekhalti%3C/text%3E%3Ctext x='54' y='60' font-family='Arial,sans-serif' font-size='11' fill='%23e63030'%3Eby %3Ctspan font-weight='700'%3EIME%3C/tspan%3E%3C/text%3E%3C/svg%3E" />
+          <div class="timeline-company">Khalti Digital Wallet · Lalitpur, Nepal</div>
+        </div>
         <ul class="timeline-points">
           <li>Performed smoke testing and Lavalist for each mobile build of the Khalti App to ensure stability.</li>
           <li>Collaborated in a scrum team using JIRA to track and manage development tasks.</li>
@@ -1199,7 +1468,10 @@
           <span class="timeline-role">QA Engineer</span>
           <span class="timeline-date">Apr 2023 – Feb 2024</span>
         </div>
-        <div class="timeline-company">Keela (Forty-two Tech) · Lalitpur, Nepal</div>
+        <div class="company-logo-wrap">
+          <img class="company-logo" alt="Keela" src="data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 220 70'%3E%3Crect width='220' height='70' rx='8' fill='white'/%3E%3Cellipse cx='22' cy='28' rx='10' ry='14' fill='%237c3aed' transform='rotate(-15,22,28)'/%3E%3Cellipse cx='30' cy='22' rx='7' ry='11' fill='%239d5cf0' transform='rotate(10,30,22)'/%3E%3Ctext x='48' y='38' font-family='Arial,sans-serif' font-size='26' font-weight='700' fill='%237c3aed'%3Ekeela%3C/text%3E%3Ctext x='48' y='57' font-family='Arial,sans-serif' font-size='10' fill='%23888'%3EPowered by %3Ctspan font-weight='700'%3EVelora%3C/tspan%3E%3C/text%3E%3C/svg%3E" />
+          <div class="timeline-company">Keela (Forty-two Tech) · Lalitpur, Nepal</div>
+        </div>
         <ul class="timeline-points">
           <li>Executed tests at multiple levels: system, regression, and smoke testing.</li>
           <li>Wrote automated test cases with Cypress for different product modules.</li>
@@ -1353,6 +1625,95 @@
     el.addEventListener('mouseleave', () => { cursor.classList.remove('hovering'); ring.classList.remove('hovering'); });
   });
 
+  /* ── MAGNETIC BUTTONS (ToyFight-style) ── */
+  document.querySelectorAll('.btn, .cmdk-fab, .nav-links a').forEach(el => {
+    el.style.transition = 'transform 0.25s cubic-bezier(0.16,1,0.3,1)';
+    el.addEventListener('mousemove', e => {
+      const r = el.getBoundingClientRect();
+      const x = e.clientX - r.left - r.width / 2;
+      const y = e.clientY - r.top - r.height / 2;
+      el.style.transform = `translate(${x * 0.3}px, ${y * 0.45}px)`;
+    });
+    el.addEventListener('mouseleave', () => { el.style.transform = 'translate(0,0)'; });
+  });
+
+  /* ── COMMAND PALETTE (ToyFight-style) ── */
+  (function() {
+    const overlay = document.getElementById('cmdkOverlay');
+    const input = document.getElementById('cmdkInput');
+    const list = document.getElementById('cmdkList');
+    const fab = document.getElementById('cmdkFab');
+    const root = document.documentElement;
+
+    const commands = [
+      { group: 'Navigate', key: 'home',       desc: 'Back to top',            run: () => scrollToId('hero') },
+      { group: 'Navigate', key: 'about',      desc: 'Who I am',               run: () => scrollToId('about') },
+      { group: 'Navigate', key: 'skills',     desc: 'What I work with',       run: () => scrollToId('skills') },
+      { group: 'Navigate', key: 'projects',   desc: 'What I have built',      run: () => scrollToId('projects') },
+      { group: 'Navigate', key: 'experience', desc: 'Career.spec.js + history', run: () => scrollToId('terminal') },
+      { group: 'Navigate', key: 'education',  desc: 'Academic background',    run: () => scrollToId('education') },
+      { group: 'Navigate', key: 'contact',    desc: 'Get in touch',           run: () => scrollToId('contact') },
+      { group: 'Effects',  key: 'negative',   desc: 'Invert all colours',     run: () => { root.classList.remove('theme-bw'); root.classList.toggle('theme-negative'); } },
+      { group: 'Effects',  key: 'bw',         desc: 'Black & white mode',     run: () => { root.classList.remove('theme-negative'); root.classList.toggle('theme-bw'); } },
+      { group: 'Effects',  key: 'reset',      desc: 'Clear all effects',      run: () => { root.classList.remove('theme-negative','theme-bw'); } },
+      { group: 'Links',    key: 'github',     desc: 'Open GitHub profile',    run: () => window.open('https://github.com/77ishan','_blank') },
+      { group: 'System',   key: 'close',      desc: 'Close this menu',        run: () => close() },
+    ];
+
+    let active = 0;
+    let filtered = commands.slice();
+
+    function scrollToId(id) {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function render() {
+      const q = input.value.trim().toLowerCase();
+      filtered = commands.filter(c => c.key.includes(q) || c.desc.toLowerCase().includes(q));
+      if (active >= filtered.length) active = 0;
+      let html = '', lastGroup = '';
+      filtered.forEach((c, i) => {
+        if (c.group !== lastGroup) { html += `<div class="cmdk-group-label">${c.group}</div>`; lastGroup = c.group; }
+        html += `<div class="cmdk-item ${i === active ? 'active' : ''}" data-i="${i}">
+          <span class="ci-key">${c.key}</span><span class="ci-desc">${c.desc}</span></div>`;
+      });
+      list.innerHTML = html || '<div class="cmdk-group-label">No matching command</div>';
+      list.querySelectorAll('.cmdk-item').forEach(el => {
+        el.addEventListener('click', () => exec(parseInt(el.dataset.i)));
+      });
+    }
+
+    function exec(i) {
+      const c = filtered[i];
+      if (!c) return;
+      const keepOpen = (c.group === 'Effects');
+      c.run();
+      if (!keepOpen) close();
+      else { input.value = ''; render(); }
+    }
+
+    function open() {
+      overlay.classList.add('open');
+      input.value = ''; active = 0; render();
+      setTimeout(() => input.focus(), 20);
+    }
+    function close() { overlay.classList.remove('open'); input.blur(); }
+
+    document.addEventListener('keydown', e => {
+      const typing = ['INPUT','TEXTAREA'].includes(document.activeElement.tagName);
+      if (e.key === '/' && !overlay.classList.contains('open') && !typing) { e.preventDefault(); open(); return; }
+      if (!overlay.classList.contains('open')) return;
+      if (e.key === 'Escape') { close(); }
+      else if (e.key === 'ArrowDown') { e.preventDefault(); active = Math.min(active + 1, filtered.length - 1); render(); }
+      else if (e.key === 'ArrowUp')   { e.preventDefault(); active = Math.max(active - 1, 0); render(); }
+      else if (e.key === 'Enter')     { e.preventDefault(); exec(active); }
+    });
+    input.addEventListener('input', () => { active = 0; render(); });
+    overlay.addEventListener('click', e => { if (e.target === overlay) close(); });
+    fab.addEventListener('click', open);
+  })();
+
   /* ── SCROLL PROGRESS ── */
   const progressBar = document.getElementById('scroll-progress');
   document.addEventListener('scroll', () => {
@@ -1363,7 +1724,7 @@
   /* ── PARTICLE NETWORK CANVAS ── */
   const netCanvas = document.getElementById('net-canvas');
   const ctx = netCanvas.getContext('2d');
-  const COLORS = ['#a855f7','#ec4899','#06b6d4'];
+  const COLORS = ['#3b82f6','#f5b324','#ef4444'];
   let W, H, nodes = [];
 
   function resize() {
@@ -1446,7 +1807,7 @@
   /* ── FLOATING QA SYMBOLS ── */
   const bgCanvas = document.getElementById('bg-canvas');
   const symbols = ['✓', '✗', '{}', '[]', 'cy.', 'null', 'pass', 'fail', '//', 'assert()', '200', '404', 'GET', 'POST', '===', 'test()', 'expect()', 'describe()', 'PASSED', 'ERROR'];
-  const symColors = ['#a855f7','#ec4899','#06b6d4'];
+  const symColors = ['#3b82f6','#f5b324','#ef4444'];
   for (let i = 0; i < 28; i++) {
     const el = document.createElement('div');
     el.className = 'qa-symbol';
@@ -1640,6 +2001,56 @@
   );
   document.querySelectorAll('.fade-in').forEach(el => fadeObserver.observe(el));
 
+  /* ── APPLE-STYLE SCROLL REVEAL ── */
+  // Auto-tag elements with staggered reveal animations
+  document.querySelectorAll('.project-card').forEach((el, i) => {
+    el.classList.add(i % 2 === 0 ? 'reveal-left' : 'reveal-right');
+    el.style.transitionDelay = (i % 2) * 0.08 + 's';
+  });
+  document.querySelectorAll('.skill-group').forEach((el, i) => {
+    el.classList.add('reveal-scale');
+    el.style.transitionDelay = (i * 0.07) + 's';
+  });
+  document.querySelectorAll('.timeline-card').forEach((el) => el.classList.add('reveal-up'));
+  document.querySelectorAll('.edu-card').forEach((el, i) => {
+    el.classList.add('reveal-up');
+    el.style.transitionDelay = (i * 0.1) + 's';
+  });
+
+  const revealObserver = new IntersectionObserver(
+    entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); revealObserver.unobserve(e.target); } }),
+    { threshold: 0.12 }
+  );
+  document.querySelectorAll('.reveal-up,.reveal-left,.reveal-right,.reveal-scale').forEach(el => revealObserver.observe(el));
+
+  /* ── PHOTO TILT (Apple-style) ── */
+  const photoWrap = document.getElementById('aboutPhoto');
+  if (photoWrap) {
+    const tilt = photoWrap.querySelector('.about-photo-tilt');
+    photoWrap.addEventListener('mousemove', e => {
+      const r = photoWrap.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width - 0.5;
+      const py = (e.clientY - r.top) / r.height - 0.5;
+      tilt.style.transform = `rotateY(${px * 22}deg) rotateX(${-py * 22}deg)`;
+    });
+    photoWrap.addEventListener('mouseleave', () => {
+      tilt.style.transform = 'rotateY(0) rotateX(0)';
+    });
+  }
+
+  /* ── HERO PARALLAX ON SCROLL ── */
+  const heroEl = document.getElementById('hero');
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    if (heroEl && y < window.innerHeight) {
+      const inner = heroEl.querySelector('.hero-inner') || heroEl.firstElementChild;
+      if (inner) {
+        inner.style.transform = `translateY(${y * 0.25}px)`;
+        inner.style.opacity = Math.max(0, 1 - y / (window.innerHeight * 0.8));
+      }
+    }
+  }, { passive: true });
+
   /* ── CONTACT FORM ── */
   const form = document.getElementById('contactForm');
   const submitBtn = document.getElementById('submitBtn');
@@ -1679,257 +2090,126 @@
     toastTimer = setTimeout(() => bugToast.classList.remove('show'), 3500);
   });
 
-  /* ── TECH ECOSYSTEM CANVAS ── */
+  /* ── TEST RUNNER TERMINAL ── */
   (function() {
-    const canvas = document.getElementById('ecosystemCanvas');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
+    const body = document.getElementById('terminalBody');
+    const summary = document.getElementById('terminalSummary');
+    const rerunBtn = document.getElementById('terminalRerun');
+    if (!body) return;
 
-    function resize() {
-      const rect = canvas.getBoundingClientRect();
-      canvas.width = rect.width * devicePixelRatio;
-      canvas.height = rect.height * devicePixelRatio;
-      ctx.scale(devicePixelRatio, devicePixelRatio);
-      W = rect.width; H = rect.height;
-      initPositions();
-    }
+    const lines = [
+      { text: '$ npx career-runner --reporter=spec', cls: 't-dim', delay: 0 },
+      { text: '', delay: 200 },
+      { text: '  ishan-rai/career.spec.js', cls: 't-white', delay: 400 },
+      { text: '', delay: 100 },
 
-    let W = 900, H = 540;
-    let mouse = { x: -999, y: -999 };
-    let dragging = null, dragOffX = 0, dragOffY = 0;
-    let hovered = null;
+      { text: '  📁 Keela — Forty-two Tech  (Apr 2023 – Feb 2024)', cls: 't-suite', delay: 700 },
+      { text: '    ✓ wrote automated Cypress test cases for product modules', cls: 't-pass', delay: 1100 },
+      { text: '    ✓ performed E2E, regression & smoke testing', cls: 't-pass', delay: 1500 },
+      { text: '    ✓ tracked & managed bugs with Linear', cls: 't-pass', delay: 1900 },
+      { text: '    ✓ wrote detailed test cases for all software modules', cls: 't-pass', delay: 2300 },
+      { text: '    ✓ system-level testing across multiple product areas', cls: 't-pass', delay: 2700 },
+      { text: '    5 passing  (830ms)', cls: 't-dim', delay: 3000 },
+      { text: '', delay: 100 },
 
-    // Node definitions
-    const categories = [
-      { id: 'center',    label: 'QA\nENGINEER', emoji: '🛡️', color: '#a855f7', size: 52, glow: '#a855f7', parent: null },
-      { id: 'auto',      label: 'Test\nAutomation', emoji: '⚡', color: '#06b6d4', size: 38, glow: '#06b6d4', parent: 'center' },
-      { id: 'api',       label: 'API\nTesting',    emoji: '🔌', color: '#ec4899', size: 38, glow: '#ec4899', parent: 'center' },
-      { id: 'perf',      label: 'Performance', emoji: '📊', color: '#f59e0b', size: 38, glow: '#f59e0b', parent: 'center' },
-      { id: 'track',     label: 'Bug\nTracking',   emoji: '🐛', color: '#10b981', size: 38, glow: '#10b981', parent: 'center' },
-      { id: 'lang',      label: 'Languages', emoji: '💻', color: '#8b5cf6', size: 38, glow: '#8b5cf6', parent: 'center' },
-      { id: 'method',    label: 'Methods', emoji: '📋', color: '#f472b6', size: 38, glow: '#f472b6', parent: 'center' },
+      { text: '  📁 Khalti Digital Wallet  (Mar 2024 – Mar 2025)', cls: 't-suite', delay: 3300 },
+      { text: '    ✓ built & executed Cypress automation for web app', cls: 't-pass', delay: 3700 },
+      { text: '    ✓ conducted API testing across services using Postman', cls: 't-pass', delay: 4100 },
+      { text: '    ✓ performance tested mobile app with JMeter', cls: 't-pass', delay: 4500 },
+      { text: '    ✓ smoke tested every mobile build release', cls: 't-pass', delay: 4900 },
+      { text: '    ✓ collaborated in Scrum team, tracked tasks with Jira', cls: 't-pass', delay: 5300 },
+      { text: '    5 passing  (1.2s)', cls: 't-dim', delay: 5600 },
+      { text: '', delay: 100 },
 
-      // Test Automation children
-      { id: 'cypress',   label: 'Cypress',    emoji: '🌲', color: '#06b6d4', size: 26, glow: '#06b6d4', parent: 'auto' },
-      { id: 'selenium',  label: 'Selenium',   emoji: '🤖', color: '#06b6d4', size: 26, glow: '#06b6d4', parent: 'auto' },
-      { id: 'e2e',       label: 'E2E Tests',  emoji: '🔄', color: '#06b6d4', size: 26, glow: '#06b6d4', parent: 'auto' },
+      { text: '  📁 Progressive Labs  (Mar 2025 – Oct 2025)', cls: 't-suite', delay: 5900 },
+      { text: '    ✓ built entire QA process from scratch', cls: 't-pass', delay: 6300 },
+      { text: '    ✓ designed test suites: functional, regression, smoke & UI', cls: 't-pass', delay: 6700 },
+      { text: '    ✓ standardised bug tracking workflows & lifecycle stages', cls: 't-pass', delay: 7100 },
+      { text: '    ✓ set up JMeter performance & load testing', cls: 't-pass', delay: 7500 },
+      { text: '    ✓ established release readiness checklists & sign-offs', cls: 't-pass', delay: 7900 },
+      { text: '    5 passing  (970ms)', cls: 't-dim', delay: 8200 },
+      { text: '', delay: 100 },
 
-      // API Testing children
-      { id: 'postman',   label: 'Postman',    emoji: '📮', color: '#ec4899', size: 26, glow: '#ec4899', parent: 'api' },
-      { id: 'rest',      label: 'REST API',   emoji: '🌐', color: '#ec4899', size: 26, glow: '#ec4899', parent: 'api' },
-      { id: 'graphql',   label: 'GraphQL',    emoji: '⬡', color: '#ec4899', size: 26, glow: '#ec4899', parent: 'api' },
-
-      // Performance children
-      { id: 'jmeter',    label: 'JMeter',     emoji: '⚙️', color: '#f59e0b', size: 26, glow: '#f59e0b', parent: 'perf' },
-      { id: 'load',      label: 'Load Test',  emoji: '📈', color: '#f59e0b', size: 26, glow: '#f59e0b', parent: 'perf' },
-
-      // Bug Tracking children
-      { id: 'jira',      label: 'Jira',       emoji: '📌', color: '#10b981', size: 26, glow: '#10b981', parent: 'track' },
-      { id: 'linear',    label: 'Linear',     emoji: '▲', color: '#10b981', size: 26, glow: '#10b981', parent: 'track' },
-      { id: 'github',    label: 'GitHub',     emoji: '🐙', color: '#10b981', size: 26, glow: '#10b981', parent: 'track' },
-
-      // Languages children
-      { id: 'js',        label: 'JavaScript', emoji: '🟡', color: '#8b5cf6', size: 26, glow: '#8b5cf6', parent: 'lang' },
-      { id: 'ts',        label: 'TypeScript', emoji: '🔷', color: '#8b5cf6', size: 26, glow: '#8b5cf6', parent: 'lang' },
-      { id: 'sql',       label: 'SQL',        emoji: '🗄️', color: '#8b5cf6', size: 26, glow: '#8b5cf6', parent: 'lang' },
-
-      // Methods children
-      { id: 'agile',     label: 'Agile',      emoji: '🔁', color: '#f472b6', size: 26, glow: '#f472b6', parent: 'method' },
-      { id: 'scrum',     label: 'Scrum',      emoji: '🏃', color: '#f472b6', size: 26, glow: '#f472b6', parent: 'method' },
+      { text: '  ─────────────────────────────────────────────────', cls: 't-dim', delay: 8500 },
+      { text: '  ✓  15 tests passing  (3.0s)', cls: 't-pass t-white', delay: 8800 },
+      { text: '  ⚡  0 failing', cls: 't-info', delay: 9100 },
+      { text: '  📊  Coverage: 100%  |  Suites: 3  |  Duration: 3.0s', cls: 't-pink', delay: 9400 },
+      { text: '', delay: 100 },
+      { text: '  All tests passed. Ready to ship. 🚀', cls: 't-white', delay: 9700 },
     ];
 
-    // Add x, y, vx, vy, angle to each node
-    categories.forEach(n => { n.x = W/2; n.y = H/2; n.vx = 0; n.vy = 0; n.angle = 0; });
+    let timers = [];
 
-    function initPositions() {
-      const cx = W / 2, cy = H / 2;
-      // center
-      categories[0].x = cx; categories[0].y = cy;
-
-      // category hubs in a ring
-      const hubs = categories.filter(n => n.parent === 'center');
-      hubs.forEach((n, i) => {
-        const a = (i / hubs.length) * Math.PI * 2 - Math.PI / 2;
-        n.x = cx + Math.cos(a) * 180;
-        n.y = cy + Math.sin(a) * 165;
-        n.baseAngle = a;
-      });
-
-      // children around their hub
-      const childGroups = {};
-      categories.filter(n => n.parent && n.parent !== 'center').forEach(n => {
-        if (!childGroups[n.parent]) childGroups[n.parent] = [];
-        childGroups[n.parent].push(n);
-      });
-
-      Object.entries(childGroups).forEach(([pid, children]) => {
-        const hub = categories.find(n => n.id === pid);
-        if (!hub) return;
-        children.forEach((n, i) => {
-          const a = hub.baseAngle + (i - (children.length - 1) / 2) * 0.65;
-          n.x = hub.x + Math.cos(a) * 105;
-          n.y = hub.y + Math.sin(a) * 95;
-          n.baseAngle = a;
-        });
-      });
+    function clearTerminal() {
+      timers.forEach(t => clearTimeout(t));
+      timers = [];
+      body.innerHTML = '';
+      summary.style.display = 'none';
     }
 
-    let tick = 0;
-    function animate() {
-      requestAnimationFrame(animate);
-      tick += 0.008;
-      ctx.clearRect(0, 0, W, H);
-
-      // gentle floating for non-dragged nodes
-      categories.forEach(n => {
-        if (dragging === n) return;
-        const phase = n.baseAngle !== undefined ? n.baseAngle : 0;
-        const floatAmt = n.parent === null ? 3 : (n.parent === 'center' ? 5 : 4);
-        n.x += Math.sin(tick + phase * 2) * 0.18 * floatAmt * 0.1;
-        n.y += Math.cos(tick * 0.9 + phase) * 0.14 * floatAmt * 0.1;
-      });
-
-      // Draw edges
-      categories.forEach(n => {
-        if (!n.parent) return;
-        const parent = categories.find(p => p.id === n.parent);
-        if (!parent) return;
-        const grad = ctx.createLinearGradient(parent.x, parent.y, n.x, n.y);
-        grad.addColorStop(0, parent.color + '66');
-        grad.addColorStop(1, n.color + '33');
-        ctx.beginPath();
-        ctx.moveTo(parent.x, parent.y);
-        ctx.lineTo(n.x, n.y);
-        ctx.strokeStyle = grad;
-        ctx.lineWidth = n.parent === 'center' ? 1.5 : 1;
-        ctx.stroke();
-      });
-
-      // Draw nodes
-      categories.forEach(n => {
-        const isHov = hovered === n;
-        const r = n.size + (isHov ? 5 : 0);
-
-        // glow
-        const glow = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, r * 2.2);
-        glow.addColorStop(0, n.glow + (isHov ? '55' : '33'));
-        glow.addColorStop(1, 'transparent');
-        ctx.beginPath();
-        ctx.arc(n.x, n.y, r * 2.2, 0, Math.PI * 2);
-        ctx.fillStyle = glow;
-        ctx.fill();
-
-        // circle bg
-        ctx.beginPath();
-        ctx.arc(n.x, n.y, r, 0, Math.PI * 2);
-        const bg = ctx.createRadialGradient(n.x - r*0.3, n.y - r*0.3, 0, n.x, n.y, r);
-        bg.addColorStop(0, n.color + (isHov ? 'cc' : '55'));
-        bg.addColorStop(1, n.color + (isHov ? '66' : '22'));
-        ctx.fillStyle = bg;
-        ctx.fill();
-
-        // border
-        ctx.beginPath();
-        ctx.arc(n.x, n.y, r, 0, Math.PI * 2);
-        ctx.strokeStyle = n.color + (isHov ? 'ff' : '99');
-        ctx.lineWidth = isHov ? 2 : 1.5;
-        ctx.stroke();
-
-        // emoji
-        ctx.font = `${r * 0.65}px serif`;
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(n.emoji, n.x, n.y - (n.label.includes('\n') ? r * 0.18 : 0));
-
-        // label
-        const lines = n.label.split('\n');
-        ctx.font = `${n.size > 36 ? 11 : 9.5}px 'Segoe UI', sans-serif`;
-        ctx.fillStyle = '#fff';
-        ctx.textBaseline = 'top';
-        const lineH = 11;
-        const totalH = lines.length * lineH;
-        const startY = n.y + r + 6;
-        lines.forEach((line, i) => {
-          ctx.fillText(line, n.x, startY + i * lineH);
-        });
-
-        // tooltip on hover
-        if (isHov && n.parent) {
-          ctx.font = 'bold 11px Segoe UI';
-          const tw = ctx.measureText(n.label.replace('\n', ' ')).width + 20;
-          const tx = Math.min(Math.max(n.x - tw/2, 4), W - tw - 4);
-          const ty = n.y - r - 36;
-          ctx.beginPath();
-          ctx.roundRect(tx, ty, tw, 24, 6);
-          ctx.fillStyle = 'rgba(10,8,20,0.92)';
-          ctx.fill();
-          ctx.strokeStyle = n.color;
-          ctx.lineWidth = 1;
-          ctx.stroke();
-          ctx.fillStyle = '#fff';
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-          ctx.fillText(n.label.replace('\n', ' '), tx + tw/2, ty + 12);
+    function typewriterLine(el, text, cb) {
+      let i = 0;
+      const cursor = document.createElement('span');
+      cursor.className = 't-cursor';
+      el.appendChild(cursor);
+      function type() {
+        if (i < text.length) {
+          cursor.before(document.createTextNode(text[i++]));
+          timers.push(setTimeout(type, 18 + Math.random() * 12));
+        } else {
+          cursor.remove();
+          if (cb) cb();
         }
-      });
-    }
-
-    function getNode(ex, ey) {
-      return categories.find(n => {
-        const dx = n.x - ex, dy = n.y - ey;
-        return Math.sqrt(dx*dx + dy*dy) < n.size + 8;
-      });
-    }
-
-    canvas.addEventListener('mousemove', e => {
-      const r = canvas.getBoundingClientRect();
-      const ex = e.clientX - r.left, ey = e.clientY - r.top;
-      mouse.x = ex; mouse.y = ey;
-      if (dragging) {
-        dragging.x = ex + dragOffX;
-        dragging.y = ey + dragOffY;
-      } else {
-        hovered = getNode(ex, ey);
-        canvas.style.cursor = hovered ? 'pointer' : 'grab';
       }
-    });
+      type();
+    }
 
-    canvas.addEventListener('mousedown', e => {
-      const r = canvas.getBoundingClientRect();
-      const ex = e.clientX - r.left, ey = e.clientY - r.top;
-      const n = getNode(ex, ey);
-      if (n) { dragging = n; dragOffX = n.x - ex; dragOffY = n.y - ey; canvas.style.cursor = 'grabbing'; }
-    });
+    function runTerminal() {
+      clearTerminal();
+      rerunBtn.textContent = '⏸ Running...';
+      rerunBtn.disabled = true;
 
-    canvas.addEventListener('mouseup', () => { dragging = null; canvas.style.cursor = 'grab'; });
-    canvas.addEventListener('mouseleave', () => { hovered = null; dragging = null; });
+      lines.forEach((line, idx) => {
+        const t = setTimeout(() => {
+          const el = document.createElement('div');
+          el.className = line.cls || '';
+          body.appendChild(el);
+          body.scrollTop = body.scrollHeight;
 
-    // Touch support
-    canvas.addEventListener('touchstart', e => {
-      e.preventDefault();
-      const r = canvas.getBoundingClientRect();
-      const t = e.touches[0];
-      const ex = t.clientX - r.left, ey = t.clientY - r.top;
-      const n = getNode(ex, ey);
-      if (n) { dragging = n; dragOffX = n.x - ex; dragOffY = n.y - ey; }
-    }, { passive: false });
+          if (!line.text) return;
 
-    canvas.addEventListener('touchmove', e => {
-      e.preventDefault();
-      if (!dragging) return;
-      const r = canvas.getBoundingClientRect();
-      const t = e.touches[0];
-      dragging.x = t.clientX - r.left + dragOffX;
-      dragging.y = t.clientY - r.top + dragOffY;
-    }, { passive: false });
+          // typewriter for important lines, instant for others
+          const useTypewriter = line.cls && (line.cls.includes('t-suite') || line.cls.includes('t-white') || line.cls.includes('t-pink'));
+          if (useTypewriter) {
+            typewriterLine(el, line.text, null);
+          } else {
+            el.textContent = line.text;
+          }
 
-    canvas.addEventListener('touchend', () => { dragging = null; });
+          if (idx === lines.length - 1) {
+            setTimeout(() => {
+              summary.style.display = 'flex';
+              rerunBtn.textContent = '▶ Re-run';
+              rerunBtn.disabled = false;
+            }, 600);
+          }
+        }, line.delay);
+        timers.push(t);
+      });
+    }
 
-    window.addEventListener('resize', resize);
-    resize();
-    animate();
+    rerunBtn.addEventListener('click', runTerminal);
+
+    // Auto-run when section scrolls into view
+    const observer = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) {
+        runTerminal();
+        observer.disconnect();
+      }
+    }, { threshold: 0.3 });
+    const section = document.getElementById('terminal');
+    if (section) observer.observe(section);
   })();
 </script>
-
 </body>
 </html>
