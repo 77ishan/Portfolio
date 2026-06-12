@@ -479,6 +479,25 @@
       border-color: rgba(168,85,247,0.4);
       color: var(--accent);
     }
+    /* ── ECOSYSTEM ── */
+    .ecosystem-wrap {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      box-shadow: 0 0 60px rgba(168,85,247,0.08);
+    }
+    #ecosystemCanvas {
+      display: block;
+      width: 100%;
+      height: 540px;
+      cursor: grab;
+    }
+    #ecosystemCanvas:active { cursor: grabbing; }
+
     .skill-tag.highlight:hover {
       background: rgba(168,85,247,0.22);
       transform: scale(1.05);
@@ -928,6 +947,7 @@
   <ul class="nav-links" id="navLinks">
     <li><a href="#about">About</a></li>
     <li><a href="#skills">Skills</a></li>
+    <li><a href="#ecosystem">Career Map</a></li>
     <li><a href="#experience">Experience</a></li>
     <li><a href="#education">Education</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -1041,6 +1061,17 @@
         <span class="skill-tag">Bug Reporting</span>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- TECH ECOSYSTEM -->
+<section id="ecosystem" class="fade-in">
+  <div class="section-label">Career Map</div>
+  <h2 class="section-title">My Tech Ecosystem</h2>
+  <div class="section-divider"></div>
+  <p style="text-align:center;color:var(--muted);margin-bottom:2rem;font-size:0.95rem;">Hover over nodes to explore · Drag to rearrange</p>
+  <div class="ecosystem-wrap">
+    <canvas id="ecosystemCanvas"></canvas>
   </div>
 </section>
 
@@ -1647,6 +1678,257 @@
     clearTimeout(toastTimer);
     toastTimer = setTimeout(() => bugToast.classList.remove('show'), 3500);
   });
+
+  /* ── TECH ECOSYSTEM CANVAS ── */
+  (function() {
+    const canvas = document.getElementById('ecosystemCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+
+    function resize() {
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width * devicePixelRatio;
+      canvas.height = rect.height * devicePixelRatio;
+      ctx.scale(devicePixelRatio, devicePixelRatio);
+      W = rect.width; H = rect.height;
+      initPositions();
+    }
+
+    let W = 900, H = 540;
+    let mouse = { x: -999, y: -999 };
+    let dragging = null, dragOffX = 0, dragOffY = 0;
+    let hovered = null;
+
+    // Node definitions
+    const categories = [
+      { id: 'center',    label: 'QA\nENGINEER', emoji: '🛡️', color: '#a855f7', size: 52, glow: '#a855f7', parent: null },
+      { id: 'auto',      label: 'Test\nAutomation', emoji: '⚡', color: '#06b6d4', size: 38, glow: '#06b6d4', parent: 'center' },
+      { id: 'api',       label: 'API\nTesting',    emoji: '🔌', color: '#ec4899', size: 38, glow: '#ec4899', parent: 'center' },
+      { id: 'perf',      label: 'Performance', emoji: '📊', color: '#f59e0b', size: 38, glow: '#f59e0b', parent: 'center' },
+      { id: 'track',     label: 'Bug\nTracking',   emoji: '🐛', color: '#10b981', size: 38, glow: '#10b981', parent: 'center' },
+      { id: 'lang',      label: 'Languages', emoji: '💻', color: '#8b5cf6', size: 38, glow: '#8b5cf6', parent: 'center' },
+      { id: 'method',    label: 'Methods', emoji: '📋', color: '#f472b6', size: 38, glow: '#f472b6', parent: 'center' },
+
+      // Test Automation children
+      { id: 'cypress',   label: 'Cypress',    emoji: '🌲', color: '#06b6d4', size: 26, glow: '#06b6d4', parent: 'auto' },
+      { id: 'selenium',  label: 'Selenium',   emoji: '🤖', color: '#06b6d4', size: 26, glow: '#06b6d4', parent: 'auto' },
+      { id: 'e2e',       label: 'E2E Tests',  emoji: '🔄', color: '#06b6d4', size: 26, glow: '#06b6d4', parent: 'auto' },
+
+      // API Testing children
+      { id: 'postman',   label: 'Postman',    emoji: '📮', color: '#ec4899', size: 26, glow: '#ec4899', parent: 'api' },
+      { id: 'rest',      label: 'REST API',   emoji: '🌐', color: '#ec4899', size: 26, glow: '#ec4899', parent: 'api' },
+      { id: 'graphql',   label: 'GraphQL',    emoji: '⬡', color: '#ec4899', size: 26, glow: '#ec4899', parent: 'api' },
+
+      // Performance children
+      { id: 'jmeter',    label: 'JMeter',     emoji: '⚙️', color: '#f59e0b', size: 26, glow: '#f59e0b', parent: 'perf' },
+      { id: 'load',      label: 'Load Test',  emoji: '📈', color: '#f59e0b', size: 26, glow: '#f59e0b', parent: 'perf' },
+
+      // Bug Tracking children
+      { id: 'jira',      label: 'Jira',       emoji: '📌', color: '#10b981', size: 26, glow: '#10b981', parent: 'track' },
+      { id: 'linear',    label: 'Linear',     emoji: '▲', color: '#10b981', size: 26, glow: '#10b981', parent: 'track' },
+      { id: 'github',    label: 'GitHub',     emoji: '🐙', color: '#10b981', size: 26, glow: '#10b981', parent: 'track' },
+
+      // Languages children
+      { id: 'js',        label: 'JavaScript', emoji: '🟡', color: '#8b5cf6', size: 26, glow: '#8b5cf6', parent: 'lang' },
+      { id: 'ts',        label: 'TypeScript', emoji: '🔷', color: '#8b5cf6', size: 26, glow: '#8b5cf6', parent: 'lang' },
+      { id: 'sql',       label: 'SQL',        emoji: '🗄️', color: '#8b5cf6', size: 26, glow: '#8b5cf6', parent: 'lang' },
+
+      // Methods children
+      { id: 'agile',     label: 'Agile',      emoji: '🔁', color: '#f472b6', size: 26, glow: '#f472b6', parent: 'method' },
+      { id: 'scrum',     label: 'Scrum',      emoji: '🏃', color: '#f472b6', size: 26, glow: '#f472b6', parent: 'method' },
+    ];
+
+    // Add x, y, vx, vy, angle to each node
+    categories.forEach(n => { n.x = W/2; n.y = H/2; n.vx = 0; n.vy = 0; n.angle = 0; });
+
+    function initPositions() {
+      const cx = W / 2, cy = H / 2;
+      // center
+      categories[0].x = cx; categories[0].y = cy;
+
+      // category hubs in a ring
+      const hubs = categories.filter(n => n.parent === 'center');
+      hubs.forEach((n, i) => {
+        const a = (i / hubs.length) * Math.PI * 2 - Math.PI / 2;
+        n.x = cx + Math.cos(a) * 180;
+        n.y = cy + Math.sin(a) * 165;
+        n.baseAngle = a;
+      });
+
+      // children around their hub
+      const childGroups = {};
+      categories.filter(n => n.parent && n.parent !== 'center').forEach(n => {
+        if (!childGroups[n.parent]) childGroups[n.parent] = [];
+        childGroups[n.parent].push(n);
+      });
+
+      Object.entries(childGroups).forEach(([pid, children]) => {
+        const hub = categories.find(n => n.id === pid);
+        if (!hub) return;
+        children.forEach((n, i) => {
+          const a = hub.baseAngle + (i - (children.length - 1) / 2) * 0.65;
+          n.x = hub.x + Math.cos(a) * 105;
+          n.y = hub.y + Math.sin(a) * 95;
+          n.baseAngle = a;
+        });
+      });
+    }
+
+    let tick = 0;
+    function animate() {
+      requestAnimationFrame(animate);
+      tick += 0.008;
+      ctx.clearRect(0, 0, W, H);
+
+      // gentle floating for non-dragged nodes
+      categories.forEach(n => {
+        if (dragging === n) return;
+        const phase = n.baseAngle !== undefined ? n.baseAngle : 0;
+        const floatAmt = n.parent === null ? 3 : (n.parent === 'center' ? 5 : 4);
+        n.x += Math.sin(tick + phase * 2) * 0.18 * floatAmt * 0.1;
+        n.y += Math.cos(tick * 0.9 + phase) * 0.14 * floatAmt * 0.1;
+      });
+
+      // Draw edges
+      categories.forEach(n => {
+        if (!n.parent) return;
+        const parent = categories.find(p => p.id === n.parent);
+        if (!parent) return;
+        const grad = ctx.createLinearGradient(parent.x, parent.y, n.x, n.y);
+        grad.addColorStop(0, parent.color + '66');
+        grad.addColorStop(1, n.color + '33');
+        ctx.beginPath();
+        ctx.moveTo(parent.x, parent.y);
+        ctx.lineTo(n.x, n.y);
+        ctx.strokeStyle = grad;
+        ctx.lineWidth = n.parent === 'center' ? 1.5 : 1;
+        ctx.stroke();
+      });
+
+      // Draw nodes
+      categories.forEach(n => {
+        const isHov = hovered === n;
+        const r = n.size + (isHov ? 5 : 0);
+
+        // glow
+        const glow = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, r * 2.2);
+        glow.addColorStop(0, n.glow + (isHov ? '55' : '33'));
+        glow.addColorStop(1, 'transparent');
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, r * 2.2, 0, Math.PI * 2);
+        ctx.fillStyle = glow;
+        ctx.fill();
+
+        // circle bg
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, r, 0, Math.PI * 2);
+        const bg = ctx.createRadialGradient(n.x - r*0.3, n.y - r*0.3, 0, n.x, n.y, r);
+        bg.addColorStop(0, n.color + (isHov ? 'cc' : '55'));
+        bg.addColorStop(1, n.color + (isHov ? '66' : '22'));
+        ctx.fillStyle = bg;
+        ctx.fill();
+
+        // border
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, r, 0, Math.PI * 2);
+        ctx.strokeStyle = n.color + (isHov ? 'ff' : '99');
+        ctx.lineWidth = isHov ? 2 : 1.5;
+        ctx.stroke();
+
+        // emoji
+        ctx.font = `${r * 0.65}px serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(n.emoji, n.x, n.y - (n.label.includes('\n') ? r * 0.18 : 0));
+
+        // label
+        const lines = n.label.split('\n');
+        ctx.font = `${n.size > 36 ? 11 : 9.5}px 'Segoe UI', sans-serif`;
+        ctx.fillStyle = '#fff';
+        ctx.textBaseline = 'top';
+        const lineH = 11;
+        const totalH = lines.length * lineH;
+        const startY = n.y + r + 6;
+        lines.forEach((line, i) => {
+          ctx.fillText(line, n.x, startY + i * lineH);
+        });
+
+        // tooltip on hover
+        if (isHov && n.parent) {
+          ctx.font = 'bold 11px Segoe UI';
+          const tw = ctx.measureText(n.label.replace('\n', ' ')).width + 20;
+          const tx = Math.min(Math.max(n.x - tw/2, 4), W - tw - 4);
+          const ty = n.y - r - 36;
+          ctx.beginPath();
+          ctx.roundRect(tx, ty, tw, 24, 6);
+          ctx.fillStyle = 'rgba(10,8,20,0.92)';
+          ctx.fill();
+          ctx.strokeStyle = n.color;
+          ctx.lineWidth = 1;
+          ctx.stroke();
+          ctx.fillStyle = '#fff';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(n.label.replace('\n', ' '), tx + tw/2, ty + 12);
+        }
+      });
+    }
+
+    function getNode(ex, ey) {
+      return categories.find(n => {
+        const dx = n.x - ex, dy = n.y - ey;
+        return Math.sqrt(dx*dx + dy*dy) < n.size + 8;
+      });
+    }
+
+    canvas.addEventListener('mousemove', e => {
+      const r = canvas.getBoundingClientRect();
+      const ex = e.clientX - r.left, ey = e.clientY - r.top;
+      mouse.x = ex; mouse.y = ey;
+      if (dragging) {
+        dragging.x = ex + dragOffX;
+        dragging.y = ey + dragOffY;
+      } else {
+        hovered = getNode(ex, ey);
+        canvas.style.cursor = hovered ? 'pointer' : 'grab';
+      }
+    });
+
+    canvas.addEventListener('mousedown', e => {
+      const r = canvas.getBoundingClientRect();
+      const ex = e.clientX - r.left, ey = e.clientY - r.top;
+      const n = getNode(ex, ey);
+      if (n) { dragging = n; dragOffX = n.x - ex; dragOffY = n.y - ey; canvas.style.cursor = 'grabbing'; }
+    });
+
+    canvas.addEventListener('mouseup', () => { dragging = null; canvas.style.cursor = 'grab'; });
+    canvas.addEventListener('mouseleave', () => { hovered = null; dragging = null; });
+
+    // Touch support
+    canvas.addEventListener('touchstart', e => {
+      e.preventDefault();
+      const r = canvas.getBoundingClientRect();
+      const t = e.touches[0];
+      const ex = t.clientX - r.left, ey = t.clientY - r.top;
+      const n = getNode(ex, ey);
+      if (n) { dragging = n; dragOffX = n.x - ex; dragOffY = n.y - ey; }
+    }, { passive: false });
+
+    canvas.addEventListener('touchmove', e => {
+      e.preventDefault();
+      if (!dragging) return;
+      const r = canvas.getBoundingClientRect();
+      const t = e.touches[0];
+      dragging.x = t.clientX - r.left + dragOffX;
+      dragging.y = t.clientY - r.top + dragOffY;
+    }, { passive: false });
+
+    canvas.addEventListener('touchend', () => { dragging = null; });
+
+    window.addEventListener('resize', resize);
+    resize();
+    animate();
+  })();
 </script>
 
 </body>
