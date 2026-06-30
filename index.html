@@ -720,6 +720,7 @@
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
   /* ── PARTICLE NETWORK ── */
   (function(){
@@ -1025,13 +1026,32 @@
 
   /* confetti burst */
   /* Formspree contact form submit (AJAX) */
+  /* ── EmailJS auto-reply config (fill these in from your EmailJS dashboard) ── */
+  var EMAILJS_PUBLIC_KEY='pUcMQWBn8wEpOCHhr';
+  var EMAILJS_SERVICE_ID='service_u3vo4tz';
+  var EMAILJS_TEMPLATE_ID='template_owzm26v';
+  try{ if(window.emailjs && EMAILJS_PUBLIC_KEY.indexOf('YOUR_')!==0){ emailjs.init({publicKey:EMAILJS_PUBLIC_KEY}); } }catch(e){}
+
+  function sendAutoReply(name,email){
+    if(!window.emailjs || EMAILJS_PUBLIC_KEY.indexOf('YOUR_')===0)return; // not configured yet
+    emailjs.send(EMAILJS_SERVICE_ID,EMAILJS_TEMPLATE_ID,{
+      to_name:name||'there',
+      to_email:email,
+      reply_to:'raiishan67@gmail.com'
+    }).catch(function(){});
+  }
+
   window.submitContact=function(e){
     e.preventDefault();
     var form=e.target, status=document.getElementById('mStatus'), btn=form.querySelector('.m-submit');
+    var visitorName=(form.querySelector('[name=name]')||{}).value||'';
+    var visitorEmail=(form.querySelector('[name=email]')||{}).value||'';
     btn.disabled=true;btn.textContent='Sending…';status.className='m-status';status.textContent='';
     fetch(form.action,{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}})
       .then(function(r){
-        if(r.ok){status.className='m-status ok';status.textContent='✓ Message sent! I will reply soon.';form.reset();btn.textContent='Sent ✓';
+        if(r.ok){status.className='m-status ok';status.textContent='✓ Message sent! Check your inbox for a confirmation.';
+          sendAutoReply(visitorName,visitorEmail);
+          form.reset();btn.textContent='Sent ✓';
           var rc=form.getBoundingClientRect();if(window.confettiBurst)window.confettiBurst(rc.left+rc.width/2,rc.top+40);}
         else{status.className='m-status err';status.textContent='Something went wrong. Please email me directly.';btn.disabled=false;btn.textContent='Send message';}
       })
