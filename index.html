@@ -4,6 +4,9 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Ishan Rai · QA Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
@@ -383,14 +386,16 @@
 
   .label{font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--faint);margin-bottom:12px;font-weight:600}
 
-  .c-intro h1{font-size:2.1rem;font-weight:600;line-height:1.1;margin-bottom:10px;letter-spacing:-.5px;background:linear-gradient(105deg,#3b82f6,#8b5cf6,#ec4899);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;background-size:200% auto;animation:hue-pan 6s linear infinite}
-  @keyframes hue-pan{to{background-position:200% center}}
-  .role-rotator{display:flex;align-items:center;font-size:1.15rem;font-weight:600;margin-bottom:14px;min-height:1.6em}
+  .c-intro h1{font-family:'Sora','Inter',sans-serif;font-size:2.7rem;font-weight:800;line-height:1.05;margin-bottom:10px;letter-spacing:-1.5px;background:linear-gradient(105deg,#3b82f6,#8b5cf6,#ec4899,#3b82f6);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;background-size:250% auto;animation:hue-pan 5s linear infinite}
+  @keyframes hue-pan{to{background-position:250% center}}
+  .wave{display:inline-block;-webkit-text-fill-color:initial;transform-origin:70% 70%;animation:wave 2.4s ease-in-out infinite}
+  @keyframes wave{0%,60%,100%{transform:rotate(0)}10%{transform:rotate(14deg)}20%{transform:rotate(-8deg)}30%{transform:rotate(14deg)}40%{transform:rotate(-4deg)}50%{transform:rotate(10deg)}}
+  .role-rotator{display:flex;align-items:center;font-family:'Space Grotesk',monospace;font-size:1.25rem;font-weight:600;margin-bottom:14px;min-height:1.6em}
   .rr-prefix{color:var(--muted);font-weight:400}
   .rr-word{color:var(--accent2);font-weight:600;transition:color .3s}
-  .rr-caret{display:inline-block;width:2px;height:1.1em;background:var(--accent2);margin-left:3px;animation:caret-blink .9s step-end infinite;vertical-align:middle}
+  .rr-caret{display:inline-block;width:2.5px;height:1.15em;background:var(--accent2);margin-left:4px;border-radius:2px;animation:caret-blink .9s step-end infinite;vertical-align:middle}
   @keyframes caret-blink{0%,100%{opacity:1}50%{opacity:0}}
-  .c-intro p{font-size:1rem;color:var(--muted);line-height:1.55;max-width:26ch}
+  .c-intro p{font-size:1.02rem;color:var(--muted);line-height:1.55;max-width:30ch}
   .c-intro a.inline{color:var(--text);text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--faint)}
   .dl-cv{display:inline-flex;align-items:center;gap:9px;margin-top:18px;width:fit-content;
     background:linear-gradient(135deg,#3b82f6,#8b5cf6,#ec4899);color:#fff;font-size:.92rem;font-weight:600;
@@ -551,7 +556,7 @@
     <div class="card c-intro">
       <div class="intro-left">
         <span class="status"><span class="dot"></span> Open to work</span>
-        <h1>Hi, I'm Ishan</h1>
+        <h1>Hi, I'm Ishan <span class="wave">👋</span></h1>
         <div class="role-rotator">
           <span class="rr-prefix">I'm a&nbsp;</span>
           <span class="rr-word" id="rrWord"></span><span class="rr-caret"></span>
