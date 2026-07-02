@@ -849,7 +849,26 @@
     function spawnRandom(){bx=Math.random()*(W-120)+60;by=Math.random()*(H-120)+60;angle=Math.random()*Math.PI*2;bug.textContent=emojis[Math.floor(Math.random()*emojis.length)];bug.style.opacity='1';bug.style.transition='';alive=true;mode='scurry';nextMode=performance.now()+300+Math.random()*400;speed=cruise();}
     function dropTrail(){const now=performance.now();if(now-lastTrail<55)return;lastTrail=now;const d=document.createElement('div');d.className='bug-trail';d.style.left=(bx+2)+'px';d.style.top=(by+4)+'px';document.body.appendChild(d);setTimeout(()=>d.remove(),700);}
     function flee(cx,cy){if(!alive)return;const dx=bx-cx,dy=by-cy,dist=Math.hypot(dx,dy);if(dist<fleeR()){fleeing=true;fleeUntil=performance.now()+550;angle=Math.atan2(dy,dx)+(Math.random()-.5)*.5;mode='scurry';nextMode=performance.now()+650;}}
+    var audioCtx=null;
+    function squashSound(){
+      try{
+        var AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;
+        audioCtx=audioCtx||new AC();if(audioCtx.state==='suspended')audioCtx.resume();
+        var t=audioCtx.currentTime;
+        // low "squish" thud: quick downward pitch sweep
+        var o=audioCtx.createOscillator(),g=audioCtx.createGain();
+        o.type='sine';o.frequency.setValueAtTime(420,t);o.frequency.exponentialRampToValueAtTime(70,t+.14);
+        g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.28,t+.01);g.gain.exponentialRampToValueAtTime(.0001,t+.16);
+        o.connect(g).connect(audioCtx.destination);o.start(t);o.stop(t+.17);
+        // tiny "pop" click on top
+        var o2=audioCtx.createOscillator(),g2=audioCtx.createGain();
+        o2.type='triangle';o2.frequency.setValueAtTime(900,t);o2.frequency.exponentialRampToValueAtTime(300,t+.06);
+        g2.gain.setValueAtTime(.0001,t);g2.gain.exponentialRampToValueAtTime(.16,t+.005);g2.gain.exponentialRampToValueAtTime(.0001,t+.08);
+        o2.connect(g2).connect(audioCtx.destination);o2.start(t);o2.stop(t+.09);
+      }catch(e){}
+    }
     function killBug(cx,cy){if(!alive)return;alive=false;bugCount++;
+      squashSound();
       if(window.confettiBurst)window.confettiBurst(cx,cy);
       const splat=document.createElement('div');splat.className='bug-splat';splat.textContent='💥';splat.style.left=bx+'px';splat.style.top=by+'px';document.body.appendChild(splat);setTimeout(()=>splat.remove(),600);
       var score=document.getElementById('bugScore');if(score){score.textContent=bugCount;score.style.transition='transform .25s';score.style.transform='scale(1.35)';setTimeout(function(){score.style.transform='scale(1)';},250);}
