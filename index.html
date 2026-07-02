@@ -115,8 +115,12 @@
   @keyframes symbol-float{0%{opacity:0;transform:translateY(0) rotate(-5deg) scale(.8)}8%{opacity:.5;transform:translateY(-8vh) rotate(0) scale(1)}85%{opacity:.28}100%{opacity:0;transform:translateY(-115vh) rotate(15deg) scale(.9)}}
 
   /* ── CRAWLING BUG ── */
-  .crawl-bug{position:fixed;font-size:1.4rem;pointer-events:auto;z-index:9000;cursor:pointer;filter:drop-shadow(0 0 6px rgba(224,83,61,.7));user-select:none;will-change:left,top,transform;touch-action:none}
-  @media(max-width:480px){.crawl-bug{font-size:1.1rem}}
+  .crawl-bug{position:fixed;font-size:1.9rem;line-height:1;pointer-events:auto;z-index:9000;cursor:pointer;filter:drop-shadow(0 0 8px rgba(224,83,61,.75));user-select:none;will-change:left,top,transform;touch-action:none;padding:14px;margin:-14px}
+  @media(max-width:480px){.crawl-bug{font-size:1.55rem;padding:18px;margin:-18px}}
+  .bug-trail{position:fixed;z-index:8999;pointer-events:none;width:7px;height:7px;border-radius:50%;background:radial-gradient(circle,rgba(224,83,61,.55),transparent 70%);transform:translate(-50%,-50%);animation:bugTrailFade .7s linear forwards}
+  @keyframes bugTrailFade{from{opacity:.6}to{opacity:0;transform:translate(-50%,-50%) scale(.3)}}
+  .bug-splat{position:fixed;z-index:9002;pointer-events:none;font-size:2.1rem;transform:translate(-50%,-50%) scale(.4);opacity:0;animation:bugSplat .55s cubic-bezier(.2,1.4,.4,1) forwards}
+  @keyframes bugSplat{40%{opacity:1;transform:translate(-50%,-50%) scale(1.45) rotate(8deg)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.1) rotate(-6deg)}}
   .bug-fixed-toast{position:fixed;z-index:9001;background:rgba(16,14,20,.95);border:1px solid #34d399;border-radius:10px;padding:.6rem 1rem;font-size:.82rem;font-family:'Courier New',monospace;color:#34d399;pointer-events:none;white-space:nowrap;opacity:0;transform:translateY(0) scale(.8);transition:opacity .2s,transform .2s;box-shadow:0 0 20px rgba(52,211,153,.3)}
   .bug-fixed-toast.show{opacity:1;transform:translateY(-10px) scale(1)}
   .phone-pop{position:fixed;z-index:10001;transform:translate(-50%,-100%) translateY(6px);
@@ -772,7 +776,7 @@
       <div class="label">Bugs squashed</div>
       <div class="bignum" id="bugScore">0</div>
       <div class="cap">and counting</div>
-      <div class="hint">Catch the 🪲 on screen → click it</div>
+      <div class="hint">A 🪲 is loose on the page → click it to squash it</div>
     </div>
 
   </main>
@@ -832,29 +836,58 @@
     const fixToast=document.getElementById('bugFixedToast');
     const isMobile=()=>window.innerWidth<=480;
     let W=window.innerWidth,H=window.innerHeight;
-    let bx=Math.random()*(W-60)+30,by=Math.random()*(H-60)+30;
-    let angle=Math.random()*Math.PI*2,speed=1.2,fleeing=false,fleeTimer=null;
+    let bx=Math.random()*(W-100)+50,by=Math.random()*(H-100)+50;
+    let angle=Math.random()*Math.PI*2,speed=0;
     let bugCount=0,alive=true,wobble=0;
+    let mode='scurry',nextMode=0,fleeing=false,fleeUntil=0,lastTrail=0,last=performance.now();
+    const emojis=['🪲','🐜','🦗','🐞','🐝'];
     window.addEventListener('resize',()=>{W=window.innerWidth;H=window.innerHeight;bx=Math.min(bx,W-30);by=Math.min(by,H-30);});
-    const getSpeed=()=>isMobile()?1.8:1.2,getFleeSpeed=()=>isMobile()?5.5:4.5,getFleeRadius=()=>isMobile()?100:140;
-    function placeBug(){bug.style.left=bx+'px';bug.style.top=by+'px';bug.style.transform=`rotate(${angle+Math.PI/2}rad) scale(${1+Math.sin(wobble)*.08})`;}
-    function spawnRandom(){bx=Math.random()*(W-80)+40;by=Math.random()*(H-80)+40;angle=Math.random()*Math.PI*2;bug.textContent=['🪲','🐜','🦗','🐝'][Math.floor(Math.random()*4)];bug.style.opacity='1';alive=true;}
-    function flee(cx,cy){if(!alive)return;const dx=bx-cx,dy=by-cy,dist=Math.sqrt(dx*dx+dy*dy);if(dist<getFleeRadius()){fleeing=true;speed=getFleeSpeed();angle=Math.atan2(dy,dx);clearTimeout(fleeTimer);fleeTimer=setTimeout(()=>{fleeing=false;speed=getSpeed();},1200);}}
+    // livelier cruise + a short, catchable dodge (not a permanent escape)
+    const cruise=()=>isMobile()?2.7:2.3, dash=()=>isMobile()?5.5:5, fleeR=()=>isMobile()?95:125;
+    const lerp=(a,b,t)=>a+(b-a)*t;
+    function placeBug(){bug.style.left=bx+'px';bug.style.top=by+'px';bug.style.transform=`rotate(${angle+Math.PI/2}rad) scale(${1+Math.sin(wobble)*.13})`;}
+    function spawnRandom(){bx=Math.random()*(W-120)+60;by=Math.random()*(H-120)+60;angle=Math.random()*Math.PI*2;bug.textContent=emojis[Math.floor(Math.random()*emojis.length)];bug.style.opacity='1';bug.style.transition='';alive=true;mode='scurry';nextMode=performance.now()+300+Math.random()*400;speed=cruise();}
+    function dropTrail(){const now=performance.now();if(now-lastTrail<55)return;lastTrail=now;const d=document.createElement('div');d.className='bug-trail';d.style.left=(bx+2)+'px';d.style.top=(by+4)+'px';document.body.appendChild(d);setTimeout(()=>d.remove(),700);}
+    function flee(cx,cy){if(!alive)return;const dx=bx-cx,dy=by-cy,dist=Math.hypot(dx,dy);if(dist<fleeR()){fleeing=true;fleeUntil=performance.now()+550;angle=Math.atan2(dy,dx)+(Math.random()-.5)*.5;mode='scurry';nextMode=performance.now()+650;}}
     function killBug(cx,cy){if(!alive)return;alive=false;bugCount++;
       if(window.confettiBurst)window.confettiBurst(cx,cy);
-      var score=document.getElementById('bugScore');if(score){score.textContent=bugCount;score.style.transform='scale(1.3)';setTimeout(function(){score.style.transform='scale(1)';},250);score.style.transition='transform .25s';}
-      bug.style.opacity='0';bug.style.transition='opacity .3s';
+      const splat=document.createElement('div');splat.className='bug-splat';splat.textContent='💥';splat.style.left=bx+'px';splat.style.top=by+'px';document.body.appendChild(splat);setTimeout(()=>splat.remove(),600);
+      var score=document.getElementById('bugScore');if(score){score.textContent=bugCount;score.style.transition='transform .25s';score.style.transform='scale(1.35)';setTimeout(function(){score.style.transform='scale(1)';},250);}
+      bug.style.transition='opacity .2s,transform .2s';bug.style.opacity='0';bug.style.transform+=' scale(0)';
       const msgs=[`✓ Bug #${String(bugCount).padStart(3,'0')} FIXED`,`✓ Severity: Critical → RESOLVED`,`✓ Logged, tested & closed`,`✓ Status: PASS, shipped!`,`✓ Test written. Bug gone. 🎉`];
-      const tx=Math.min(cx-80,W-220),ty=Math.max(cy-50,10);
+      const tx=Math.min(Math.max(cx-90,10),W-230),ty=Math.max(cy-50,10);
       fixToast.textContent=msgs[Math.floor(Math.random()*msgs.length)];fixToast.style.left=tx+'px';fixToast.style.top=ty+'px';fixToast.classList.add('show');
-      setTimeout(()=>fixToast.classList.remove('show'),2000);setTimeout(()=>{bug.style.transition='';spawnRandom();},3000);}
+      setTimeout(()=>fixToast.classList.remove('show'),1900);setTimeout(spawnRandom,2400);}
     document.addEventListener('mousemove',e=>flee(e.clientX,e.clientY));
     bug.addEventListener('click',e=>{e.stopPropagation();killBug(e.clientX,e.clientY);});
     document.addEventListener('touchmove',e=>{const t=e.touches[0];flee(t.clientX,t.clientY);},{passive:true});
     bug.addEventListener('touchstart',e=>{e.preventDefault();e.stopPropagation();const t=e.touches[0];killBug(t.clientX,t.clientY);},{passive:false});
-    const lerp=(a,b,t)=>a+(b-a)*t;
-    function crawl(){if(alive){wobble+=.12;const m=50;if(bx<m)angle=lerp(angle,0,.08);if(bx>W-m)angle=lerp(angle,Math.PI,.08);if(by<m)angle=lerp(angle,Math.PI/2,.08);if(by>H-m)angle=lerp(angle,-Math.PI/2,.08);if(!fleeing)angle+=(Math.random()-.5)*.07;bx+=Math.cos(angle)*speed;by+=Math.sin(angle)*speed;bx=Math.max(10,Math.min(W-30,bx));by=Math.max(10,Math.min(H-30,by));placeBug();}requestAnimationFrame(crawl);}
-    speed=getSpeed();placeBug();crawl();
+    function step(now){
+      const dt=Math.min((now-last)/16.67,3);last=now;
+      if(alive){
+        wobble+=.28*dt;
+        if(fleeing){speed=dash();if(now>fleeUntil)fleeing=false;}
+        else{
+          if(now>nextMode){
+            if(mode==='scurry'){mode='pause';nextMode=now+250+Math.random()*450;}      // brief stop → easy to click
+            else{mode='scurry';nextMode=now+350+Math.random()*550;angle+=(Math.random()-.5)*1.6;} // dart off in a new direction
+          }
+          speed=lerp(speed,mode==='scurry'?cruise():0,.15*dt);
+        }
+        const m=60;
+        if(bx<m)angle=lerp(angle,0,.12*dt);
+        if(bx>W-m)angle=lerp(angle,Math.PI,.12*dt);
+        if(by<m)angle=lerp(angle,Math.PI/2,.12*dt);
+        if(by>H-m)angle=lerp(angle,-Math.PI/2,.12*dt);
+        if(!fleeing&&mode==='scurry')angle+=(Math.random()-.5)*.12*dt;
+        bx+=Math.cos(angle)*speed*dt;by+=Math.sin(angle)*speed*dt;
+        bx=Math.max(6,Math.min(W-24,bx));by=Math.max(6,Math.min(H-24,by));
+        if(speed>1)dropTrail();
+        placeBug();
+      }
+      requestAnimationFrame(step);
+    }
+    spawnRandom();placeBug();requestAnimationFrame(step);
   })();
 
   /* ── LIVE GITHUB STATS ── */
@@ -1041,7 +1074,7 @@
       'c-contact':{c:'#ec4899',eb:"Let's talk",t:'Want to work together?',b:"<p>I'm actively looking for <strong>QA opportunities</strong>. Drop me a message and I'll get back to you.</p><form class='m-form' action='https://formspree.io/f/mojrydyo' method='POST' onsubmit='return window.submitContact(event)'><input name='name' type='text' placeholder='Your name' required><input name='email' type='email' placeholder='Your email' required><textarea name='message' rows='3' placeholder='Your message…' required></textarea><button type='submit' class='m-submit'>Send message</button><div class='m-status' id='mStatus'></div></form><div class='m-row' style='margin-top:14px'><span class='r-t'>Or email</span><a href='https://mail.google.com/mail/?view=cm&fs=1&to=raiishan67@gmail.com&su=Hi%20Ishan' target='_blank'>raiishan67@gmail.com</a></div>"},
       'c-exp':{c:'#06b6d4',eb:'Experience',t:'Work history',b:"<div class='xp'><div class='xp-h'><span class='xp-co'>Rara Labs <span style='color:#10b981;font-weight:700;font-size:.7rem'>● CURRENT</span></span><span class='xp-d'>QA Analyst · Jun 2026 to present</span></div><ul><li>My latest role: driving end-to-end quality as a QA Analyst</li><li>Designing test strategy, test plans and detailed test cases</li><li>Running functional, regression and smoke testing cycles</li><li>Logging, tracking and verifying defects through to closure</li><li>Championing quality standards across the product team</li></ul></div><div class='xp'><div class='xp-h'><span class='xp-co'>Progressive Labs</span><span class='xp-d'>QA Engineer · Mar to Oct 2025</span></div><ul><li>Pioneered and built the entire QA process from the ground up</li><li>Designed test suites covering functional, regression, smoke & UI testing</li><li>Defined and standardised bug-tracking workflows with severity/priority levels</li><li>Set up performance & load testing with JMeter</li><li>Established release-readiness checklists and sign-off procedures</li><li>Integrated QA early into the agile development lifecycle</li></ul></div><div class='xp'><div class='xp-h'><span class='xp-co'>Khalti Digital Wallet</span><span class='xp-d'>Associate QA Officer · Mar 2024 to Mar 2025</span></div><ul><li>Performed smoke testing on every mobile build of the Khalti App</li><li>Developed & executed automated test cases in Cypress for the web app</li><li>Conducted API testing across services using Postman</li><li>Ran performance testing on the Khalti mobile app with JMeter</li><li>Collaborated in a Scrum team, tracking tasks in Jira</li></ul></div><div class='xp'><div class='xp-h'><span class='xp-co'>Keela · Forty-two Tech</span><span class='xp-d'>QA Engineer · Apr 2023 to Feb 2024</span></div><ul><li>Executed system, regression and smoke testing across modules</li><li>Wrote automated test cases with Cypress for multiple product areas</li><li>Performed end-to-end testing of the software</li><li>Authored detailed test cases for Keela's modules</li><li>Tracked and managed reported bugs in Linear</li></ul></div>"},
       'c-clock':{c:'#f5b324',eb:'Today in Nepal',t:'Lalitpur, Nepal',b:clockBody},
-      'c-bugs':{c:'#10b981',eb:'Mini-game',t:'Squash the bug 🪲',b:"<p>There's a bug crawling around the page. It <strong>runs from your cursor</strong>. Chase it down and <strong>click it</strong> to squash it.</p><p>Every squash logs a fix (with confetti 🎉) and ticks the counter. Just like real QA: find it, log it, close it.</p>"},
+      'c-bugs':{c:'#10b981',eb:'Mini-game',t:'Squash the bug 🪲',b:"<p>A little bug is scurrying around the page. It <strong>darts, pauses, then bolts off in a new direction</strong>, and gives a quick dodge when your cursor gets close. Wait for it to stop, then <strong>click it</strong> to squash it.</p><p>Every squash goes off with a splat and confetti 🎉 and ticks the counter. Just like real QA: find it, log it, close it.</p>"},
       'c-tests':{c:'#10b981',eb:'Live demo',t:'My career as a test suite',b:"<p>Click <strong>▶ Run my test suite</strong> to watch a simulated CI run of my career:</p><ul><li>Cypress automation ✓</li><li>API tests (Postman) ✓</li><li>JMeter load test ✓</li><li><strong>15/15 passing · 0 failing</strong> 🎉</li></ul>"},
       'c-edu':{c:'#8b5cf6',eb:'Education',t:'Academic background',b:"<div class='edm'><div class='edm-h'><span class='edm-deg'>BSc CSIT</span><span class='edm-yr'>2018 to 2023</span></div><div class='edm-sch'>Prime College · Tribhuvan University</div><p>Bachelor of Science in Computer Science &amp; Information Technology. Built strong foundations in <strong>software engineering, databases, data structures, web technologies</strong> and the full software development lifecycle, the groundwork for my move into QA.</p><div class='m-tags'><span>Software Engineering</span><span>Databases &amp; SQL</span><span>Web Technologies</span><span>Programming</span></div></div><div class='edm'><div class='edm-h'><span class='edm-deg'>QA Training</span><span class='edm-yr'>2022 to 2023</span></div><div class='edm-sch'>InfoDevelopers · Lalitpur</div><p>Hands-on professional QA training covering <strong>manual and automation testing</strong>, real-world test design and industry tooling, the launchpad for my QA career.</p><div class='m-tags'><span>Manual Testing</span><span>Test Automation</span><span>Test Case Design</span><span>Bug Tracking</span></div></div>"},
       'c-quote':{c:'#ec4899',eb:'Philosophy',t:'How I approach every build',b:"<p style='font-size:1.15rem;color:var(--text);line-height:1.5'>\"Quality is never an accident. It's caught one test case at a time.\"</p><p>I believe in embedding quality early, automating the repetitive, and treating every bug as a lesson that makes the next release stronger.</p>"}
