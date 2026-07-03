@@ -586,6 +586,21 @@
   .card:hover .arrow-btn{color:var(--text);border-color:var(--border-hover)}
   .arrow-btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2}
 
+  .c-skills{padding-top:20px;padding-bottom:20px}
+  .c-skills .label{margin-bottom:6px}
+  .skill-cats{display:flex;flex-direction:column;gap:6px;margin-top:auto}
+  .scat{display:flex;align-items:baseline;gap:12px;font-size:.84rem;line-height:1.25}
+  .scat-l{flex:0 0 90px;font-family:'Space Grotesk',monospace;font-size:.62rem;font-weight:600;letter-spacing:.6px;text-transform:uppercase}
+  .scat-p{color:var(--text);font-weight:500}
+  @media(max-width:900px){.scat-l{flex-basis:78px}}
+  @media(max-width:560px){.scat{font-size:.9rem}.scat-l{flex-basis:92px}}
+  .scl-list{display:flex;flex-direction:column;gap:11px;margin-top:10px}
+  .scl{display:flex;align-items:baseline;gap:14px;padding-bottom:11px;border-bottom:1px solid var(--border)}
+  .scl:last-child{border-bottom:none;padding-bottom:0}
+  .scl-l{flex:0 0 104px;font-family:'Space Grotesk',monospace;font-size:.68rem;font-weight:600;letter-spacing:.6px;text-transform:uppercase}
+  .scl-v{color:var(--text);font-size:.9rem;line-height:1.45}
+  .scl-v em{color:var(--faint);font-style:normal;font-size:.82rem}
+  @media(max-width:480px){.scl{flex-direction:column;gap:4px}.scl-l{flex-basis:auto}}
   .skills-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:auto}
   .pill{display:inline-flex;align-items:center;gap:8px;font-size:.82rem;font-weight:500;
     color:var(--text);
@@ -774,15 +789,12 @@
     <!-- SKILLS -->
     <div class="card c-skills">
       <span class="pass-ribbon" aria-hidden="true">PASSED</span>
-      <div class="label">Tools I use</div>
-      <div class="skills-row">
-        <span class="pill">Cypress</span>
-        <span class="pill">Postman</span>
-        <span class="pill">JMeter</span>
-        <span class="pill">Jira</span>
-        <span class="pill">Linear</span>
-        <span class="pill">SQL</span>
-        <span class="pill">Agile / Scrum</span>
+      <div class="label">Skills by area</div>
+      <div class="skill-cats">
+        <div class="scat"><span class="scat-l" style="color:#10b981">Manual</span><span class="scat-p">Functional · Regression · Smoke</span></div>
+        <div class="scat"><span class="scat-l" style="color:#06b6d4">Automation</span><span class="scat-p">Cypress · Playwright</span></div>
+        <div class="scat"><span class="scat-l" style="color:#ec4899">API / Perf</span><span class="scat-p">Postman · JMeter</span></div>
+        <div class="scat"><span class="scat-l" style="color:#8b5cf6">Collab</span><span class="scat-p">Jira · Linear · Agile</span></div>
       </div>
     </div>
 
@@ -1269,10 +1281,17 @@
       'c-role':{c:'#10b981',eb:'Latest role',t:'QA Analyst · Rara Labs',b:"<p><strong>Since June 1, 2026 · Current role</strong></p><p>My latest role, driving quality as a <strong>QA Analyst</strong> at Rara Labs: designing test strategy, running functional & regression cycles, and championing quality across the team.</p>"},
       'c-photo':{c:'#ef4444',eb:'Ishan Rai',t:'QA Engineer',b:"<p style='font-size:1.1rem;color:var(--text);line-height:1.5;margin-bottom:16px'>Hey, I'm Ishan, the person behind the testing.</p><p>I've spent the last 3+ years in QA, and honestly, I really enjoy it. I like figuring out how things work, asking a lot of \"but what if&hellip;?\" questions, and catching that one odd bug before it ever reaches a real user.</p><p>I do my best work alongside developers, not against them: catching issues early, keeping things honest, and helping the team ship without the last-minute panic. When a release goes out smoothly, I take it a little personally (in a good way).</p><p>Outside of work, I'm just a curious person who likes understanding how things tick, and yes, I'll probably still spot the typo on your menu.</p>"},
       'c-about':{c:'#3b82f6',eb:'About',t:'Who I am',b:"<p>I'm a <strong>QA Engineer with 3+ years of experience</strong> across product-based and service-based companies.</p><p>I specialise in <strong>manual testing, test automation with Cypress, API testing with Postman</strong>, and <strong>performance testing with JMeter</strong>. I've built QA processes from the ground up, defined bug tracking workflows, and embedded quality early in agile development lifecycles.</p><p>I have a proven track record of <strong>reducing production defects</strong> and collaborating cross-functionally to ship high-quality software.</p>"},
-      'c-skills':{c:'#8b5cf6',eb:'Toolbox',t:'Tools & skills',b:"<p>My core testing toolkit and proficiency:</p><div class='ring-grid'>"+
+      'c-skills':{c:'#8b5cf6',eb:'Toolbox',t:'Skills by area',b:"<p>My core testing toolkit and proficiency:</p><div class='ring-grid'>"+
         ring('Cypress','#06b6d4',90,16.3)+ring('Postman','#ec4899',88,19.6)+ring('JMeter','#f5b324',78,35.9)+
         ring('API Testing','#3b82f6',88,19.6)+ring('Automation','#8b5cf6',86,22.9)+ring('Functional','#10b981',92,13.1)+
-        "</div><p style='margin-top:6px'><strong>Also:</strong></p><div class='m-tags'><span>E2E Testing</span><span>Regression</span><span>Jira</span><span>Linear</span><span>Agile / Scrum</span><span>SQL</span></div>"},
+        "</div><p style='margin-top:6px'><strong>Full coverage, grouped by area:</strong></p>"+
+        "<div class='scl-list'>"+
+        "<div class='scl'><span class='scl-l' style='color:#10b981'>Manual</span><span class='scl-v'>Functional · Regression · Smoke · Exploratory · UI</span></div>"+
+        "<div class='scl'><span class='scl-l' style='color:#06b6d4'>Automation</span><span class='scl-v'>Cypress · Playwright <em>(learning)</em> · JavaScript</span></div>"+
+        "<div class='scl'><span class='scl-l' style='color:#ec4899'>API</span><span class='scl-v'>Postman · REST · Contract testing</span></div>"+
+        "<div class='scl'><span class='scl-l' style='color:#f5b324'>Performance</span><span class='scl-v'>JMeter · Load &amp; stress testing</span></div>"+
+        "<div class='scl'><span class='scl-l' style='color:#8b5cf6'>Collaboration</span><span class='scl-v'>Jira · Linear · Agile / Scrum · SQL · Git</span></div>"+
+        "</div>"},
       'c-projects':{c:'#10b981',eb:'Projects',t:'What I have built',b:"<ul><li><strong>QA Bug Tracker</strong>: web app to track bug reports & test cases with Jira linking</li><li><strong>Cypress Projects</strong>: end-to-end automation suites across real-world apps</li><li><strong>Expense Tracker</strong>: clean web app to track income & expenses</li><li><strong>Automation Scripts</strong>: JavaScript scripts for web testing workflows</li></ul><p><a href='https://github.com/77ishan' target='_blank'>See all projects on GitHub →</a></p>"},
       'c-contact':{c:'#ec4899',eb:"Let's talk",t:'Want to work together?',b:"<p>I'm actively looking for <strong>QA opportunities</strong>. Drop me a message and I'll get back to you.</p><form class='m-form' action='https://formspree.io/f/mojrydyo' method='POST' onsubmit='return window.submitContact(event)'><input name='name' type='text' placeholder='Your name' required><input name='email' type='email' placeholder='Your email' required><textarea name='message' rows='3' placeholder='Your message…' required></textarea><button type='submit' class='m-submit'>Send message</button><div class='m-status' id='mStatus'></div></form><div class='m-row' style='margin-top:14px'><span class='r-t'>Or email</span><a href='https://mail.google.com/mail/?view=cm&fs=1&to=raiishan67@gmail.com&su=Hi%20Ishan' target='_blank'>raiishan67@gmail.com</a></div>"},
       'c-exp':{c:'#06b6d4',eb:'Experience',t:'Work history',b:"<div class='xp'><div class='xp-h'><span class='xp-co'>Rara Labs <span style='color:#10b981;font-weight:700;font-size:.7rem'>● CURRENT</span></span><span class='xp-d'>QA Analyst · Jun 2026 to present</span></div><ul><li>My latest role: driving end-to-end quality as a QA Analyst</li><li>Designing test strategy, test plans and detailed test cases</li><li>Running functional, regression and smoke testing cycles</li><li>Logging, tracking and verifying defects through to closure</li><li>Championing quality standards across the product team</li></ul></div><div class='xp'><div class='xp-h'><span class='xp-co'>Progressive Labs</span><span class='xp-d'>QA Engineer · Mar to Oct 2025</span></div><ul><li>Pioneered and built the entire QA process from the ground up</li><li>Designed test suites covering functional, regression, smoke & UI testing</li><li>Defined and standardised bug-tracking workflows with severity/priority levels</li><li>Set up performance & load testing with JMeter</li><li>Established release-readiness checklists and sign-off procedures</li><li>Integrated QA early into the agile development lifecycle</li></ul></div><div class='xp'><div class='xp-h'><span class='xp-co'>Khalti Digital Wallet</span><span class='xp-d'>Associate QA Officer · Mar 2024 to Mar 2025</span></div><ul><li>Performed smoke testing on every mobile build of the Khalti App</li><li>Developed & executed automated test cases in Cypress for the web app</li><li>Conducted API testing across services using Postman</li><li>Ran performance testing on the Khalti mobile app with JMeter</li><li>Collaborated in a Scrum team, tracking tasks in Jira</li></ul></div><div class='xp'><div class='xp-h'><span class='xp-co'>Keela · Forty-two Tech</span><span class='xp-d'>QA Engineer · Apr 2023 to Feb 2024</span></div><ul><li>Executed system, regression and smoke testing across modules</li><li>Wrote automated test cases with Cypress for multiple product areas</li><li>Performed end-to-end testing of the software</li><li>Authored detailed test cases for Keela's modules</li><li>Tracked and managed reported bugs in Linear</li></ul></div>"},
