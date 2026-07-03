@@ -201,6 +201,37 @@
   .card:hover .expand-hint{opacity:1;transform:scale(1)}
   .c-photo .expand-hint,.c-social .expand-hint{top:12px;right:12px}
 
+  /* ── QA design accents ── */
+  /* test-case id tag (corner) */
+  .tc-tag{position:absolute;top:13px;right:13px;z-index:2;font-family:'Space Grotesk',monospace;font-size:.58rem;font-weight:500;letter-spacing:.5px;color:var(--faint);border:1px solid color-mix(in srgb,var(--glow) 24%,var(--border));border-radius:5px;padding:2px 6px;background:color-mix(in srgb,var(--glow) 6%,transparent);pointer-events:none;opacity:.9;transition:opacity .3s}
+  .card.clickable:hover .tc-tag{opacity:0}
+  /* terminal chip (intro) */
+  .term-chip{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;margin-bottom:15px;padding:4px 10px;border:1px solid var(--border);border-radius:8px;background:color-mix(in srgb,var(--glow) 5%,transparent);font-family:'Space Grotesk',monospace;font-size:.62rem;color:var(--faint)}
+  .term-chip i{width:8px;height:8px;border-radius:50%;display:inline-block}
+  .term-chip .r{background:#ff5f57}.term-chip .y{background:#febc2e}.term-chip .g{background:#28c840}
+  /* pass ribbon (skills) */
+  .pass-ribbon{position:absolute;top:15px;right:-33px;transform:rotate(45deg);z-index:2;background:#10b981;color:#04241b;font-family:'Space Grotesk',monospace;font-size:.56rem;font-weight:700;letter-spacing:1px;padding:3px 38px;pointer-events:none;box-shadow:0 2px 8px rgba(16,185,129,.3)}
+  /* ci build-passing badge (role) */
+  .ci-badge{display:inline-flex;align-items:center;gap:6px;margin-top:14px;padding:3px 11px;border:1px solid color-mix(in srgb,#10b981 40%,transparent);border-radius:20px;background:color-mix(in srgb,#10b981 10%,transparent);font-family:'Space Grotesk',monospace;font-size:.62rem;color:#10b981;align-self:flex-start}
+  .ci-badge .cd{width:7px;height:7px;border-radius:50%;background:#10b981;box-shadow:0 0 7px #10b981;animation:ciPulse 2s ease-in-out infinite}
+  @keyframes ciPulse{0%,100%{opacity:1}50%{opacity:.35}}
+  /* coverage bar (education) */
+  .cov{margin-top:12px}
+  .cov-top{display:flex;justify-content:space-between;font-family:'Space Grotesk',monospace;font-size:.6rem;color:var(--faint);margin-bottom:5px}
+  .cov-top b{color:#8bbf4d;font-weight:600}
+  .cov-track{height:5px;border-radius:3px;background:color-mix(in srgb,var(--glow) 14%,var(--border));overflow:hidden}
+  .cov-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,#639922,#97c459);animation:covFill 1.2s cubic-bezier(.16,1,.3,1) both}
+  @keyframes covFill{from{width:0!important}}
+  /* code watermark (experience) */
+  .code-wm{position:absolute;inset:0;padding:24px;font-family:'Space Grotesk',monospace;font-size:.72rem;line-height:1.75;color:color-mix(in srgb,var(--glow) 9%,transparent);white-space:pre;pointer-events:none;z-index:0;overflow:hidden}
+  body.light .code-wm{color:color-mix(in srgb,var(--glow) 11%,transparent)}
+  .c-exp .label,.c-exp .exp-item,.c-exp .exp-hint{position:relative;z-index:1}
+  /* dot texture + suites line (projects) */
+  .dot-tex{position:absolute;inset:0;background-image:radial-gradient(circle,color-mix(in srgb,var(--glow) 26%,transparent) 1px,transparent 1px);background-size:20px 20px;opacity:.45;pointer-events:none;z-index:0}
+  .c-projects .label,.c-projects h3,.c-projects .gh-stats,.c-projects .suites{position:relative;z-index:1}
+  .suites{display:flex;align-items:center;gap:8px;margin-top:12px;font-family:'Space Grotesk',monospace;font-size:.64rem;color:var(--faint)}
+  .suites b{color:#10b981;letter-spacing:2px}
+
   /* per-card accent colors */
   .c-intro{--glow:#3b82f6}
   .c-stat{--glow:#f5b324}
@@ -608,6 +639,7 @@
     <!-- INTRO -->
     <div class="card c-intro">
       <div class="intro-left">
+        <span class="term-chip" aria-hidden="true"><i class="r"></i><i class="y"></i><i class="g"></i>ishan@portfolio ~ %</span>
         <span class="status"><span class="dot"></span> Open to work</span>
         <h1>Hi, I'm Ishan <span class="wave">👋</span></h1>
         <div class="role-rotator">
@@ -642,9 +674,11 @@
 
     <!-- ROLE -->
     <div class="card c-role">
+      <span class="tc-tag" aria-hidden="true">TC-02</span>
       <div class="label">Latest role</div>
       <div class="role-co">QA Analyst</div>
       <div class="role-sub">Rara Labs · Since Jun 2026</div>
+      <span class="ci-badge" aria-hidden="true"><span class="cd"></span>build passing</span>
     </div>
 
     <!-- PHOTO -->
@@ -657,6 +691,7 @@
 
     <!-- THEME -->
     <div class="card c-theme">
+      <span class="tc-tag" aria-hidden="true">TC-08</span>
       <div class="label">Theme</div>
       <div class="theme-toggle" id="themeToggle" role="button" aria-label="Toggle theme">
         <div class="knob" id="knob">☾</div>
@@ -665,6 +700,7 @@
 
     <!-- SKILLS -->
     <div class="card c-skills">
+      <span class="pass-ribbon" aria-hidden="true">PASSED</span>
       <div class="label">Tools I use</div>
       <div class="skills-row">
         <span class="pill">Cypress</span>
@@ -679,6 +715,8 @@
 
     <!-- PROJECTS -->
     <div class="card c-projects">
+      <div class="dot-tex" aria-hidden="true"></div>
+      <span class="tc-tag" aria-hidden="true">TC-05</span>
       <a class="full" href="https://github.com/77ishan" target="_blank" aria-label="View projects"></a>
       <div class="label">Projects · GitHub</div>
       <h3>See my work on GitHub</h3>
@@ -687,6 +725,7 @@
         <span class="gh-stat"><b id="ghStars">·</b> stars</span>
         <span class="gh-stat"><b id="ghFollowers">·</b> followers</span>
       </div>
+      <div class="suites" aria-hidden="true"><b>✓✓✓✓</b> all suites green</div>
       <a class="arrow-btn" href="https://github.com/77ishan" target="_blank" aria-label="GitHub">
         <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H8M17 7V16"/></svg>
       </a>
@@ -694,6 +733,7 @@
 
     <!-- CONTACT -->
     <div class="card c-contact">
+      <span class="tc-tag" aria-hidden="true">TC-06</span>
       <div class="label">Let's talk</div>
       <h3>Want to work together?</h3>
       <button class="copy-btn" id="copyBtn">
@@ -704,6 +744,12 @@
 
     <!-- EXPERIENCE -->
     <div class="card c-exp">
+      <div class="code-wm" aria-hidden="true">describe('ishan', () => {
+  it('ships quality', () => {
+    expect(bugs).toBe(0)
+  })
+})</div>
+      <span class="tc-tag" aria-hidden="true">TC-03</span>
       <div class="label">Experience</div>
       <div class="exp-item">
         <div class="exp-dot now"></div>
@@ -743,6 +789,7 @@
 
     <!-- EDUCATION -->
     <div class="card c-edu">
+      <span class="tc-tag" aria-hidden="true">TC-04</span>
       <div class="label">Education</div>
       <div class="edu-row">
         <div class="edu-ic" aria-hidden="true">
@@ -762,17 +809,23 @@
           <div class="edu-sch">InfoDevelopers · Lalitpur</div>
         </div>
       </div>
+      <div class="cov" aria-hidden="true">
+        <div class="cov-top"><span>foundations coverage</span><b>96%</b></div>
+        <div class="cov-track"><div class="cov-fill" style="width:96%"></div></div>
+      </div>
       <div class="edu-hint">Click for full details →</div>
     </div>
 
     <!-- QUOTE -->
     <div class="card c-quote">
+      <span class="tc-tag" aria-hidden="true">TC-07</span>
       <blockquote>"Quality is never an accident. It's caught one test case at a time."</blockquote>
       <cite>How I approach every build</cite>
     </div>
 
     <!-- BUGS SQUASHED -->
     <div class="card c-bugs">
+      <span class="tc-tag" aria-hidden="true">TC-09</span>
       <div class="label">Bugs squashed</div>
       <div class="bignum" id="bugScore">0</div>
       <div class="cap">and counting</div>
