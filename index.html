@@ -216,13 +216,6 @@
   .ci-badge{display:inline-flex;align-items:center;gap:6px;margin-top:14px;padding:3px 11px;border:1px solid color-mix(in srgb,#10b981 40%,transparent);border-radius:20px;background:color-mix(in srgb,#10b981 10%,transparent);font-family:'Space Grotesk',monospace;font-size:.62rem;color:#10b981;align-self:flex-start}
   .ci-badge .cd{width:7px;height:7px;border-radius:50%;background:#10b981;box-shadow:0 0 7px #10b981;animation:ciPulse 2s ease-in-out infinite}
   @keyframes ciPulse{0%,100%{opacity:1}50%{opacity:.35}}
-  /* coverage bar (education) */
-  .cov{margin-top:12px}
-  .cov-top{display:flex;justify-content:space-between;font-family:'Space Grotesk',monospace;font-size:.6rem;color:var(--faint);margin-bottom:5px}
-  .cov-top b{color:#8bbf4d;font-weight:600}
-  .cov-track{height:5px;border-radius:3px;background:color-mix(in srgb,var(--glow) 14%,var(--border));overflow:hidden}
-  .cov-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,#639922,#97c459);animation:covFill 1.2s cubic-bezier(.16,1,.3,1) both}
-  @keyframes covFill{from{width:0!important}}
   /* code watermark (experience) */
   .code-wm{position:absolute;inset:0;padding:24px;font-family:'Space Grotesk',monospace;font-size:.72rem;line-height:1.75;color:color-mix(in srgb,var(--glow) 9%,transparent);white-space:pre;pointer-events:none;z-index:0;overflow:hidden}
   body.light .code-wm{color:color-mix(in srgb,var(--glow) 11%,transparent)}
@@ -510,6 +503,12 @@
   .edu-deg{font-family:'Sora','Inter',sans-serif;font-size:.96rem;font-weight:700;letter-spacing:-.3px;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
   .edu-sch{font-size:.78rem;color:var(--muted);margin-top:2px}
   .edu-yr{font-family:'Space Grotesk',monospace;font-size:.7rem;color:var(--faint);white-space:nowrap;font-weight:500}
+  .edu-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
+  .edu-tags span{font-size:.7rem;font-weight:500;color:var(--text);
+    background:color-mix(in srgb,var(--glow) 10%,transparent);
+    border:1px solid color-mix(in srgb,var(--glow) 30%,transparent);
+    padding:4px 10px;border-radius:20px;transition:transform .2s,background .2s,border-color .2s}
+  .edu-tags span:hover{transform:translateY(-2px);background:color-mix(in srgb,var(--glow) 18%,transparent);border-color:color-mix(in srgb,var(--glow) 50%,transparent)}
   .edu-hint{font-size:.72rem;color:var(--faint);margin-top:auto;padding-top:10px;text-align:right}
 
   /* run tests */
@@ -894,9 +893,11 @@
           <div class="edu-sch">InfoDevelopers · Lalitpur</div>
         </div>
       </div>
-      <div class="cov" aria-hidden="true">
-        <div class="cov-top"><span>foundations coverage</span><b>96%</b></div>
-        <div class="cov-track"><div class="cov-fill" style="width:96%"></div></div>
+      <div class="edu-tags" aria-hidden="true">
+        <span>Software Eng.</span>
+        <span>Databases</span>
+        <span>Web Tech</span>
+        <span>QA &amp; Automation</span>
       </div>
       <div class="edu-hint">Click for full details →</div>
     </div>
