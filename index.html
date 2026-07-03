@@ -468,10 +468,12 @@
   /* experience timeline */
   .exp-item{display:flex;gap:13px;align-items:center;padding:9px 0;border-top:1px solid var(--border)}
   .exp-item:first-of-type{border-top:none}
-  .exp-logo{width:32px;height:32px;flex:0 0 auto;border-radius:9px;display:flex;align-items:center;justify-content:center;
+  .exp-logo{position:relative;overflow:hidden;width:32px;height:32px;flex:0 0 auto;border-radius:9px;display:flex;align-items:center;justify-content:center;
     font-family:'Space Grotesk',monospace;font-size:.72rem;font-weight:700;letter-spacing:.3px;
     color:var(--lc);background:color-mix(in srgb,var(--lc) 15%,transparent);border:1px solid color-mix(in srgb,var(--lc) 42%,transparent);
     transition:transform .25s cubic-bezier(.16,1,.3,1),box-shadow .3s}
+  .exp-logo .brand{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#fff;padding:3px;display:none}
+  .exp-logo .brand.ok{display:block}
   .exp-item:hover .exp-logo{transform:translateY(-2px) scale(1.06);box-shadow:0 6px 16px -4px color-mix(in srgb,var(--lc) 55%,transparent)}
   .exp-logo.now{box-shadow:0 0 0 0 rgba(16,185,129,.6);animation:exp-pulse 1.8s ease-in-out infinite}
   @keyframes exp-pulse{0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,.55)}50%{box-shadow:0 0 0 5px rgba(16,185,129,0)}}
@@ -840,22 +842,22 @@
       <span class="tc-tag" aria-hidden="true">TC-03</span>
       <div class="label">Experience</div>
       <div class="exp-item">
-        <div class="exp-logo now" style="--lc:#10b981" aria-hidden="true">RL</div>
+        <div class="exp-logo now" style="--lc:#10b981" aria-hidden="true"><span class="mono">RL</span><img class="brand" alt="" data-local="logos/rara.png" data-domain="raralabs.com"></div>
         <div class="exp-co">Rara Labs <span class="exp-badge">Current</span></div>
         <div class="exp-yr">Since Jun 2026</div>
       </div>
       <div class="exp-item">
-        <div class="exp-logo" style="--lc:#3b82f6" aria-hidden="true">PL</div>
+        <div class="exp-logo" style="--lc:#3b82f6" aria-hidden="true"><span class="mono">PL</span><img class="brand" alt="" data-local="logos/progressive.png"></div>
         <div class="exp-co">Progressive Labs</div>
         <div class="exp-yr">Mar to Oct 2025</div>
       </div>
       <div class="exp-item">
-        <div class="exp-logo" style="--lc:#8b5cf6" aria-hidden="true">Kh</div>
+        <div class="exp-logo" style="--lc:#8b5cf6" aria-hidden="true"><span class="mono">Kh</span><img class="brand" alt="" data-local="logos/khalti.png" data-domain="khalti.com"></div>
         <div class="exp-co">Khalti Digital Wallet</div>
         <div class="exp-yr">Mar 2024 to Mar 2025</div>
       </div>
       <div class="exp-item">
-        <div class="exp-logo" style="--lc:#ec4899" aria-hidden="true">Ke</div>
+        <div class="exp-logo" style="--lc:#ec4899" aria-hidden="true"><span class="mono">Ke</span><img class="brand" alt="" data-local="logos/keela.png" data-domain="keela.co"></div>
         <div class="exp-co">Keela · Forty-two Tech</div>
         <div class="exp-yr">Apr 2023 to Feb 2024</div>
       </div>
@@ -1452,6 +1454,20 @@
         if(i<steps.length){out.innerHTML=steps[i];i++;}
         else{clearInterval(t);btn.disabled=false;}
       },500);
+    });
+  })();
+
+  /* company logos: try local file, then logo service, else keep monogram */
+  (function(){
+    document.querySelectorAll('.exp-logo .brand').forEach(function(img){
+      var chain=[];
+      var local=img.getAttribute('data-local'),domain=img.getAttribute('data-domain');
+      if(local)chain.push(local);
+      if(domain)chain.push('https://logo.clearbit.com/'+domain);
+      var i=0;
+      img.addEventListener('load',function(){if(img.naturalWidth>1)img.classList.add('ok');});
+      img.addEventListener('error',function(){img.classList.remove('ok');if(i<chain.length)img.src=chain[i++];});
+      if(chain.length)img.src=chain[i++];
     });
   })();
 
