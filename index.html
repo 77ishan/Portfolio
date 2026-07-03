@@ -142,7 +142,8 @@
       "photo skills skills theme"
       "photo exp    exp    proj"
       "edu   exp    exp    contact"
-      "edu   quote  quote  bugs";
+      "edu   quote  quote  bugs"
+      "learn learn  test   test";
   }
 
   .card{
@@ -232,6 +233,57 @@
   .suites{display:flex;align-items:center;gap:8px;margin-top:12px;font-family:'Space Grotesk',monospace;font-size:.64rem;color:var(--faint)}
   .suites b{color:#10b981;letter-spacing:2px}
 
+  /* ── currently learning card ── */
+  .learn-list{display:flex;flex-direction:column;gap:10px;margin-top:6px}
+  .learn-item{display:flex;align-items:center;gap:10px;font-size:.95rem;color:var(--text);font-weight:600}
+  .learn-dot{width:9px;height:9px;border-radius:50%;background:var(--glow);box-shadow:0 0 8px var(--glow);flex:none;animation:ciPulse 2s ease-in-out infinite}
+  .learn-tag{font-family:'Space Grotesk',monospace;font-size:.6rem;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--glow);border:1px solid color-mix(in srgb,var(--glow) 40%,transparent);border-radius:20px;padding:2px 8px}
+  .learn-hint{font-size:.75rem;color:var(--faint);margin-top:auto;padding-top:12px}
+
+  /* ── QA challenge card ── */
+  .c-testme{padding-top:20px;padding-bottom:20px}
+  .c-testme h3{font-size:1.05rem;font-weight:700;letter-spacing:-.4px;margin:5px 0 3px}
+  .c-testme .tm-sub{font-size:.82rem;color:var(--muted);line-height:1.4}
+  .tm-play{display:inline-flex;align-items:center;gap:8px;align-self:flex-start;margin-top:auto;padding:8px 15px;border-radius:12px;border:1px solid color-mix(in srgb,var(--glow) 45%,var(--border));background:color-mix(in srgb,var(--glow) 12%,transparent);color:var(--text);font-weight:600;font-size:.82rem;cursor:pointer;transition:background .25s,transform .2s}
+  .tm-play:hover{background:color-mix(in srgb,var(--glow) 22%,transparent);transform:translateY(-2px)}
+  .tm-play svg{width:15px;height:15px;fill:none;stroke:var(--glow);stroke-width:2.2}
+
+  /* ── generic light modal (challenge + cv) ── */
+  .lmodal-overlay{position:fixed;inset:0;z-index:10000;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(4,4,8,.72);backdrop-filter:blur(6px)}
+  .lmodal-overlay.open{display:flex}
+  .lmodal{position:relative;width:100%;max-width:520px;max-height:88vh;overflow:auto;background:var(--card);border:1px solid var(--border);border-radius:22px;padding:30px 28px;box-shadow:0 30px 80px rgba(0,0,0,.55);animation:modalFlipIn .5s cubic-bezier(.2,.7,.2,1)}
+  .lmodal-close{position:absolute;top:16px;right:16px;width:34px;height:34px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:20px;line-height:1;cursor:pointer;transition:background .2s,color .2s}
+  .lmodal-close:hover{background:color-mix(in srgb,var(--text) 8%,transparent);color:var(--text)}
+  .lmodal .eyebrow{font-family:'Space Grotesk',monospace;font-size:.68rem;letter-spacing:2px;text-transform:uppercase;color:#06b6d4}
+  .lmodal h2{font-family:'Sora','Inter',sans-serif;font-size:1.5rem;font-weight:800;letter-spacing:-.6px;margin:8px 0 6px}
+  .lmodal .intro{color:var(--muted);font-size:.92rem;line-height:1.55;margin-bottom:18px}
+
+  /* challenge form */
+  .tm-form{border:1px solid var(--border);border-radius:14px;padding:18px;background:color-mix(in srgb,var(--text) 3%,transparent)}
+  .tm-cap{font-family:'Space Grotesk',monospace;font-size:.66rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--faint);margin-bottom:12px}
+  .tm-field{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 13px;border:1.5px solid var(--border);border-radius:11px;margin-bottom:10px;cursor:pointer;transition:border-color .2s,background .2s}
+  .tm-field:hover{border-color:color-mix(in srgb,#06b6d4 55%,var(--border))}
+  .tm-field.wrong{border-color:#ef4444;animation:tmShake .4s}
+  .tm-field.right{border-color:#10b981;background:color-mix(in srgb,#10b981 12%,transparent)}
+  @keyframes tmShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+  .tm-flabel{font-size:.82rem;color:var(--muted)}
+  .tm-fval{font-family:'Space Grotesk',monospace;font-weight:600;color:var(--text)}
+  .tm-qty{display:flex;align-items:center;gap:8px}
+  .tm-qty button{width:26px;height:26px;border-radius:8px;border:1px solid var(--border);background:transparent;color:var(--text);font-size:15px;cursor:pointer}
+  .tm-qty span{min-width:20px;text-align:center;font-weight:600}
+  .tm-hint{font-size:.78rem;color:var(--faint);margin-top:12px;text-align:center}
+  .tm-result{margin-top:16px;padding:14px 16px;border-radius:12px;border:1px solid #10b981;background:color-mix(in srgb,#10b981 10%,transparent);color:var(--text);font-size:.9rem;line-height:1.55;display:none}
+  .tm-result.show{display:block;animation:tmShake .001s}
+  .tm-result b{color:#10b981}
+
+  /* cv preview */
+  .cv-frame{width:100%;height:64vh;border:1px solid var(--border);border-radius:12px;background:#fff}
+  .cv-actions{display:flex;gap:10px;margin-top:16px}
+  .cv-actions a{flex:1;text-align:center;padding:11px;border-radius:12px;font-weight:600;font-size:.9rem;text-decoration:none;transition:transform .2s}
+  .cv-dl{background:linear-gradient(135deg,#3b82f6,#8b5cf6,#ec4899);color:#fff}
+  .cv-open{border:1px solid var(--border);color:var(--text)}
+  .cv-actions a:hover{transform:translateY(-2px)}
+
   /* per-card accent colors */
   .c-intro{--glow:#3b82f6}
   .c-stat{--glow:#f5b324}
@@ -246,6 +298,8 @@
   .c-exp{--glow:#06b6d4}
   .c-clock{--glow:#f5b324}
   .c-bugs{--glow:#10b981}
+  .c-learn{--glow:#f59e0b}
+  .c-testme{--glow:#06b6d4}
   .c-edu{--glow:#8b5cf6}
   .c-tests{--glow:#10b981}
   .c-quote{--glow:#ec4899}
@@ -414,6 +468,8 @@
   .c-edu{grid-area:edu}
   .c-quote{grid-area:quote;justify-content:center}
   .c-bugs{grid-area:bugs}
+  .c-learn{grid-area:learn}
+  .c-testme{grid-area:test}
 
   /* experience timeline */
   .exp-item{display:flex;gap:14px;align-items:center;padding:13px 0;border-top:1px solid var(--border)}
@@ -479,7 +535,12 @@
   @keyframes caret-blink{0%,100%{opacity:1}50%{opacity:0}}
   .c-intro p{font-size:1.02rem;color:var(--muted);line-height:1.55;max-width:30ch}
   .c-intro a.inline{color:var(--text);text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--faint)}
-  .dl-cv{display:inline-flex;align-items:center;gap:9px;margin-top:18px;width:fit-content;
+  .cv-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:18px}
+  .cv-preview-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border-radius:14px;
+    border:1px solid var(--border);background:transparent;color:var(--text);font-size:.9rem;font-weight:600;cursor:pointer;position:relative;z-index:2;
+    transition:transform .25s,border-color .25s,background .25s}
+  .cv-preview-btn:hover{transform:translateY(-3px);border-color:var(--border-hover);background:rgba(255,255,255,.04)}
+  .dl-cv{display:inline-flex;align-items:center;gap:9px;width:fit-content;
     background:linear-gradient(135deg,#3b82f6,#8b5cf6,#ec4899);color:#fff;font-size:.92rem;font-weight:600;
     padding:12px 22px;border-radius:14px;text-decoration:none;position:relative;z-index:2;
     box-shadow:0 6px 18px rgba(59,130,246,.3);transition:transform .25s,box-shadow .3s,filter .25s}
@@ -588,7 +649,9 @@
         "edu   edu"
         "edu   edu"
         "bugs  bugs"
-        "quote quote";
+        "quote quote"
+        "learn learn"
+        "test  test";
     }
   }
   @media(max-width:560px){
@@ -619,6 +682,9 @@
     .ring-grid{grid-template-columns:repeat(2,1fr)}
   }
 </style>
+<!-- Privacy-friendly analytics (GoatCounter). Sign up free at https://www.goatcounter.com/,
+     then replace MYCODE below with your site code (e.g. ishanrai -> https://ishanrai.goatcounter.com/count). -->
+<script data-goatcounter="https://MYCODE.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
 <a href="#main" class="skip-link">Skip to content</a>
@@ -647,10 +713,16 @@
           <span class="rr-word" id="rrWord"></span><span class="rr-caret"></span>
         </div>
         <p>Breaking things so users don't have to. Based in <a class="inline" href="#">Lalitpur, Nepal</a>.</p>
-        <a class="dl-cv" href="Ishan_Rai_CV.pdf" download="Ishan_Rai_CV.pdf">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>
-          Download CV
-        </a>
+        <div class="cv-row">
+          <a class="dl-cv" href="Ishan_Rai_CV.pdf" download="Ishan_Rai_CV.pdf">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>
+            Download CV
+          </a>
+          <button class="cv-preview-btn" id="cvPreviewBtn" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true" style="width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+            Preview
+          </button>
+        </div>
       </div>
     </div>
 
@@ -832,6 +904,28 @@
       <div class="hint">A 🪲 is loose on the page → click it to squash it</div>
     </div>
 
+    <!-- CURRENTLY LEARNING -->
+    <div class="card c-learn">
+      <span class="tc-tag" aria-hidden="true">TC-10</span>
+      <div class="label">Currently learning</div>
+      <div class="learn-list">
+        <div class="learn-item"><span class="learn-dot"></span>Cypress <span class="learn-tag">levelling up</span></div>
+      </div>
+      <div class="learn-hint">Always sharpening my automation game →</div>
+    </div>
+
+    <!-- QA CHALLENGE -->
+    <div class="card c-testme" id="testCard">
+      <span class="tc-tag" aria-hidden="true">TC-11</span>
+      <div class="label">QA challenge</div>
+      <h3>Can you spot the bug?</h3>
+      <div class="tm-sub">One field on this form is broken. Can you spot it?</div>
+      <button class="tm-play" id="testOpen" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+        Start the challenge
+      </button>
+    </div>
+
   </main>
   <p class="credit">© 2026 Ishan Rai · QA Engineer · Lalitpur, Nepal</p>
 </div>
@@ -843,6 +937,41 @@
     <div class="modal-eyebrow" id="modalEyebrow"></div>
     <h2 class="modal-title" id="modalTitle"></h2>
     <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<!-- QA CHALLENGE MODAL -->
+<div class="lmodal-overlay" id="testOverlay">
+  <div class="lmodal" role="dialog" aria-modal="true" aria-label="QA challenge">
+    <button class="lmodal-close" id="testClose" aria-label="Close">&times;</button>
+    <div class="eyebrow">Mini QA challenge</div>
+    <h2>Spot the bug 🐛</h2>
+    <p class="intro">Here's a tiny checkout. Change the quantity and watch closely — one field doesn't behave. Click the field you think is broken, just like triaging a real bug.</p>
+    <div class="tm-form">
+      <div class="tm-cap">Checkout · 1 item</div>
+      <div class="tm-field" data-f="price"><span class="tm-flabel">Unit price</span><span class="tm-fval">$20.00</span></div>
+      <div class="tm-field" data-f="qty">
+        <span class="tm-flabel">Quantity</span>
+        <span class="tm-qty"><button type="button" id="qtyMinus" aria-label="decrease">−</button><span id="qtyVal">1</span><button type="button" id="qtyPlus" aria-label="increase">+</button></span>
+      </div>
+      <div class="tm-field" data-f="total"><span class="tm-flabel">Total</span><span class="tm-fval" id="tmTotal">$20.00</span></div>
+      <div class="tm-hint" id="tmHint">Tip: bump the quantity up first, then look for what's off.</div>
+    </div>
+    <div class="tm-result" id="tmResult"></div>
+  </div>
+</div>
+
+<!-- CV PREVIEW MODAL -->
+<div class="lmodal-overlay" id="cvOverlay">
+  <div class="lmodal" role="dialog" aria-modal="true" aria-label="CV preview" style="max-width:640px">
+    <button class="lmodal-close" id="cvClose" aria-label="Close">&times;</button>
+    <div class="eyebrow" style="color:#8b5cf6">Résumé</div>
+    <h2>Ishan Rai · CV</h2>
+    <iframe class="cv-frame" id="cvFrame" title="CV preview" src="about:blank" loading="lazy"></iframe>
+    <div class="cv-actions">
+      <a class="cv-dl" href="Ishan_Rai_CV.pdf" download="Ishan_Rai_CV.pdf">Download PDF</a>
+      <a class="cv-open" href="Ishan_Rai_CV.pdf" target="_blank" rel="noopener">Open in new tab</a>
+    </div>
   </div>
 </div>
 
@@ -1298,6 +1427,51 @@
         else{clearInterval(t);btn.disabled=false;}
       },500);
     });
+  })();
+
+  /* QA challenge modal */
+  (function(){
+    var open=document.getElementById('testOpen'),ov=document.getElementById('testOverlay'),cl=document.getElementById('testClose');
+    if(!open||!ov)return;
+    var qtyVal=document.getElementById('qtyVal'),total=document.getElementById('tmTotal'),hint=document.getElementById('tmHint'),result=document.getElementById('tmResult');
+    var plus=document.getElementById('qtyPlus'),minus=document.getElementById('qtyMinus');
+    var qty=1,PRICE=20,found=false;
+    function show(){ov.classList.add('open');document.body.style.overflow='hidden';}
+    function hide(){ov.classList.remove('open');document.body.style.overflow='';}
+    open.addEventListener('click',show);
+    cl.addEventListener('click',hide);
+    ov.addEventListener('click',function(e){if(e.target===ov)hide();});
+    // the planted bug: total NEVER recalculates when qty changes
+    plus.addEventListener('click',function(){if(qty<9){qty++;qtyVal.textContent=qty;/* bug: total stays */if(qty>1)hint.textContent='See it? The quantity changed but the total didn\'t. Click the broken field.';}});
+    minus.addEventListener('click',function(){if(qty>1){qty--;qtyVal.textContent=qty;}});
+    document.querySelectorAll('#testOverlay .tm-field').forEach(function(f){
+      f.addEventListener('click',function(){
+        if(found)return;
+        var which=f.getAttribute('data-f');
+        if(which==='total'){
+          found=true;f.classList.add('right');
+          if(window.confettiBurst){var r=f.getBoundingClientRect();window.confettiBurst(r.left+r.width/2,r.top+r.height/2);}
+          result.innerHTML='<b>Nice catch! 🎉</b> The <b>total doesn\'t recalculate</b> when the quantity changes — a classic state-management bug. A tester would log it as: <em>"Total not updated on quantity change (expected $'+(qty*PRICE)+'.00, got $20.00)."</em> That\'s exactly the kind of thing I catch before your users do.';
+          result.classList.add('show');
+        } else {
+          f.classList.add('wrong');setTimeout(function(){f.classList.remove('wrong');},450);
+          hint.textContent = which==='qty' ? 'The quantity control works fine — compare it against another field.' : 'The unit price is correct. What should change when quantity does?';
+        }
+      });
+    });
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&ov.classList.contains('open'))hide();});
+  })();
+
+  /* CV preview modal */
+  (function(){
+    var btn=document.getElementById('cvPreviewBtn'),ov=document.getElementById('cvOverlay'),cl=document.getElementById('cvClose'),frame=document.getElementById('cvFrame');
+    if(!btn||!ov)return;
+    function show(){if(frame.getAttribute('src')==='about:blank')frame.setAttribute('src','Ishan_Rai_CV.pdf#view=FitH');ov.classList.add('open');document.body.style.overflow='hidden';}
+    function hide(){ov.classList.remove('open');document.body.style.overflow='';}
+    btn.addEventListener('click',show);
+    cl.addEventListener('click',hide);
+    ov.addEventListener('click',function(e){if(e.target===ov)hide();});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&ov.classList.contains('open'))hide();});
   })();
 </script>
 </body>
