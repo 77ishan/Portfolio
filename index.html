@@ -234,11 +234,12 @@
   .suites b{color:#10b981;letter-spacing:2px}
 
   /* ── currently learning card ── */
-  .learn-list{display:flex;flex-direction:column;gap:10px;margin-top:6px}
-  .learn-item{display:flex;align-items:center;gap:10px;font-size:.95rem;color:var(--text);font-weight:600}
-  .learn-dot{width:9px;height:9px;border-radius:50%;background:var(--glow);box-shadow:0 0 8px var(--glow);flex:none;animation:ciPulse 2s ease-in-out infinite}
-  .learn-tag{font-family:'Space Grotesk',monospace;font-size:.6rem;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--glow);border:1px solid color-mix(in srgb,var(--glow) 40%,transparent);border-radius:20px;padding:2px 8px}
-  .learn-hint{font-size:.75rem;color:var(--faint);margin-top:auto;padding-top:12px}
+  .c-learn{padding-top:22px;padding-bottom:22px}
+  .learn-list{display:flex;flex-direction:column;gap:8px;margin-top:5px}
+  .learn-item{display:flex;align-items:center;gap:9px;font-size:.9rem;color:var(--text);font-weight:600}
+  .learn-dot{width:8px;height:8px;border-radius:50%;background:var(--glow);box-shadow:0 0 8px var(--glow);flex:none;animation:ciPulse 2s ease-in-out infinite}
+  .learn-tag{font-family:'Space Grotesk',monospace;font-size:.58rem;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--glow);border:1px solid color-mix(in srgb,var(--glow) 40%,transparent);border-radius:20px;padding:2px 7px}
+  .learn-hint{font-size:.73rem;color:var(--faint);margin-top:auto;padding-top:8px}
 
   /* ── QA challenge card ── */
   .c-testme{padding-top:20px;padding-bottom:20px}
@@ -909,9 +910,10 @@
       <span class="tc-tag" aria-hidden="true">TC-10</span>
       <div class="label">Currently learning</div>
       <div class="learn-list">
-        <div class="learn-item"><span class="learn-dot"></span>Cypress <span class="learn-tag">levelling up</span></div>
+        <div class="learn-item"><span class="learn-dot"></span>Playwright <span class="learn-tag">in progress</span></div>
+        <div class="learn-item"><span class="learn-dot"></span>CI/CD · GitHub Actions <span class="learn-tag">next up</span></div>
       </div>
-      <div class="learn-hint">Always sharpening my automation game →</div>
+      <div class="learn-hint">Always leveling up my automation game →</div>
     </div>
 
     <!-- QA CHALLENGE -->
