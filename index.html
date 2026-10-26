@@ -203,6 +203,13 @@
     backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
     opacity:.85;transition:opacity .25s,transform .25s,background .25s;pointer-events:none;z-index:3}
   .expand-hint .eh-hover{display:none}
+  .expand-hint.measuring{transition:none;transform:scale(1.04)}
+  .expand-hint.measuring .eh-hover{display:none!important}
+  .expand-hint.measuring .eh-idle{display:inline!important}
+  .expand-hint[data-idle-empty="1"] .eh-idle,.expand-hint.icon-only .eh-idle{display:none}
+  .card:not(:hover) .expand-hint[data-idle-empty="1"],.expand-hint.icon-only{padding:0 7px;gap:0}
+  .card:hover .expand-hint[data-hover-empty="1"]{padding:0 7px;gap:0}
+  .card:hover .expand-hint[data-hover-empty="1"] .eh-hover{display:none!important}
   .card:hover .expand-hint .eh-idle,.card:focus-visible .expand-hint .eh-idle{display:none}
   .card:hover .expand-hint .eh-hover,.card:focus-visible .expand-hint .eh-hover{display:inline}
   .card:hover .expand-hint,.card:focus-visible .expand-hint{background:color-mix(in srgb,var(--glow) 30%,var(--card))!important;transform:scale(1.04)}
@@ -218,7 +225,8 @@
   .tap-tip{display:inline-flex;align-items:center;gap:6px;margin-top:14px;font-size:.78rem;color:var(--muted)}
   .tap-tip b{color:var(--text);font-weight:600}
   @media(prefers-reduced-motion:reduce){.expand-hint.pulse{animation:none}}
-  @media(max-width:560px){.c-quote.has-hint{padding-top:44px}}
+  .c-quote.has-hint{padding-top:44px}
+  @media(max-width:560px){.c-skills.has-hint{padding-top:46px}}
 
   /* ── QA design accents ── */
   /* test-case id tag (corner) */
@@ -1349,6 +1357,34 @@
     }
     function close(){overlay.classList.remove('open');}
 
+    /* Responsive hint: pick the longest label that doesn't cover any of the card's text */
+    function fitHints(){
+      fitHints.list.forEach(function(o){
+        var card=o.card,hint=o.hint,idle=hint.querySelector('.eh-idle'),hov=hint.querySelector('.eh-hover');
+        // text rects of the card's real content (skip decorative/aria-hidden bits and the hint itself)
+        var rects=[],w=document.createTreeWalker(card,NodeFilter.SHOW_TEXT,{acceptNode:function(n){
+          if(!n.nodeValue.trim())return NodeFilter.FILTER_REJECT;
+          var el=n.parentElement;
+          if(el.closest('.expand-hint,.shimmer,[aria-hidden="true"],.modal'))return NodeFilter.FILTER_REJECT;
+          return NodeFilter.FILTER_ACCEPT;}});
+        var n,r=document.createRange();
+        while((n=w.nextNode())){r.selectNodeContents(n);[].forEach.call(r.getClientRects(),function(x){if(x.width&&x.height)rects.push(x);});}
+        function clear(){
+          var h=hint.getBoundingClientRect(),pad=4;
+          return !rects.some(function(x){return x.left<h.right+pad&&x.right>h.left-pad&&x.top<h.bottom+pad&&x.bottom>h.top-pad;});
+        }
+        function pick(list){
+          var keep=hint.className;hint.classList.add('measuring');
+          for(var i=0;i<list.length;i++){idle.textContent=list[i];hint.classList.toggle('icon-only',!list[i]);if(clear()||i===list.length-1){hint.className=keep;return list[i];}}
+        }
+        var hv=hint._hover?pick(hint._hover):null;
+        var id=pick(hint._idle);
+        idle.textContent=id;hov.textContent=hv===null?id:hv;
+        hint.dataset.idleEmpty=id?'0':'1';hint.dataset.hoverEmpty=(hv===null?id:hv)?'0':'1';
+      });
+    }
+    fitHints.list=[];
+
     document.querySelectorAll('.bento .card').forEach(function(card,idx){
       // staggered entrance
       card.style.animationDelay=(idx*0.05)+'s';
@@ -1364,7 +1400,10 @@
       if(!card.querySelector('.full')&&!card.classList.contains('c-social')){
         var touch=window.matchMedia('(hover: none)').matches;
         var hint=document.createElement('div');hint.className='expand-hint';hint.setAttribute('aria-hidden','true');
-        hint.innerHTML=(touch?'<span class="eh-txt">Tap to open</span>':'<span class="eh-txt eh-idle">Details</span><span class="eh-txt eh-hover">Click to open</span>')+' <span class="eh-arrow">&#8599;</span>';
+        hint.innerHTML='<span class="eh-txt eh-idle"></span><span class="eh-txt eh-hover"></span><span class="eh-arrow">&#8599;</span>';
+        hint._idle=touch?['Tap to open','Tap','']:['Details',''];
+        hint._hover=touch?null:['Click to open','Open',''];
+        fitHints.list.push({card:card,hint:hint});
         card.appendChild(hint);card.classList.add('has-hint');
         setTimeout(function(){hint.classList.add('pulse');},900+idx*120);
       }
@@ -1381,6 +1420,10 @@
         if(e.key==='Enter'||e.key===' '){e.preventDefault();trigger();}
       });
     });
+    fitHints();
+    window.addEventListener('resize',function(){clearTimeout(fitHints.t);fitHints.t=setTimeout(fitHints,150);});
+    if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitHints);
+    setTimeout(fitHints,1600); // after the entrance animation settles
     document.getElementById('modalClose').addEventListener('click',close);
     overlay.addEventListener('click',function(e){if(e.target===overlay)close();});
     document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
