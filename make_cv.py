@@ -13,7 +13,7 @@ LIGHT  = colors.HexColor("#9ca3af")
 
 doc = SimpleDocTemplate(
     "Ishan_Rai_CV.pdf", pagesize=A4,
-    leftMargin=16*mm, rightMargin=16*mm, topMargin=13*mm, bottomMargin=10*mm,
+    leftMargin=16*mm, rightMargin=16*mm, topMargin=11*mm, bottomMargin=8*mm,
 )
 
 styles = getSampleStyleSheet()
@@ -49,11 +49,11 @@ story.append(HRFlowable(width="100%", thickness=1.4, color=ACCENT, spaceAfter=2)
 # ---- Summary ----
 story.append(Paragraph("PROFILE", section))
 story.append(Paragraph(
-    "QA Engineer with 3+ years of experience across product-based and service-based companies. "
+    "QA Engineer and Product Owner with 3+ years of experience across product-based and service-based companies. "
     "I specialise in manual testing, test automation with Cypress, API testing with Postman, and "
     "performance testing with JMeter. I have built QA processes from the ground up, defined bug "
     "tracking workflows, and embedded quality early in agile development lifecycles, with a proven "
-    "track record of reducing production defects and shipping high-quality software.", body))
+    "track record of reducing production defects. As Product Owner, I also own the backlog, user stories and priorities.", body))
 
 # ---- Experience ----
 story.append(Paragraph("EXPERIENCE", section))
@@ -77,6 +77,7 @@ def job(title, comp, dates, bullets, current=False):
 job("QA &amp; Product Owner", "Rara Labs", "Jun 2026 to Present", [
     "Combining QA and Product Owner responsibilities on the core product.",
     "Owning the product backlog: writing user stories and acceptance criteria, and prioritising with stakeholders.",
+    "Leading sprint planning and backlog refinement, and signing off releases against acceptance criteria.",
     "Designing test strategy, test plans and detailed test cases.",
     "Running functional, regression and smoke testing cycles.",
     "Logging, tracking and verifying defects through to closure.",
@@ -87,7 +88,7 @@ job("QA Engineer", "Progressive Labs, Kalopul, Kathmandu", "Mar 2025 to Oct 2025
     "Designed test suites covering functional, regression, smoke and UI testing.",
     "Defined and standardised bug-tracking workflows with severity and priority levels.",
     "Set up performance and load testing with JMeter.",
-    "Established release-readiness checklists and sign-off procedures, reducing production defects.",
+    "Established release-readiness checklists and sign-off procedures.",
     "Integrated QA early into the agile development lifecycle.",
 ])
 
@@ -112,6 +113,7 @@ story.append(Paragraph("SKILLS", section))
 skill_rows = [
     ("Testing", "Manual, Functional, Regression, Smoke, E2E, API, Performance"),
     ("Automation", "Cypress, Test Automation, End-to-End Testing"),
+    ("Product", "Backlog Ownership, User Stories, Acceptance Criteria, Sprint Planning, Prioritisation"),
     ("Tools", "Postman, JMeter, Jira, Linear"),
     ("Technical", "HTML, CSS, JavaScript, SQL"),
     ("Methodologies", "Agile / Scrum, Test Case Design, Bug Tracking & Reporting"),
