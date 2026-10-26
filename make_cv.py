@@ -39,7 +39,7 @@ def rule():
 
 # ---- Header ----
 story.append(Paragraph("Ishan Rai", name))
-story.append(Paragraph("QA Engineer &nbsp;&middot;&nbsp; QA Analyst", role))
+story.append(Paragraph("QA Engineer &nbsp;&middot;&nbsp; Product Owner", role))
 story.append(Paragraph(
     "Lalitpur, Nepal &nbsp;&bull;&nbsp; raiishan67@gmail.com &nbsp;&bull;&nbsp; +977 9865044105 "
     "&nbsp;&bull;&nbsp; github.com/77ishan", contact))
@@ -74,12 +74,12 @@ def job(title, comp, dates, bullets, current=False):
                               leftIndent=8, bulletColor=ACCENT, bulletFontSize=7))
     story.append(Spacer(1, 5))
 
-job("QA Analyst", "Rara Labs", "Jun 2026 to Present", [
-    "Driving end-to-end quality as QA Analyst on the core product team.",
+job("QA &amp; Product Owner", "Rara Labs", "Jun 2026 to Present", [
+    "Combining QA and Product Owner responsibilities on the core product.",
+    "Owning the product backlog: writing user stories and acceptance criteria, and prioritising with stakeholders.",
     "Designing test strategy, test plans and detailed test cases.",
     "Running functional, regression and smoke testing cycles.",
     "Logging, tracking and verifying defects through to closure.",
-    "Championing quality standards across the product team.",
 ], current=True)
 
 job("QA Engineer", "Progressive Labs, Kalopul, Kathmandu", "Mar 2025 to Oct 2025", [
