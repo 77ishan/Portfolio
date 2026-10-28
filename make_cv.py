@@ -6,7 +6,7 @@ from reportlab.platypus import (SimpleDocTemplate, Paragraph, Spacer, Table, Tab
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.enums import TA_LEFT, TA_RIGHT
 
-ACCENT = colors.HexColor("#2563eb")   # royal blue
+ACCENT = colors.HexColor("#1A7DB5")   # cerulean blue
 DARK   = colors.HexColor("#111827")
 GRAY   = colors.HexColor("#4b5563")
 LIGHT  = colors.HexColor("#9ca3af")
@@ -59,7 +59,7 @@ story.append(Paragraph(
 story.append(Paragraph("EXPERIENCE", section))
 
 def job(title, comp, dates, bullets, current=False):
-    tag = ' &nbsp;<font color="#16a34a" size=8><b>CURRENT</b></font>' if current else ''
+    tag = ' &nbsp;<font color="#FF2E88" size=8><b>CURRENT</b></font>' if current else ''
     head = Table(
         [[Paragraph(title + tag, jobtitle), Paragraph(dates, jobmeta)]],
         colWidths=[118*mm, 56*mm])
