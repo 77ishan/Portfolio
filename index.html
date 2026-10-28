@@ -95,6 +95,22 @@
   .modal-body .avail-row:first-child{border-top:none}
   .modal-body .avail-row span{color:var(--muted)}
   .modal-body .avail-row b{color:var(--text);font-weight:600;text-align:right}
+  /* online-status indicator: solid dot + two expanding ripple rings */
+  .online{--on:#22c55e;position:relative;flex:0 0 10px;width:10px;height:10px;display:inline-block}
+  .online i,.online::before,.online::after{content:'';position:absolute;inset:0;border-radius:50%}
+  .online i{background:var(--on);box-shadow:0 0 0 2px color-mix(in srgb,var(--on) 25%,transparent),0 0 10px var(--on);z-index:1}
+  .online::before,.online::after{border:2px solid var(--on);animation:onRipple 2.2s cubic-bezier(.2,.6,.3,1) infinite}
+  .online::after{animation-delay:1.1s}
+  @keyframes onRipple{0%{transform:scale(1);opacity:.75}100%{transform:scale(2.8);opacity:0}}
+  @media(prefers-reduced-motion:reduce){.online::before,.online::after{animation:none;opacity:0}}
+  .status{gap:9px;padding:6px 13px 6px 11px}
+  .status .st-on{color:#4ade80;font-weight:600;letter-spacing:.2px}
+  body.light .status .st-on{color:#15803d}
+  .status .st-sep{width:1px;height:12px;background:var(--border-hover)}
+  .avail{align-items:center;gap:9px}
+  .avail .online{margin-left:1px}
+  .avail strong{color:#4ade80}
+  body.light .avail strong{color:#15803d}
   html{scroll-behavior:smooth}
   body{
     font-family:'Inter','Segoe UI',system-ui,-apple-system,sans-serif;
@@ -785,7 +801,7 @@
     <div class="card c-intro">
       <div class="intro-left">
         <span class="term-chip" aria-hidden="true"><i class="r"></i><i class="y"></i><i class="g"></i>ishan@portfolio ~ %</span>
-        <span class="status"><span class="dot"></span> Open to remote QA roles</span>
+        <span class="status" role="status" aria-label="Online: available for remote QA roles"><span class="online" aria-hidden="true"><i></i></span><b class="st-on">Online</b><span class="st-sep"></span>Available for remote QA roles</span>
         <h1>Hi, I'm Ishan <span class="wave">👋</span></h1>
         <div class="role-rotator">
           <span class="rr-prefix">I'm a&nbsp;</span>
@@ -885,7 +901,7 @@
       <span class="tc-tag" aria-hidden="true">TC-06</span>
       <div class="label">Let's talk</div>
       <h3>Want to work together?</h3>
-      <p class="avail"><span class="avail-dot" aria-hidden="true"></span><span>Open to <strong>remote QA roles</strong></span></p>
+      <p class="avail"><span class="online" aria-hidden="true"><i></i></span><span><strong>Online</strong> · available now</span></p>
       <button class="copy-btn" id="copyBtn">
         <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
         <span id="copyText">Copy email</span>
