@@ -47,25 +47,25 @@
 </script>
 <style>
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-  .skip-link{position:fixed;top:-60px;left:12px;z-index:10002;background:#3b82f6;color:#fff;
+  .skip-link{position:fixed;top:-60px;left:12px;z-index:10002;background:#1E9BD7;color:#fff;
     padding:10px 18px;border-radius:10px;font-size:.9rem;font-weight:600;text-decoration:none;transition:top .2s}
   .skip-link:focus{top:12px;outline:2px solid #fff;outline-offset:2px}
-  :focus-visible{outline:2px solid #3b82f6;outline-offset:2px;border-radius:4px}
+  :focus-visible{outline:2px solid #1E9BD7;outline-offset:2px;border-radius:4px}
   @media (prefers-reduced-motion: reduce){
     *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
     #crawlBug,#net-canvas,.orb,.qa-symbol{display:none!important}
   }
 
   :root{
-    --bg:#0c0c0d;
-    --card:#161617;
-    --card-hover:#1c1c1e;
+    --bg:#0A0A0A;
+    --card:#121214;
+    --card-hover:#18181b;
     --border:rgba(255,255,255,0.08);
     --border-hover:rgba(255,255,255,0.18);
     --text:#f5f5f5;
     --muted:#8a8a8f;
     --faint:#5c5c61;
-    --accent:#e0533d;
+    --accent:#FF2E88;
     --radius:24px;
   }
   body.light{
@@ -79,6 +79,11 @@
     --faint:#8c8c94;
   }
 
+  /* light theme: deepen the pale cerulean tints so they stay readable on white */
+  body.light .c-stat,body.light .c-role,body.light .c-theme,body.light .c-exp,body.light .c-clock,body.light .c-learn,body.light .c-testme,body.light .c-quote{--glow:#1A7DB5}
+  body.light [style*="color:#8FD3F7"],body.light [style*="color:#5BC4F0"]{color:#1A7DB5!important}
+
+  body.light .c-clock .time{background:linear-gradient(120deg,#1E9BD7,#1A6FA3);-webkit-background-clip:text;background-clip:text}
   html{scroll-behavior:smooth}
   body{
     font-family:'Inter','Segoe UI',system-ui,-apple-system,sans-serif;
@@ -104,32 +109,32 @@
   #bg-canvas{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
   #net-canvas{position:absolute;inset:0;width:100%;height:100%}
   .orb{position:absolute;border-radius:50%;filter:blur(70px);animation:orb-drift ease-in-out infinite}
-  .orb-1{width:600px;height:600px;background:radial-gradient(circle,#a855f7,transparent 70%);opacity:.22;top:-150px;left:-150px;animation-duration:18s}
-  .orb-2{width:500px;height:500px;background:radial-gradient(circle,#ec4899,transparent 70%);opacity:.18;bottom:-100px;right:-100px;animation-duration:22s;animation-delay:-7s}
-  .orb-3{width:350px;height:350px;background:radial-gradient(circle,#06b6d4,transparent 70%);opacity:.16;top:35%;left:55%;animation-duration:15s;animation-delay:-4s}
-  .orb-4{width:280px;height:280px;background:radial-gradient(circle,#e0533d,transparent 70%);opacity:.16;top:65%;left:8%;animation-duration:20s;animation-delay:-11s}
-  .orb-5{width:200px;height:200px;background:radial-gradient(circle,#ec4899,transparent 70%);opacity:.12;top:20%;left:80%;animation-duration:13s;animation-delay:-3s}
+  .orb-1{width:600px;height:600px;background:radial-gradient(circle,#2E86DE,transparent 70%);opacity:.22;top:-150px;left:-150px;animation-duration:18s}
+  .orb-2{width:500px;height:500px;background:radial-gradient(circle,#FF2E88,transparent 70%);opacity:.18;bottom:-100px;right:-100px;animation-duration:22s;animation-delay:-7s}
+  .orb-3{width:350px;height:350px;background:radial-gradient(circle,#5BC4F0,transparent 70%);opacity:.16;top:35%;left:55%;animation-duration:15s;animation-delay:-4s}
+  .orb-4{width:280px;height:280px;background:radial-gradient(circle,#2E86DE,transparent 70%);opacity:.16;top:65%;left:8%;animation-duration:20s;animation-delay:-11s}
+  .orb-5{width:200px;height:200px;background:radial-gradient(circle,#5BC4F0,transparent 70%);opacity:.12;top:20%;left:80%;animation-duration:13s;animation-delay:-3s}
   @keyframes orb-drift{0%{transform:translate(0,0) scale(1)}25%{transform:translate(50px,-70px) scale(1.1)}50%{transform:translate(-40px,50px) scale(.92)}75%{transform:translate(70px,30px) scale(1.06)}100%{transform:translate(0,0) scale(1)}}
   body.light .orb{opacity:.1}
   .qa-symbol{position:absolute;font-family:'Courier New',monospace;font-weight:700;pointer-events:none;opacity:0;animation:symbol-float linear infinite;user-select:none;text-shadow:0 0 8px currentColor}
   @keyframes symbol-float{0%{opacity:0;transform:translateY(0) rotate(-5deg) scale(.8)}8%{opacity:.5;transform:translateY(-8vh) rotate(0) scale(1)}85%{opacity:.28}100%{opacity:0;transform:translateY(-115vh) rotate(15deg) scale(.9)}}
 
   /* ── CRAWLING BUG ── */
-  .crawl-bug{position:fixed;font-size:1.9rem;line-height:1;pointer-events:auto;z-index:9000;cursor:pointer;filter:drop-shadow(0 0 8px rgba(224,83,61,.75));user-select:none;will-change:left,top,transform;touch-action:none;padding:14px;margin:-14px}
+  .crawl-bug{position:fixed;font-size:1.9rem;line-height:1;pointer-events:auto;z-index:9000;cursor:pointer;filter:drop-shadow(0 0 8px rgba(255,46,136,.75));user-select:none;will-change:left,top,transform;touch-action:none;padding:14px;margin:-14px}
   @media(max-width:480px){.crawl-bug{font-size:1.55rem;padding:18px;margin:-18px}}
-  .bug-trail{position:fixed;z-index:8999;pointer-events:none;width:7px;height:7px;border-radius:50%;background:radial-gradient(circle,rgba(224,83,61,.55),transparent 70%);transform:translate(-50%,-50%);animation:bugTrailFade .7s linear forwards}
+  .bug-trail{position:fixed;z-index:8999;pointer-events:none;width:7px;height:7px;border-radius:50%;background:radial-gradient(circle,rgba(255,46,136,.55),transparent 70%);transform:translate(-50%,-50%);animation:bugTrailFade .7s linear forwards}
   @keyframes bugTrailFade{from{opacity:.6}to{opacity:0;transform:translate(-50%,-50%) scale(.3)}}
   .bug-splat{position:fixed;z-index:9002;pointer-events:none;font-size:2.1rem;transform:translate(-50%,-50%) scale(.4);opacity:0;animation:bugSplat .55s cubic-bezier(.2,1.4,.4,1) forwards}
   @keyframes bugSplat{40%{opacity:1;transform:translate(-50%,-50%) scale(1.45) rotate(8deg)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.1) rotate(-6deg)}}
   .bug-fixed-toast{position:fixed;z-index:9001;background:rgba(16,14,20,.95);border:1px solid #34d399;border-radius:10px;padding:.6rem 1rem;font-size:.82rem;font-family:'Courier New',monospace;color:#34d399;pointer-events:none;white-space:nowrap;opacity:0;transform:translateY(0) scale(.8);transition:opacity .2s,transform .2s;box-shadow:0 0 20px rgba(52,211,153,.3)}
   .bug-fixed-toast.show{opacity:1;transform:translateY(-10px) scale(1)}
   .phone-pop{position:fixed;z-index:10001;transform:translate(-50%,-100%) translateY(6px);
-    background:#10b981;color:#04140d;border-radius:12px;padding:8px 14px;white-space:nowrap;
-    box-shadow:0 10px 28px rgba(16,185,129,.4);opacity:0;transition:opacity .22s,transform .22s;pointer-events:none;text-align:center}
+    background:#1E9BD7;color:#04140d;border-radius:12px;padding:8px 14px;white-space:nowrap;
+    box-shadow:0 10px 28px rgba(30,155,215,.4);opacity:0;transition:opacity .22s,transform .22s;pointer-events:none;text-align:center}
   .phone-pop.show{opacity:1;transform:translate(-50%,-100%)}
   .phone-pop b{display:block;font-size:.95rem;font-weight:700}
   .phone-pop span{display:block;font-size:.66rem;opacity:.75;margin-top:1px}
-  .phone-pop::after{content:'';position:absolute;left:50%;bottom:-5px;width:10px;height:10px;background:#10b981;transform:translateX(-50%) rotate(45deg)}
+  .phone-pop::after{content:'';position:absolute;left:50%;bottom:-5px;width:10px;height:10px;background:#1E9BD7;transform:translateX(-50%) rotate(45deg)}
 
   .bento{
     display:grid;
@@ -155,7 +160,7 @@
     overflow:hidden;
     transition:background .3s,border-color .3s,transform .25s cubic-bezier(.16,1,.3,1),box-shadow .35s;
     display:flex;flex-direction:column;
-    --glow:#e0533d;
+    --glow:#1E9BD7;
     box-shadow:0 1px 2px rgba(0,0,0,.16), 0 10px 30px -12px color-mix(in srgb,var(--glow) 30%,transparent);
   }
   body.light .card{
@@ -252,7 +257,7 @@
   .dot-tex{position:absolute;inset:0;background-image:radial-gradient(circle,color-mix(in srgb,var(--glow) 26%,transparent) 1px,transparent 1px);background-size:20px 20px;opacity:.45;pointer-events:none;z-index:0}
   .c-projects .label,.c-projects h3,.c-projects .gh-stats,.c-projects .suites{position:relative;z-index:1}
   .suites{display:flex;align-items:center;gap:8px;margin-top:12px;font-family:'Space Grotesk',monospace;font-size:.64rem;color:var(--faint)}
-  .suites b{color:#10b981;letter-spacing:2px}
+  .suites b{color:#1E9BD7;letter-spacing:2px}
 
   /* ── currently learning card ── */
   .c-learn{padding-top:22px;padding-bottom:22px}
@@ -276,7 +281,7 @@
   .lmodal{position:relative;width:100%;max-width:520px;max-height:88vh;overflow:auto;background:var(--card);border:1px solid var(--border);border-radius:22px;padding:30px 28px;box-shadow:0 30px 80px rgba(0,0,0,.55);animation:modalFlipIn .5s cubic-bezier(.2,.7,.2,1)}
   .lmodal-close{position:absolute;top:16px;right:16px;width:34px;height:34px;border-radius:10px;border:1px solid var(--border);background:transparent;color:var(--muted);font-size:20px;line-height:1;cursor:pointer;transition:background .2s,color .2s}
   .lmodal-close:hover{background:color-mix(in srgb,var(--text) 8%,transparent);color:var(--text)}
-  .lmodal .eyebrow{font-family:'Space Grotesk',monospace;font-size:.68rem;letter-spacing:2px;text-transform:uppercase;color:#06b6d4}
+  .lmodal .eyebrow{font-family:'Space Grotesk',monospace;font-size:.68rem;letter-spacing:2px;text-transform:uppercase;color:#5BC4F0}
   .lmodal h2{font-family:'Sora','Inter',sans-serif;font-size:1.5rem;font-weight:800;letter-spacing:-.6px;margin:8px 0 6px}
   .lmodal .intro{color:var(--muted);font-size:.92rem;line-height:1.55;margin-bottom:18px}
 
@@ -284,8 +289,8 @@
   .tm-form{border:1px solid var(--border);border-radius:14px;padding:18px;background:color-mix(in srgb,var(--text) 3%,transparent)}
   .tm-cap{font-family:'Space Grotesk',monospace;font-size:.66rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--faint);margin-bottom:12px}
   .tm-field{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 13px;border:1.5px solid var(--border);border-radius:11px;margin-bottom:10px;cursor:pointer;transition:border-color .2s,background .2s}
-  .tm-field:hover{border-color:color-mix(in srgb,#06b6d4 55%,var(--border))}
-  .tm-field.wrong{border-color:#ef4444;animation:tmShake .4s}
+  .tm-field:hover{border-color:color-mix(in srgb,#5BC4F0 55%,var(--border))}
+  .tm-field.wrong{border-color:#FF2E88;animation:tmShake .4s}
   .tm-field.right{border-color:#10b981;background:color-mix(in srgb,#10b981 12%,transparent)}
   @keyframes tmShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
   .tm-flabel{font-size:.82rem;color:var(--muted)}
@@ -302,29 +307,29 @@
   .cv-frame{width:100%;height:64vh;border:1px solid var(--border);border-radius:12px;background:#fff}
   .cv-actions{display:flex;gap:10px;margin-top:16px}
   .cv-actions a{flex:1;text-align:center;padding:11px;border-radius:12px;font-weight:600;font-size:.9rem;text-decoration:none;transition:transform .2s}
-  .cv-dl{background:linear-gradient(135deg,#3b82f6,#8b5cf6,#ec4899);color:#fff}
+  .cv-dl{background:linear-gradient(135deg,#1E9BD7,#2E86DE,#FF2E88);color:#fff}
   .cv-open{border:1px solid var(--border);color:var(--text)}
   .cv-actions a:hover{transform:translateY(-2px)}
 
   /* per-card accent colors */
-  .c-intro{--glow:#3b82f6}
-  .c-stat{--glow:#f5b324}
-  .c-social{--glow:#8b5cf6}
-  .c-role{--glow:#06b6d4}
-  .c-photo{--glow:#ef4444}
-  .c-about{--glow:#3b82f6}
-  .c-theme{--glow:#f5b324}
-  .c-skills{--glow:#8b5cf6}
-  .c-projects{--glow:#10b981}
-  .c-contact{--glow:#ec4899}
-  .c-exp{--glow:#06b6d4}
-  .c-clock{--glow:#f5b324}
-  .c-bugs{--glow:#10b981}
-  .c-learn{--glow:#f59e0b}
-  .c-testme{--glow:#06b6d4}
-  .c-edu{--glow:#8b5cf6}
-  .c-tests{--glow:#10b981}
-  .c-quote{--glow:#ec4899}
+  .c-intro{--glow:#1E9BD7}
+  .c-stat{--glow:#8FD3F7}
+  .c-social{--glow:#2E86DE}
+  .c-role{--glow:#5BC4F0}
+  .c-photo{--glow:#1E9BD7}
+  .c-about{--glow:#1E9BD7}
+  .c-theme{--glow:#8FD3F7}
+  .c-skills{--glow:#2E86DE}
+  .c-projects{--glow:#1E9BD7}
+  .c-contact{--glow:#FF2E88}
+  .c-exp{--glow:#5BC4F0}
+  .c-clock{--glow:#8FD3F7}
+  .c-bugs{--glow:#1E9BD7}
+  .c-learn{--glow:#8FD3F7}
+  .c-testme{--glow:#5BC4F0}
+  .c-edu{--glow:#2E86DE}
+  .c-tests{--glow:#1E9BD7}
+  .c-quote{--glow:#5BC4F0}
 
   .card.clickable{cursor:pointer}
   .bento{perspective:1400px}
@@ -351,7 +356,7 @@
     55%{opacity:1}
     100%{transform:rotateY(0deg) scale(1);opacity:1}
   }
-  .modal-accent{position:absolute;top:0;left:0;height:4px;background:var(--mc,#e0533d);border-radius:24px 24px 0 0;width:0}
+  .modal-accent{position:absolute;top:0;left:0;height:4px;background:var(--mc,#1E9BD7);border-radius:24px 24px 0 0;width:0}
   .modal-overlay.open .modal-accent{animation:accentGrow .5s .12s cubic-bezier(.16,1,.3,1) forwards}
   @keyframes accentGrow{to{width:100%}}
   @keyframes mItemIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
@@ -363,15 +368,15 @@
     background:rgba(255,255,255,0.06);border:1px solid var(--border);color:var(--muted);
     font-size:1.3rem;line-height:1;cursor:pointer;transition:all .2s;
   }
-  .modal-close:hover{background:var(--mc,#e0533d);color:#fff;border-color:transparent;transform:rotate(90deg)}
-  .modal-eyebrow{font-size:.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--mc,#e0533d);font-weight:700;margin-bottom:8px}
+  .modal-close:hover{background:var(--mc,#1E9BD7);color:#fff;border-color:transparent;transform:rotate(90deg)}
+  .modal-eyebrow{font-size:.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--mc,#1E9BD7);font-weight:700;margin-bottom:8px}
   .modal-title{font-size:1.7rem;font-weight:600;letter-spacing:-.5px;margin-bottom:18px;line-height:1.15}
   .modal-body{font-size:.96rem;color:var(--muted);line-height:1.7}
   .modal-body p{margin-bottom:14px}
   .modal-body strong{color:var(--text);font-weight:600}
   .modal-body ul{list-style:none;margin:0 0 14px}
   .modal-body li{display:flex;gap:10px;margin-bottom:10px}
-  .modal-body li::before{content:'';flex-shrink:0;width:7px;height:7px;border-radius:50%;background:var(--mc,#e0533d);margin-top:8px}
+  .modal-body li::before{content:'';flex-shrink:0;width:7px;height:7px;border-radius:50%;background:var(--mc,#1E9BD7);margin-top:8px}
   .modal-body .xp{padding:14px 0;border-top:1px solid var(--border)}
   .modal-body .xp:first-child{border-top:none;padding-top:0}
   .modal-body .xp-h{display:flex;align-items:center;gap:12px;margin-bottom:10px}
@@ -379,17 +384,17 @@
   .modal-body .xp-lg img{width:100%;height:100%;object-fit:contain;padding:5px}
   .modal-body .xp-info{flex:1;min-width:0;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:3px 10px}
   .modal-body .xp-co{font-size:1.05rem;font-weight:600;color:var(--text)}
-  .modal-body .xp-d{font-size:.8rem;color:var(--mc,#e0533d);font-weight:500;white-space:nowrap}
+  .modal-body .xp-d{font-size:.8rem;color:var(--mc,#1E9BD7);font-weight:500;white-space:nowrap}
   .modal-body .xp ul{margin:0}
   .modal-body .xp li{font-size:.9rem;margin-bottom:8px}
   .modal-body .edm{padding:16px 0;border-top:1px solid var(--border)}
   .modal-body .edm:first-child{border-top:none;padding-top:0}
   .modal-body .edm-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
   .modal-body .edm-deg{font-size:1.1rem;font-weight:600;color:var(--text)}
-  .modal-body .edm-yr{font-size:.82rem;color:var(--mc,#8b5cf6);font-weight:500;white-space:nowrap}
-  .modal-body .edm-sch{font-size:.85rem;color:var(--mc,#8b5cf6);margin:2px 0 8px}
+  .modal-body .edm-yr{font-size:.82rem;color:var(--mc,#2E86DE);font-weight:500;white-space:nowrap}
+  .modal-body .edm-sch{font-size:.85rem;color:var(--mc,#2E86DE);margin:2px 0 8px}
   .modal-body .edm p{margin-bottom:10px}
-  .modal-body .ab-sec{font-size:.72rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--mc,#3b82f6);margin:20px 0 8px}
+  .modal-body .ab-sec{font-size:.72rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--mc,#1E9BD7);margin:20px 0 8px}
   .modal-body em{color:var(--text);font-style:italic;opacity:.92}
   .modal-body .ab-journey{display:flex;flex-direction:column;gap:12px;margin-top:4px}
   .modal-body .abj{display:flex;gap:12px;align-items:flex-start;font-size:.9rem}
@@ -397,16 +402,16 @@
   .modal-body .abj b{color:var(--text);font-weight:600}
   .modal-body .ph-facts{display:flex;flex-direction:column;gap:10px;margin-top:4px}
   .modal-body .phf{display:flex;align-items:center;gap:12px;font-size:.94rem;color:var(--text);
-    background:color-mix(in srgb,var(--mc,#ef4444) 8%,transparent);
-    border:1px solid color-mix(in srgb,var(--mc,#ef4444) 22%,transparent);
+    background:color-mix(in srgb,var(--mc,#1E9BD7) 8%,transparent);
+    border:1px solid color-mix(in srgb,var(--mc,#1E9BD7) 22%,transparent);
     border-radius:12px;padding:10px 14px;transition:transform .2s,border-color .2s}
-  .modal-body .phf:hover{transform:translateX(4px);border-color:color-mix(in srgb,var(--mc,#ef4444) 45%,transparent)}
+  .modal-body .phf:hover{transform:translateX(4px);border-color:color-mix(in srgb,var(--mc,#1E9BD7) 45%,transparent)}
   .modal-body .phf-i{font-size:1.15rem;flex:0 0 auto}
   .modal-body .qf-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:4px}
   .modal-body .qf{display:flex;flex-direction:column;gap:3px;padding:11px 14px;border-radius:12px;
-    background:color-mix(in srgb,var(--mc,#3b82f6) 7%,transparent);
-    border:1px solid color-mix(in srgb,var(--mc,#3b82f6) 20%,transparent);transition:transform .2s,border-color .2s}
-  .modal-body .qf:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--mc,#3b82f6) 40%,transparent)}
+    background:color-mix(in srgb,var(--mc,#1E9BD7) 7%,transparent);
+    border:1px solid color-mix(in srgb,var(--mc,#1E9BD7) 20%,transparent);transition:transform .2s,border-color .2s}
+  .modal-body .qf:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--mc,#1E9BD7) 40%,transparent)}
   .modal-body .qf-l{font-size:.68rem;letter-spacing:1px;text-transform:uppercase;color:var(--faint)}
   .modal-body .qf-v{font-size:.92rem;font-weight:600;color:var(--text)}
   @media(max-width:480px){.modal-body .qf-grid{grid-template-columns:1fr}}
@@ -425,31 +430,31 @@
   @keyframes ringfill{to{stroke-dashoffset:var(--off)}}
   .ring .pct{position:absolute;font-size:.92rem;font-weight:700;color:var(--text)}
   .ring .lbl{font-size:.76rem;color:var(--muted);text-align:center}
-  .modal-body a{color:var(--mc,#e0533d);text-decoration:none;font-weight:500}
+  .modal-body a{color:var(--mc,#1E9BD7);text-decoration:none;font-weight:500}
   .modal-body a:hover{text-decoration:underline}
   .m-form{display:flex;flex-direction:column;gap:10px;margin:16px 0 6px}
   .m-form input,.m-form textarea{
     width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:12px;
     padding:11px 14px;color:var(--text);font-family:inherit;font-size:.9rem;transition:border-color .2s;resize:vertical;
   }
-  .m-form input:focus,.m-form textarea:focus{outline:none;border-color:var(--mc,#ec4899)}
+  .m-form input:focus,.m-form textarea:focus{outline:none;border-color:var(--mc,#1E9BD7)}
   .m-form input::placeholder,.m-form textarea::placeholder{color:var(--faint)}
   body.light .m-form input,body.light .m-form textarea{background:rgba(0,0,0,0.03)}
   .m-submit{
-    background:var(--mc,#ec4899);color:#fff;border:none;border-radius:12px;padding:12px;
+    background:var(--mc,#1E9BD7);color:#fff;border:none;border-radius:12px;padding:12px;
     font-family:inherit;font-size:.92rem;font-weight:600;cursor:pointer;transition:transform .2s,opacity .2s;
   }
   .m-submit:hover{transform:translateY(-2px)}
   .m-submit:disabled{opacity:.6;cursor:default;transform:none}
   .m-status{font-size:.84rem;text-align:center;min-height:1.1em}
-  .m-status.ok{color:#10b981}.m-status.err{color:#ef4444}
+  .m-status.ok{color:#10b981}.m-status.err{color:#FF2E88}
   .modal-body .clk-date{margin-bottom:16px}
   .modal-body .clk-day{display:block;font-size:1.25rem;font-weight:600;color:var(--text)}
-  .modal-body .clk-time-zone{display:block;font-size:.82rem;color:var(--mc,#f5b324);margin-top:4px}
+  .modal-body .clk-time-zone{display:block;font-size:.82rem;color:var(--mc,#8FD3F7);margin-top:4px}
   .modal-body .clk-now{display:flex;align-items:center;gap:18px;padding:18px;border-radius:16px;margin-bottom:6px;
-    background:color-mix(in srgb,var(--mc,#f5b324) 9%,transparent);border:1px solid color-mix(in srgb,var(--mc,#f5b324) 22%,transparent)}
+    background:color-mix(in srgb,var(--mc,#8FD3F7) 9%,transparent);border:1px solid color-mix(in srgb,var(--mc,#8FD3F7) 22%,transparent)}
   .modal-body .clk-big{font-size:2.3rem;font-weight:700;letter-spacing:-1px;line-height:1;font-variant-numeric:tabular-nums;
-    background:linear-gradient(120deg,#f5b324,#ec4899);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;white-space:nowrap}
+    background:linear-gradient(120deg,#8FD3F7,#1E9BD7);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;white-space:nowrap}
   .modal-body .clk-meta{min-width:0}
   .modal-body .clk-d{font-size:.92rem;font-weight:600;color:var(--text)}
   .modal-body .clk-tz{font-size:.76rem;color:var(--muted);margin:2px 0 6px}
@@ -460,9 +465,9 @@
   .modal-body .clk-row:last-child{border-bottom:none}
   .modal-body .clk-c{font-size:.9rem;color:var(--text)}
   .modal-body .clk-t{font-size:.9rem;color:var(--muted);font-variant-numeric:tabular-nums;font-weight:500}
-  .modal-body .fest{display:flex;align-items:center;gap:14px;padding:14px;border-radius:14px;background:color-mix(in srgb,var(--mc,#f5b324) 10%,transparent);border:1px solid color-mix(in srgb,var(--mc,#f5b324) 30%,transparent)}
-  .modal-body .fest-today{background:color-mix(in srgb,var(--mc,#f5b324) 18%,transparent);animation:festpulse 2s ease-in-out infinite}
-  @keyframes festpulse{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--mc,#f5b324) 40%,transparent)}50%{box-shadow:0 0 0 6px transparent}}
+  .modal-body .fest{display:flex;align-items:center;gap:14px;padding:14px;border-radius:14px;background:color-mix(in srgb,var(--mc,#8FD3F7) 10%,transparent);border:1px solid color-mix(in srgb,var(--mc,#8FD3F7) 30%,transparent)}
+  .modal-body .fest-today{background:color-mix(in srgb,var(--mc,#8FD3F7) 18%,transparent);animation:festpulse 2s ease-in-out infinite}
+  @keyframes festpulse{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--mc,#8FD3F7) 40%,transparent)}50%{box-shadow:0 0 0 6px transparent}}
   .modal-body .fest-e{font-size:2rem;line-height:1}
   .modal-body .fest-n{font-size:1rem;font-weight:600;color:var(--text)}
   .modal-body .fest-m{font-size:.82rem;color:var(--muted);margin-top:2px}
@@ -475,10 +480,10 @@
   .istat{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:4px;padding:16px 18px;border-radius:16px;background:rgba(255,255,255,0.03);border:1px solid var(--border);transition:transform .25s,border-color .25s}
   .istat:hover{transform:translateY(-3px);border-color:var(--border-hover)}
   body.light .istat{background:rgba(0,0,0,0.03)}
-  .istat-n{font-size:1.7rem;font-weight:700;letter-spacing:-1px;line-height:1;background:linear-gradient(120deg,#3b82f6,#8b5cf6,#ec4899);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-  .istat:nth-child(2) .istat-n{background:linear-gradient(120deg,#10b981,#06b6d4);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-  .istat:nth-child(3) .istat-n{background:linear-gradient(120deg,#f5b324,#ef4444);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-  .istat:nth-child(4) .istat-n{background:linear-gradient(120deg,#ec4899,#8b5cf6);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .istat-n{font-size:1.7rem;font-weight:700;letter-spacing:-1px;line-height:1;background:linear-gradient(120deg,#1E9BD7,#2E86DE,#5BC4F0);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .istat:nth-child(2) .istat-n{background:linear-gradient(120deg,#1E9BD7,#5BC4F0);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .istat:nth-child(3) .istat-n{background:linear-gradient(120deg,#8FD3F7,#1E9BD7);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .istat:nth-child(4) .istat-n{background:linear-gradient(120deg,#5BC4F0,#2E86DE);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
   .istat-l{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
   @media(max-width:760px){.intro-stats{display:none}}
   .c-social{grid-area:social;padding:18px}
@@ -506,8 +511,8 @@
   .exp-logo .brand{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#fff;padding:5px;display:none}
   .exp-logo .brand.ok{display:block}
   .exp-item:hover .exp-logo{transform:translateY(-2px) scale(1.06);box-shadow:0 6px 16px -4px color-mix(in srgb,var(--lc) 55%,transparent)}
-  .exp-logo.now{box-shadow:0 0 0 0 rgba(16,185,129,.6);animation:exp-pulse 1.8s ease-in-out infinite}
-  @keyframes exp-pulse{0%,100%{box-shadow:0 0 0 0 rgba(16,185,129,.55)}50%{box-shadow:0 0 0 5px rgba(16,185,129,0)}}
+  .exp-logo.now{box-shadow:0 0 0 0 rgba(30,155,215,.6);animation:exp-pulse 1.8s ease-in-out infinite}
+  @keyframes exp-pulse{0%,100%{box-shadow:0 0 0 0 rgba(30,155,215,.55)}50%{box-shadow:0 0 0 5px rgba(30,155,215,0)}}
   .exp-co{font-size:.95rem;font-weight:600;display:flex;align-items:center;gap:8px}
   .exp-badge{font-size:.62rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#10b981;background:rgba(16,185,129,.14);border:1px solid rgba(16,185,129,.4);padding:2px 7px;border-radius:20px}
   .exp-yr{margin-left:auto;font-size:.76rem;color:var(--muted);white-space:nowrap}
@@ -515,7 +520,7 @@
 
   /* live clock */
   .c-clock .clock-head{display:flex;align-items:center;justify-content:space-between}
-  .c-clock .clock-ic{font-size:1.05rem;line-height:1;filter:drop-shadow(0 0 6px rgba(245,179,36,.5))}
+  .c-clock .clock-ic{font-size:1.05rem;line-height:1;filter:drop-shadow(0 0 6px rgba(143,211,247,.5))}
   .c-clock .time{font-size:2.1rem;font-weight:700;letter-spacing:-1.5px;font-variant-numeric:tabular-nums;margin-top:auto;display:flex;align-items:baseline;gap:6px}
   .c-clock .ampm{font-size:.82rem;font-weight:600;letter-spacing:0;color:var(--muted);-webkit-text-fill-color:var(--muted)}
   .c-clock .clock-meta{margin-top:6px;display:flex;flex-direction:column;gap:3px}
@@ -533,8 +538,8 @@
   .edu-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--border)}
   .edu-row:first-of-type{border-top:none}
   .edu-ic{flex:0 0 auto;width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;
-    background:color-mix(in srgb,#8b5cf6 14%,transparent);border:1px solid color-mix(in srgb,#8b5cf6 30%,transparent);color:#a78bfa}
-  .edu-ic.alt{background:color-mix(in srgb,#10b981 14%,transparent);border-color:color-mix(in srgb,#10b981 30%,transparent);color:#34d399}
+    background:color-mix(in srgb,#2E86DE 14%,transparent);border:1px solid color-mix(in srgb,#2E86DE 30%,transparent);color:#8FD3F7}
+  .edu-ic.alt{background:color-mix(in srgb,#1E9BD7 14%,transparent);border-color:color-mix(in srgb,#1E9BD7 30%,transparent);color:#5BC4F0}
   .edu-ic svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
   .edu-body{flex:1 1 auto;min-width:0}
   .edu-deg{font-family:'Sora','Inter',sans-serif;font-size:.96rem;font-weight:700;letter-spacing:-.3px;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
@@ -561,7 +566,7 @@
 
   .label{font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--faint);margin-bottom:12px;font-weight:600}
 
-  .c-intro h1{font-family:'Sora','Inter',sans-serif;font-size:2.7rem;font-weight:800;line-height:1.05;margin-bottom:10px;letter-spacing:-1.5px;background:linear-gradient(105deg,#3b82f6,#8b5cf6,#ec4899,#3b82f6);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;background-size:250% auto;animation:hue-pan 5s linear infinite}
+  .c-intro h1{font-family:'Sora','Inter',sans-serif;font-size:2.7rem;font-weight:800;line-height:1.05;margin-bottom:10px;letter-spacing:-1.5px;background:linear-gradient(105deg,#1E9BD7,#2E86DE,#FF2E88,#1E9BD7);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;background-size:250% auto;animation:hue-pan 5s linear infinite}
   @keyframes hue-pan{to{background-position:250% center}}
   .wave{display:inline-block;-webkit-text-fill-color:initial;transform-origin:70% 70%;animation:wave 2.4s ease-in-out infinite}
   @keyframes wave{0%,60%,100%{transform:rotate(0)}10%{transform:rotate(14deg)}20%{transform:rotate(-8deg)}30%{transform:rotate(14deg)}40%{transform:rotate(-4deg)}50%{transform:rotate(10deg)}}
@@ -582,18 +587,18 @@
     transition:transform .25s,border-color .25s,background .25s}
   .cv-preview-btn:hover{transform:translateY(-3px);border-color:var(--border-hover);background:rgba(255,255,255,.04)}
   .dl-cv{display:inline-flex;align-items:center;gap:9px;width:fit-content;
-    background:linear-gradient(135deg,#3b82f6,#8b5cf6,#ec4899);color:#fff;font-size:.92rem;font-weight:600;
+    background:linear-gradient(135deg,#1E9BD7,#2E86DE,#FF2E88);color:#fff;font-size:.92rem;font-weight:600;
     padding:12px 22px;border-radius:14px;text-decoration:none;position:relative;z-index:2;
-    box-shadow:0 6px 18px rgba(59,130,246,.3);transition:transform .25s,box-shadow .3s,filter .25s}
-  .dl-cv:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(59,130,246,.5);filter:brightness(1.08)}
+    box-shadow:0 6px 18px rgba(30,155,215,.3);transition:transform .25s,box-shadow .3s,filter .25s}
+  .dl-cv:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(30,155,215,.5);filter:brightness(1.08)}
   .dl-cv:active{transform:translateY(-1px) scale(.98)}
   .dl-cv svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
   .status{display:inline-flex;align-items:center;gap:8px;font-size:.78rem;color:var(--muted);margin-bottom:18px;background:rgba(255,255,255,0.04);border:1px solid var(--border);padding:5px 12px;border-radius:30px;width:fit-content}
   .status .dot{width:7px;height:7px;border-radius:50%;background:#34d399;box-shadow:0 0 8px #34d399;animation:pulse 2s infinite}
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
 
-  .c-stat .num{font-size:2.6rem;font-weight:600;letter-spacing:-1px;line-height:1;background:linear-gradient(120deg,#f5b324,#ef4444);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-  .c-clock .time{background:linear-gradient(120deg,#f5b324,#ec4899);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .c-stat .num{font-size:2.6rem;font-weight:600;letter-spacing:-1px;line-height:1;background:linear-gradient(120deg,#8FD3F7,#1E9BD7);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .c-clock .time{background:linear-gradient(120deg,#8FD3F7,#1E9BD7);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
   .c-stat .cap{font-size:.72rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-top:8px}
 
   .c-role .role-co{font-size:1.05rem;font-weight:600;margin-top:auto}
@@ -610,13 +615,13 @@
   .social-grid a:hover{color:#fff;transform:translateY(-3px) scale(1.05);border-color:var(--sc,#fff);background:var(--sc,rgba(255,255,255,0.08));box-shadow:0 6px 16px color-mix(in srgb,var(--sc,#fff) 45%,transparent)}
   .social-grid a:nth-child(1){--sc:#0a66c2}
   .social-grid a:nth-child(2){--sc:#ea4335}
-  .social-grid a:nth-child(3){--sc:#10b981}
-  .social-grid a:nth-child(4){--sc:#ef4444}
+  .social-grid a:nth-child(3){--sc:#1E9BD7}
+  .social-grid a:nth-child(4){--sc:#5BC4F0}
   .social-grid svg{width:22px;height:22px;fill:currentColor}
 
   .c-photo .frame{position:relative;width:100%;height:100%}
   .c-photo img{width:100%;height:100%;object-fit:cover;display:block}
-  .c-photo .ptag{position:absolute;left:14px;bottom:14px;font-size:.7rem;font-weight:600;color:#fff;background:rgba(10,8,9,.65);border:1px solid rgba(224,83,61,.5);padding:5px 11px;border-radius:20px;backdrop-filter:blur(4px)}
+  .c-photo .ptag{position:absolute;left:14px;bottom:14px;font-size:.7rem;font-weight:600;color:#fff;background:rgba(10,8,9,.65);border:1px solid rgba(255,46,136,.5);padding:5px 11px;border-radius:20px;backdrop-filter:blur(4px)}
   .c-photo .ptag b{color:var(--accent)}
 
   .c-about h2{font-size:1.45rem;font-weight:500;line-height:1.3;letter-spacing:-.3px;max-width:22ch}
@@ -657,13 +662,13 @@
   .pill:hover::before{background:#fff;box-shadow:0 0 10px rgba(255,255,255,.8)}
   @keyframes pillIn{from{opacity:0;transform:translateY(10px) scale(.9)}to{opacity:1;transform:none}}
   @keyframes pillDot{0%,100%{opacity:1}50%{opacity:.45}}
-  .pill:nth-child(1){--pc:#06b6d4;animation-delay:.05s}
-  .pill:nth-child(2){--pc:#ef4444;animation-delay:.1s}
-  .pill:nth-child(3){--pc:#f5b324;animation-delay:.15s}
-  .pill:nth-child(4){--pc:#3b82f6;animation-delay:.2s}
-  .pill:nth-child(5){--pc:#8b5cf6;animation-delay:.25s}
-  .pill:nth-child(6){--pc:#10b981;animation-delay:.3s}
-  .pill:nth-child(7){--pc:#ec4899;animation-delay:.35s}
+  .pill:nth-child(1){--pc:#5BC4F0;animation-delay:.05s}
+  .pill:nth-child(2){--pc:#5BC4F0;animation-delay:.1s}
+  .pill:nth-child(3){--pc:#8FD3F7;animation-delay:.15s}
+  .pill:nth-child(4){--pc:#1E9BD7;animation-delay:.2s}
+  .pill:nth-child(5){--pc:#2E86DE;animation-delay:.25s}
+  .pill:nth-child(6){--pc:#1E9BD7;animation-delay:.3s}
+  .pill:nth-child(7){--pc:#1E9BD7;animation-delay:.35s}
   body.light .social-grid a{background:rgba(0,0,0,0.03)}
   body.light .social-grid a:hover{background:rgba(0,0,0,0.07)}
   body.light .status{background:rgba(0,0,0,0.03)}
@@ -831,11 +836,11 @@
       <span class="pass-ribbon" aria-hidden="true">PASSED</span>
       <div class="label">Skills by area</div>
       <div class="skill-cats">
-        <div class="scat"><span class="scat-l" style="color:#10b981">Manual</span><span class="scat-p">Functional · Regression · Smoke</span></div>
-        <div class="scat"><span class="scat-l" style="color:#06b6d4">Automation</span><span class="scat-p">Cypress · Playwright</span></div>
-        <div class="scat"><span class="scat-l" style="color:#ec4899">API / Perf</span><span class="scat-p">Postman · JMeter</span></div>
-        <div class="scat"><span class="scat-l" style="color:#8b5cf6">Collab</span><span class="scat-p">Jira · Linear · Agile</span></div>
-        <div class="scat"><span class="scat-l" style="color:#3b82f6">Product</span><span class="scat-p">Backlog · User stories · Sprints</span></div>
+        <div class="scat"><span class="scat-l" style="color:#1E9BD7">Manual</span><span class="scat-p">Functional · Regression · Smoke</span></div>
+        <div class="scat"><span class="scat-l" style="color:#5BC4F0">Automation</span><span class="scat-p">Cypress · Playwright</span></div>
+        <div class="scat"><span class="scat-l" style="color:#8FD3F7">API / Perf</span><span class="scat-p">Postman · JMeter</span></div>
+        <div class="scat"><span class="scat-l" style="color:#2E86DE">Collab</span><span class="scat-p">Jira · Linear · Agile</span></div>
+        <div class="scat"><span class="scat-l" style="color:#FF2E88">Product</span><span class="scat-p">Backlog · User stories · Sprints</span></div>
       </div>
     </div>
 
@@ -893,7 +898,7 @@
         <div class="exp-yr">Mar 2024 to Mar 2025</div>
       </div>
       <div class="exp-item">
-        <div class="exp-logo" style="--lc:#8b5cf6" aria-hidden="true"><span class="mono">Ke</span><img class="brand" alt="Keela logo" data-local="logos/keela.jpeg"></div>
+        <div class="exp-logo" style="--lc:#2E86DE" aria-hidden="true"><span class="mono">Ke</span><img class="brand" alt="Keela logo" data-local="logos/keela.jpeg"></div>
         <div class="exp-co">Keela · Forty-two Tech</div>
         <div class="exp-yr">Apr 2023 to Feb 2024</div>
       </div>
@@ -1022,7 +1027,7 @@
 <div class="lmodal-overlay" id="cvOverlay">
   <div class="lmodal" role="dialog" aria-modal="true" aria-label="CV preview" style="max-width:640px">
     <button class="lmodal-close" id="cvClose" aria-label="Close">&times;</button>
-    <div class="eyebrow" style="color:#8b5cf6">Résumé</div>
+    <div class="eyebrow" style="color:#2E86DE">Résumé</div>
     <h2>Ishan Rai · CV</h2>
     <iframe class="cv-frame" id="cvFrame" title="CV preview" src="about:blank"></iframe>
     <div class="cv-actions">
@@ -1038,7 +1043,7 @@
   (function(){
     const netCanvas=document.getElementById('net-canvas');
     const ctx=netCanvas.getContext('2d');
-    const COLORS=['#a855f7','#ec4899','#06b6d4','#e0533d'];
+    const COLORS=['#1E9BD7','#5BC4F0','#2E86DE','#1E9BD7','#FF2E88'];
     let W,H,nodes=[];
     function resize(){W=netCanvas.width=window.innerWidth;H=netCanvas.height=window.innerHeight;}
     resize();window.addEventListener('resize',()=>{resize();initNodes();});
@@ -1060,7 +1065,7 @@
   (function(){
     const bg=document.getElementById('bg-canvas');
     const symbols=['✓','✗','{}','[]','cy.','null','pass','fail','//','assert()','200','404','GET','POST','===','test()','expect()','describe()','PASSED','ERROR'];
-    const cols=['#a855f7','#ec4899','#06b6d4','#e0533d'];
+    const cols=['#1E9BD7','#5BC4F0','#2E86DE','#FF2E88'];
     for(let i=0;i<26;i++){
       const el=document.createElement('div');el.className='qa-symbol';
       el.textContent=symbols[Math.floor(Math.random()*symbols.length)];
@@ -1170,9 +1175,9 @@
     var el=document.getElementById('rrWord');
     if(!el)return;
     var roles=[
-      {t:'QA Engineer',c:'#06b6d4'},
-      {t:'Product Owner',c:'#8b5cf6'},
-      {t:'Test Automation Engineer',c:'#f5b324'}
+      {t:'QA Engineer',c:'#5BC4F0'},
+      {t:'Product Owner',c:'#2E86DE'},
+      {t:'Test Automation Engineer',c:'#8FD3F7'}
     ];
     var ri=0,ci=0,deleting=false;
     function tick(){
@@ -1251,7 +1256,7 @@
       else{img.style.display='none';
         var ph=document.createElement('div');
         ph.style.cssText='width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:monospace;background:#161617';
-        ph.innerHTML='<div style="color:#e0533d;font-size:1rem">ishan.jpg</div><div style="color:#666;font-size:.72rem;margin-top:6px">save photo to portfolio folder</div>';
+        ph.innerHTML='<div style="color:#1E9BD7;font-size:1rem">ishan.jpg</div><div style="color:#666;font-size:.72rem;margin-top:6px">save photo to portfolio folder</div>';
         img.parentElement.insertBefore(ph,img);
       }
     });
@@ -1316,32 +1321,32 @@
     }
 
     var details={
-      'c-intro':{c:'#3b82f6',eb:'About me',t:"Hi, I'm Ishan Rai",b:"<p style='font-size:1.12rem;color:var(--text);line-height:1.5;margin-bottom:18px'>I'm a <strong>QA Engineer and Product Owner</strong> from Nepal who cares less about finding bugs to look clever, and more about making sure the people using your product never run into them.</p><p>Over <strong>3+ years</strong> across product and service companies, I've grown from writing my first test case to <strong>building entire QA functions from the ground up</strong>, with <strong>Cypress</strong>, <strong>Postman</strong> and <strong>JMeter</strong> as my everyday tools. At <strong>Rara Labs</strong> I now also work as <strong>Product Owner</strong>: owning the backlog, writing user stories and acceptance criteria, and deciding with stakeholders what gets built next.</p><div class='ab-sec'>How I work</div><p>I like to plug into a team <strong>early, not at the end</strong>. I'd rather stop a bug in a planning chat than chase it in production, and as a PO I get to do exactly that: clear acceptance criteria up front mean fewer surprises later. I get into design discussions, write repro steps developers actually thank me for, and automate the boring parts so the team can move fast without breaking things.</p><div class='ab-sec'>Quick facts</div><div class='qf-grid'><div class='qf'><span class='qf-l'>Experience</span><span class='qf-v'>3+ years in QA &middot; now PO too</span></div><div class='qf'><span class='qf-l'>Companies</span><span class='qf-v'>4 and counting</span></div><div class='qf'><span class='qf-l'>Based in</span><span class='qf-v'>Lalitpur, Nepal</span></div><div class='qf'><span class='qf-l'>Languages</span><span class='qf-v'>English &middot; Nepali &middot; Hindi</span></div><div class='qf'><span class='qf-l'>Go-to stack</span><span class='qf-v'>Cypress &middot; Postman &middot; JMeter &middot; Jira</span></div><div class='qf'><span class='qf-l'>Status</span><span class='qf-v' style='color:#10b981'>&#9679; Open to work</span></div></div>"},
-      'c-stat':{c:'#f5b324',eb:'Experience',t:'3+ years in QA',b:"<p>Three-plus years building and running quality processes:</p><ul><li><strong>Keela (Forty-two Tech)</strong> · 2023 to 2024</li><li><strong>Khalti Digital Wallet</strong> · 2024 to 2025</li><li><strong>Progressive Labs</strong> · 2025</li><li><strong>Rara Labs</strong> · 2026 to present (QA &amp; Product Owner)</li></ul><p>From writing the first test case to owning the release sign-off process, and now the product backlog too.</p>"},
-      'c-social':{c:'#8b5cf6',eb:'Connect',t:"Let's connect",b:"<div class='m-row'><span class='r-t'>LinkedIn</span><a href='https://www.linkedin.com/in/ishan-rai0001/' target='_blank'>linkedin.com/in/ishan-rai0001</a></div><div class='m-row'><span class='r-t'>Email</span><a href='https://mail.google.com/mail/?view=cm&fs=1&to=raiishan67@gmail.com&su=Hi%20Ishan' target='_blank'>raiishan67@gmail.com</a></div><div class='m-row'><span class='r-t'>Phone</span><a href='tel:+9779865044105'>+977 9865044105</a></div><div class='m-row'><span class='r-t'>Location</span><span class='r-d'>Lalitpur, Nepal</span></div>"},
-      'c-role':{c:'#10b981',eb:'Latest role',t:'QA & Product Owner · Rara Labs',b:"<p><strong>Since June 1, 2026 · Current role</strong></p><p>My current role at Rara Labs combines two hats: <strong>QA</strong> and <strong>Product Owner</strong>. I own the product backlog, write user stories and acceptance criteria, and prioritise work with stakeholders, while still driving quality through test strategy and functional & regression cycles.</p>"},
-      'c-photo':{c:'#ef4444',eb:'Ishan Rai',t:'QA Engineer',b:"<p style='font-size:1.1rem;color:var(--text);line-height:1.5;margin-bottom:16px'>Hey, I'm Ishan, the person behind the testing.</p><p>I've spent the last 3+ years in QA, and honestly, I really enjoy it. I like figuring out how things work, asking a lot of \"but what if&hellip;?\" questions, and catching that one odd bug before it ever reaches a real user.</p><p>I do my best work alongside developers, not against them: catching issues early, keeping things honest, and helping the team ship without the last-minute panic. When a release goes out smoothly, I take it a little personally (in a good way).</p><p>Outside of work, I'm just a curious person who likes understanding how things tick, and yes, I'll probably still spot the typo on your menu.</p>"},
-      'c-about':{c:'#3b82f6',eb:'About',t:'Who I am',b:"<p>I'm a <strong>QA Engineer and Product Owner with 3+ years of experience</strong> across product-based and service-based companies.</p><p>I specialise in <strong>manual testing, test automation with Cypress, API testing with Postman</strong>, and <strong>performance testing with JMeter</strong>. I've built QA processes from the ground up, defined bug tracking workflows, and embedded quality early in agile development lifecycles. As a <strong>Product Owner</strong>, I own the backlog, write user stories and acceptance criteria, and prioritise work with stakeholders.</p><p>I have a proven track record of <strong>reducing production defects</strong> and collaborating cross-functionally to ship high-quality software.</p>"},
-      'c-skills':{c:'#8b5cf6',eb:'Toolbox',t:'Skills by area',b:"<p>My core testing and product toolkit:</p><div class='ring-grid'>"+
-        ring('Cypress','#06b6d4',90,16.3)+ring('Postman','#ec4899',88,19.6)+ring('JMeter','#f5b324',78,35.9)+
-        ring('API Testing','#3b82f6',88,19.6)+ring('Automation','#8b5cf6',86,22.9)+ring('Functional','#10b981',92,13.1)+
+      'c-intro':{c:'#1E9BD7',eb:'About me',t:"Hi, I'm Ishan Rai",b:"<p style='font-size:1.12rem;color:var(--text);line-height:1.5;margin-bottom:18px'>I'm a <strong>QA Engineer and Product Owner</strong> from Nepal who cares less about finding bugs to look clever, and more about making sure the people using your product never run into them.</p><p>Over <strong>3+ years</strong> across product and service companies, I've grown from writing my first test case to <strong>building entire QA functions from the ground up</strong>, with <strong>Cypress</strong>, <strong>Postman</strong> and <strong>JMeter</strong> as my everyday tools. At <strong>Rara Labs</strong> I now also work as <strong>Product Owner</strong>: owning the backlog, writing user stories and acceptance criteria, and deciding with stakeholders what gets built next.</p><div class='ab-sec'>How I work</div><p>I like to plug into a team <strong>early, not at the end</strong>. I'd rather stop a bug in a planning chat than chase it in production, and as a PO I get to do exactly that: clear acceptance criteria up front mean fewer surprises later. I get into design discussions, write repro steps developers actually thank me for, and automate the boring parts so the team can move fast without breaking things.</p><div class='ab-sec'>Quick facts</div><div class='qf-grid'><div class='qf'><span class='qf-l'>Experience</span><span class='qf-v'>3+ years in QA &middot; now PO too</span></div><div class='qf'><span class='qf-l'>Companies</span><span class='qf-v'>4 and counting</span></div><div class='qf'><span class='qf-l'>Based in</span><span class='qf-v'>Lalitpur, Nepal</span></div><div class='qf'><span class='qf-l'>Languages</span><span class='qf-v'>English &middot; Nepali &middot; Hindi</span></div><div class='qf'><span class='qf-l'>Go-to stack</span><span class='qf-v'>Cypress &middot; Postman &middot; JMeter &middot; Jira</span></div><div class='qf'><span class='qf-l'>Status</span><span class='qf-v' style='color:#1E9BD7'>&#9679; Open to work</span></div></div>"},
+      'c-stat':{c:'#8FD3F7',eb:'Experience',t:'3+ years in QA',b:"<p>Three-plus years building and running quality processes:</p><ul><li><strong>Keela (Forty-two Tech)</strong> · 2023 to 2024</li><li><strong>Khalti Digital Wallet</strong> · 2024 to 2025</li><li><strong>Progressive Labs</strong> · 2025</li><li><strong>Rara Labs</strong> · 2026 to present (QA &amp; Product Owner)</li></ul><p>From writing the first test case to owning the release sign-off process, and now the product backlog too.</p>"},
+      'c-social':{c:'#2E86DE',eb:'Connect',t:"Let's connect",b:"<div class='m-row'><span class='r-t'>LinkedIn</span><a href='https://www.linkedin.com/in/ishan-rai0001/' target='_blank'>linkedin.com/in/ishan-rai0001</a></div><div class='m-row'><span class='r-t'>Email</span><a href='https://mail.google.com/mail/?view=cm&fs=1&to=raiishan67@gmail.com&su=Hi%20Ishan' target='_blank'>raiishan67@gmail.com</a></div><div class='m-row'><span class='r-t'>Phone</span><a href='tel:+9779865044105'>+977 9865044105</a></div><div class='m-row'><span class='r-t'>Location</span><span class='r-d'>Lalitpur, Nepal</span></div>"},
+      'c-role':{c:'#1E9BD7',eb:'Latest role',t:'QA & Product Owner · Rara Labs',b:"<p><strong>Since June 1, 2026 · Current role</strong></p><p>My current role at Rara Labs combines two hats: <strong>QA</strong> and <strong>Product Owner</strong>. I own the product backlog, write user stories and acceptance criteria, and prioritise work with stakeholders, while still driving quality through test strategy and functional & regression cycles.</p>"},
+      'c-photo':{c:'#1E9BD7',eb:'Ishan Rai',t:'QA Engineer',b:"<p style='font-size:1.1rem;color:var(--text);line-height:1.5;margin-bottom:16px'>Hey, I'm Ishan, the person behind the testing.</p><p>I've spent the last 3+ years in QA, and honestly, I really enjoy it. I like figuring out how things work, asking a lot of \"but what if&hellip;?\" questions, and catching that one odd bug before it ever reaches a real user.</p><p>I do my best work alongside developers, not against them: catching issues early, keeping things honest, and helping the team ship without the last-minute panic. When a release goes out smoothly, I take it a little personally (in a good way).</p><p>Outside of work, I'm just a curious person who likes understanding how things tick, and yes, I'll probably still spot the typo on your menu.</p>"},
+      'c-about':{c:'#1E9BD7',eb:'About',t:'Who I am',b:"<p>I'm a <strong>QA Engineer and Product Owner with 3+ years of experience</strong> across product-based and service-based companies.</p><p>I specialise in <strong>manual testing, test automation with Cypress, API testing with Postman</strong>, and <strong>performance testing with JMeter</strong>. I've built QA processes from the ground up, defined bug tracking workflows, and embedded quality early in agile development lifecycles. As a <strong>Product Owner</strong>, I own the backlog, write user stories and acceptance criteria, and prioritise work with stakeholders.</p><p>I have a proven track record of <strong>reducing production defects</strong> and collaborating cross-functionally to ship high-quality software.</p>"},
+      'c-skills':{c:'#2E86DE',eb:'Toolbox',t:'Skills by area',b:"<p>My core testing and product toolkit:</p><div class='ring-grid'>"+
+        ring('Cypress','#5BC4F0',90,16.3)+ring('Postman','#8FD3F7',88,19.6)+ring('JMeter','#8FD3F7',78,35.9)+
+        ring('API Testing','#1E9BD7',88,19.6)+ring('Automation','#2E86DE',86,22.9)+ring('Functional','#1E9BD7',92,13.1)+
         "</div><p style='margin-top:6px'><strong>Full coverage, grouped by area:</strong></p>"+
         "<div class='scl-list'>"+
-        "<div class='scl'><span class='scl-l' style='color:#10b981'>Manual</span><span class='scl-v'>Functional · Regression · Smoke · Exploratory · UI</span></div>"+
-        "<div class='scl'><span class='scl-l' style='color:#06b6d4'>Automation</span><span class='scl-v'>Cypress · Playwright <em>(learning)</em> · JavaScript</span></div>"+
-        "<div class='scl'><span class='scl-l' style='color:#ec4899'>API</span><span class='scl-v'>Postman · REST · Contract testing</span></div>"+
-        "<div class='scl'><span class='scl-l' style='color:#f5b324'>Performance</span><span class='scl-v'>JMeter · Load &amp; stress testing</span></div>"+
-        "<div class='scl'><span class='scl-l' style='color:#8b5cf6'>Collaboration</span><span class='scl-v'>Jira · Linear · Agile / Scrum · SQL · Git</span></div>"+
-        "<div class='scl'><span class='scl-l' style='color:#3b82f6'>Product</span><span class='scl-v'>Backlog ownership · User stories · Acceptance criteria · Sprint planning · Prioritisation · Stakeholder communication</span></div>"+
+        "<div class='scl'><span class='scl-l' style='color:#1E9BD7'>Manual</span><span class='scl-v'>Functional · Regression · Smoke · Exploratory · UI</span></div>"+
+        "<div class='scl'><span class='scl-l' style='color:#5BC4F0'>Automation</span><span class='scl-v'>Cypress · Playwright <em>(learning)</em> · JavaScript</span></div>"+
+        "<div class='scl'><span class='scl-l' style='color:#8FD3F7'>API</span><span class='scl-v'>Postman · REST · Contract testing</span></div>"+
+        "<div class='scl'><span class='scl-l' style='color:#8FD3F7'>Performance</span><span class='scl-v'>JMeter · Load &amp; stress testing</span></div>"+
+        "<div class='scl'><span class='scl-l' style='color:#2E86DE'>Collaboration</span><span class='scl-v'>Jira · Linear · Agile / Scrum · SQL · Git</span></div>"+
+        "<div class='scl'><span class='scl-l' style='color:#FF2E88'>Product</span><span class='scl-v'>Backlog ownership · User stories · Acceptance criteria · Sprint planning · Prioritisation · Stakeholder communication</span></div>"+
         "</div>"},
-      'c-projects':{c:'#10b981',eb:'Projects',t:'What I have built',b:"<ul><li><strong>QA Bug Tracker</strong>: web app to track bug reports & test cases with Jira linking</li><li><strong>Cypress Projects</strong>: end-to-end automation suites across real-world apps</li><li><strong>Expense Tracker</strong>: clean web app to track income & expenses</li><li><strong>Automation Scripts</strong>: JavaScript scripts for web testing workflows</li></ul><p><a href='https://github.com/77ishan' target='_blank'>See all projects on GitHub →</a></p>"},
-      'c-contact':{c:'#ec4899',eb:"Let's talk",t:'Want to work together?',b:"<p>I'm actively looking for <strong>QA opportunities</strong>. Drop me a message and I'll get back to you.</p><form class='m-form' action='https://formspree.io/f/mojrydyo' method='POST' onsubmit='return window.submitContact(event)'><input name='name' type='text' placeholder='Your name' required><input name='email' type='email' placeholder='Your email' required><textarea name='message' rows='3' placeholder='Your message…' required></textarea><button type='submit' class='m-submit'>Send message</button><div class='m-status' id='mStatus'></div></form><div class='m-row' style='margin-top:14px'><span class='r-t'>Or email</span><a href='https://mail.google.com/mail/?view=cm&fs=1&to=raiishan67@gmail.com&su=Hi%20Ishan' target='_blank'>raiishan67@gmail.com</a></div>"},
-      'c-exp':{c:'#06b6d4',eb:'Experience',t:'Work history',b:"<div class='xp'><div class='xp-h'><span class='xp-lg' style='--lc:#f43f5e'><img src='logos/rara.jpeg' alt='Rara Labs logo'></span><div class='xp-info'><span class='xp-co'>Rara Labs <span style='color:#10b981;font-weight:700;font-size:.7rem'>● CURRENT</span></span><span class='xp-d'>QA &amp; Product Owner · Jun 2026 to present</span></div></div><ul><li>Combining QA and Product Owner responsibilities on the core product</li><li>Owning the product backlog: writing user stories and acceptance criteria, and prioritising with stakeholders</li><li>Leading sprint planning and backlog refinement, and signing off releases against acceptance criteria</li><li>Designing test strategy, test plans and detailed test cases</li><li>Running functional, regression and smoke testing cycles</li><li>Logging, tracking and verifying defects through to closure</li></ul></div><div class='xp'><div class='xp-h'><span class='xp-lg' style='--lc:#14a19a'><img src='logos/progressive.png' alt='Progressive Labs logo'></span><div class='xp-info'><span class='xp-co'>Progressive Labs</span><span class='xp-d'>QA Engineer · Mar to Oct 2025</span></div></div><ul><li>Pioneered and built the entire QA process from the ground up</li><li>Designed test suites covering functional, regression, smoke & UI testing</li><li>Defined and standardised bug-tracking workflows with severity/priority levels</li><li>Set up performance & load testing with JMeter</li><li>Established release-readiness checklists and sign-off procedures</li><li>Integrated QA early into the agile development lifecycle</li></ul></div><div class='xp'><div class='xp-h'><span class='xp-lg' style='--lc:#e2231a'><img src='logos/khalti.png' alt='Khalti logo'></span><div class='xp-info'><span class='xp-co'>Khalti Digital Wallet</span><span class='xp-d'>Associate QA Officer · Mar 2024 to Mar 2025</span></div></div><ul><li>Performed smoke testing on every mobile build of the Khalti App</li><li>Developed & executed automated test cases in Cypress for the web app</li><li>Conducted API testing across services using Postman</li><li>Ran performance testing on the Khalti mobile app with JMeter</li><li>Collaborated in a Scrum team, tracking tasks in Jira</li></ul></div><div class='xp'><div class='xp-h'><span class='xp-lg' style='--lc:#8b5cf6'><img src='logos/keela.jpeg' alt='Keela logo'></span><div class='xp-info'><span class='xp-co'>Keela · Forty-two Tech</span><span class='xp-d'>QA Engineer · Apr 2023 to Feb 2024</span></div></div><ul><li>Executed system, regression and smoke testing across modules</li><li>Wrote automated test cases with Cypress for multiple product areas</li><li>Performed end-to-end testing of the software</li><li>Authored detailed test cases for Keela's modules</li><li>Tracked and managed reported bugs in Linear</li></ul></div>"},
-      'c-clock':{c:'#f5b324',eb:'Today in Nepal',t:'Lalitpur, Nepal',b:clockBody},
-      'c-bugs':{c:'#10b981',eb:'Mini-game',t:'Squash the bug 🪲',b:"<p>A little bug is scurrying around the page. It <strong>darts, pauses, then bolts off in a new direction</strong>, and gives a quick dodge when your cursor gets close. Wait for it to stop, then <strong>click it</strong> to squash it.</p><p>Every squash goes off with a splat and confetti 🎉 and ticks the counter. Just like real QA: find it, log it, close it.</p>"},
-      'c-tests':{c:'#10b981',eb:'Live demo',t:'My career as a test suite',b:"<p>Click <strong>▶ Run my test suite</strong> to watch a simulated CI run of my career:</p><ul><li>Cypress automation ✓</li><li>API tests (Postman) ✓</li><li>JMeter load test ✓</li><li><strong>15/15 passing · 0 failing</strong> 🎉</li></ul>"},
-      'c-edu':{c:'#8b5cf6',eb:'Education',t:'Academic background',b:"<div class='edm'><div class='edm-h'><span class='edm-deg'>BSc CSIT</span><span class='edm-yr'>2018 to 2023</span></div><div class='edm-sch'>Prime College · Tribhuvan University</div><p>Bachelor of Science in Computer Science &amp; Information Technology. Built strong foundations in <strong>software engineering, databases, data structures, web technologies</strong> and the full software development lifecycle, the groundwork for my move into QA.</p><div class='m-tags'><span>Software Engineering</span><span>Databases &amp; SQL</span><span>Web Technologies</span><span>Programming</span></div></div><div class='edm'><div class='edm-h'><span class='edm-deg'>QA Training</span><span class='edm-yr'>2022 to 2023</span></div><div class='edm-sch'>InfoDevelopers · Lalitpur</div><p>Hands-on professional QA training covering <strong>manual and automation testing</strong>, real-world test design and industry tooling, the launchpad for my QA career.</p><div class='m-tags'><span>Manual Testing</span><span>Test Automation</span><span>Test Case Design</span><span>Bug Tracking</span></div></div>"},
-      'c-quote':{c:'#ec4899',eb:'Philosophy',t:'How I approach every build',b:"<p style='font-size:1.15rem;color:var(--text);line-height:1.5'>\"Quality is never an accident. It's caught one test case at a time.\"</p><p>I believe in embedding quality early, automating the repetitive, and treating every bug as a lesson that makes the next release stronger.</p>"}
+      'c-projects':{c:'#1E9BD7',eb:'Projects',t:'What I have built',b:"<ul><li><strong>QA Bug Tracker</strong>: web app to track bug reports & test cases with Jira linking</li><li><strong>Cypress Projects</strong>: end-to-end automation suites across real-world apps</li><li><strong>Expense Tracker</strong>: clean web app to track income & expenses</li><li><strong>Automation Scripts</strong>: JavaScript scripts for web testing workflows</li></ul><p><a href='https://github.com/77ishan' target='_blank'>See all projects on GitHub →</a></p>"},
+      'c-contact':{c:'#FF2E88',eb:"Let's talk",t:'Want to work together?',b:"<p>I'm actively looking for <strong>QA opportunities</strong>. Drop me a message and I'll get back to you.</p><form class='m-form' action='https://formspree.io/f/mojrydyo' method='POST' onsubmit='return window.submitContact(event)'><input name='name' type='text' placeholder='Your name' required><input name='email' type='email' placeholder='Your email' required><textarea name='message' rows='3' placeholder='Your message…' required></textarea><button type='submit' class='m-submit'>Send message</button><div class='m-status' id='mStatus'></div></form><div class='m-row' style='margin-top:14px'><span class='r-t'>Or email</span><a href='https://mail.google.com/mail/?view=cm&fs=1&to=raiishan67@gmail.com&su=Hi%20Ishan' target='_blank'>raiishan67@gmail.com</a></div>"},
+      'c-exp':{c:'#5BC4F0',eb:'Experience',t:'Work history',b:"<div class='xp'><div class='xp-h'><span class='xp-lg' style='--lc:#f43f5e'><img src='logos/rara.jpeg' alt='Rara Labs logo'></span><div class='xp-info'><span class='xp-co'>Rara Labs <span style='color:#1E9BD7;font-weight:700;font-size:.7rem'>● CURRENT</span></span><span class='xp-d'>QA &amp; Product Owner · Jun 2026 to present</span></div></div><ul><li>Combining QA and Product Owner responsibilities on the core product</li><li>Owning the product backlog: writing user stories and acceptance criteria, and prioritising with stakeholders</li><li>Leading sprint planning and backlog refinement, and signing off releases against acceptance criteria</li><li>Designing test strategy, test plans and detailed test cases</li><li>Running functional, regression and smoke testing cycles</li><li>Logging, tracking and verifying defects through to closure</li></ul></div><div class='xp'><div class='xp-h'><span class='xp-lg' style='--lc:#14a19a'><img src='logos/progressive.png' alt='Progressive Labs logo'></span><div class='xp-info'><span class='xp-co'>Progressive Labs</span><span class='xp-d'>QA Engineer · Mar to Oct 2025</span></div></div><ul><li>Pioneered and built the entire QA process from the ground up</li><li>Designed test suites covering functional, regression, smoke & UI testing</li><li>Defined and standardised bug-tracking workflows with severity/priority levels</li><li>Set up performance & load testing with JMeter</li><li>Established release-readiness checklists and sign-off procedures</li><li>Integrated QA early into the agile development lifecycle</li></ul></div><div class='xp'><div class='xp-h'><span class='xp-lg' style='--lc:#e2231a'><img src='logos/khalti.png' alt='Khalti logo'></span><div class='xp-info'><span class='xp-co'>Khalti Digital Wallet</span><span class='xp-d'>Associate QA Officer · Mar 2024 to Mar 2025</span></div></div><ul><li>Performed smoke testing on every mobile build of the Khalti App</li><li>Developed & executed automated test cases in Cypress for the web app</li><li>Conducted API testing across services using Postman</li><li>Ran performance testing on the Khalti mobile app with JMeter</li><li>Collaborated in a Scrum team, tracking tasks in Jira</li></ul></div><div class='xp'><div class='xp-h'><span class='xp-lg' style='--lc:#2E86DE'><img src='logos/keela.jpeg' alt='Keela logo'></span><div class='xp-info'><span class='xp-co'>Keela · Forty-two Tech</span><span class='xp-d'>QA Engineer · Apr 2023 to Feb 2024</span></div></div><ul><li>Executed system, regression and smoke testing across modules</li><li>Wrote automated test cases with Cypress for multiple product areas</li><li>Performed end-to-end testing of the software</li><li>Authored detailed test cases for Keela's modules</li><li>Tracked and managed reported bugs in Linear</li></ul></div>"},
+      'c-clock':{c:'#8FD3F7',eb:'Today in Nepal',t:'Lalitpur, Nepal',b:clockBody},
+      'c-bugs':{c:'#1E9BD7',eb:'Mini-game',t:'Squash the bug 🪲',b:"<p>A little bug is scurrying around the page. It <strong>darts, pauses, then bolts off in a new direction</strong>, and gives a quick dodge when your cursor gets close. Wait for it to stop, then <strong>click it</strong> to squash it.</p><p>Every squash goes off with a splat and confetti 🎉 and ticks the counter. Just like real QA: find it, log it, close it.</p>"},
+      'c-tests':{c:'#1E9BD7',eb:'Live demo',t:'My career as a test suite',b:"<p>Click <strong>▶ Run my test suite</strong> to watch a simulated CI run of my career:</p><ul><li>Cypress automation ✓</li><li>API tests (Postman) ✓</li><li>JMeter load test ✓</li><li><strong>15/15 passing · 0 failing</strong> 🎉</li></ul>"},
+      'c-edu':{c:'#2E86DE',eb:'Education',t:'Academic background',b:"<div class='edm'><div class='edm-h'><span class='edm-deg'>BSc CSIT</span><span class='edm-yr'>2018 to 2023</span></div><div class='edm-sch'>Prime College · Tribhuvan University</div><p>Bachelor of Science in Computer Science &amp; Information Technology. Built strong foundations in <strong>software engineering, databases, data structures, web technologies</strong> and the full software development lifecycle, the groundwork for my move into QA.</p><div class='m-tags'><span>Software Engineering</span><span>Databases &amp; SQL</span><span>Web Technologies</span><span>Programming</span></div></div><div class='edm'><div class='edm-h'><span class='edm-deg'>QA Training</span><span class='edm-yr'>2022 to 2023</span></div><div class='edm-sch'>InfoDevelopers · Lalitpur</div><p>Hands-on professional QA training covering <strong>manual and automation testing</strong>, real-world test design and industry tooling, the launchpad for my QA career.</p><div class='m-tags'><span>Manual Testing</span><span>Test Automation</span><span>Test Case Design</span><span>Bug Tracking</span></div></div>"},
+      'c-quote':{c:'#5BC4F0',eb:'Philosophy',t:'How I approach every build',b:"<p style='font-size:1.15rem;color:var(--text);line-height:1.5'>\"Quality is never an accident. It's caught one test case at a time.\"</p><p>I believe in embedding quality early, automating the repetitive, and treating every bug as a lesson that makes the next release stronger.</p>"}
     };
 
     var overlay=document.getElementById('modalOverlay');
@@ -1477,7 +1482,7 @@
   };
 
   window.confettiBurst=function(x,y){
-    var cols=['#3b82f6','#ec4899','#f5b324','#10b981','#8b5cf6','#ef4444','#06b6d4'];
+    var cols=['#1E9BD7','#FF2E88','#8FD3F7','#1E9BD7','#2E86DE','#FF2E88','#5BC4F0'];
     for(var i=0;i<26;i++){
       var p=document.createElement('div');
       var sz=6+Math.random()*6;
