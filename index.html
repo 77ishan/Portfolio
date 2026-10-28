@@ -150,7 +150,7 @@
   .bento{
     display:grid;
     grid-template-columns:repeat(4,1fr);
-    grid-auto-rows:minmax(148px,auto);
+    grid-auto-rows:var(--row,176px);
     gap:14px;
     grid-template-areas:
       "intro intro role   social"
@@ -375,9 +375,13 @@
   .modal-overlay.open .modal-title{animation:mItemIn .5s .18s both}
   .modal-overlay.open .modal-body{animation:mItemIn .55s .28s both}
   .modal-close{
-    position:absolute;top:18px;right:20px;width:34px;height:34px;border-radius:50%;
-    background:rgba(255,255,255,0.06);border:1px solid var(--border);color:var(--muted);
-    font-size:1.3rem;line-height:1;cursor:pointer;transition:all .2s;
+    /* sticky + floated: stays in the corner while a long popup scrolls; z-index keeps it above the animated heading */
+    position:sticky;top:0;float:right;margin:-16px -14px 0 12px;z-index:20;
+    display:flex;align-items:center;justify-content:center;
+    width:36px;height:36px;border-radius:50%;
+    background:color-mix(in srgb,var(--card) 80%,#fff 6%);border:1px solid var(--border);color:var(--muted);
+    font-size:1.3rem;line-height:1;cursor:pointer;transition:background .2s,color .2s,transform .2s;
+    -webkit-tap-highlight-color:transparent;touch-action:manipulation;
   }
   .modal-close:hover{background:var(--mc,#1E9BD7);color:#fff;border-color:transparent;transform:rotate(90deg)}
   .modal-eyebrow{font-size:.72rem;letter-spacing:2px;text-transform:uppercase;color:var(--mc,#1E9BD7);font-weight:700;margin-bottom:8px}
@@ -704,9 +708,9 @@
 
   .credit{text-align:center;color:var(--faint);font-size:.74rem;margin-top:20px}
 
-  @media(max-width:900px){
+  @media(max-width:1060px){
     .bento{
-      grid-template-columns:repeat(2,1fr);grid-auto-rows:minmax(150px,auto);
+      grid-template-columns:repeat(2,1fr);grid-auto-rows:var(--row,176px);
       grid-template-areas:
         "intro intro"
         "intro intro"
@@ -751,6 +755,13 @@
     .c-intro h1{font-size:1.5rem}
     .social-grid{grid-template-rows:repeat(2,56px)}
     .ring-grid{grid-template-columns:repeat(2,1fr)}
+  }
+  /* narrow 4-column desktops & small tablets: keep every card's content inside its fixed-height cell */
+  @media(max-width:1120px) and (min-width:561px){
+    .c-contact h3,.c-projects h3{font-size:1rem;line-height:1.25}
+    .c-role .role-co{font-size:.98rem}
+    .avail{margin:6px 0 10px}
+    .gh-stats{gap:10px}
   }
 </style>
 </head>
@@ -857,7 +868,7 @@
       <div class="dot-tex" aria-hidden="true"></div>
       <span class="tc-tag" aria-hidden="true">TC-05</span>
       <div class="label">Case studies</div>
-      <h3>QA Bug Tracker, Cypress suites &amp; more</h3>
+      <h3>QA tools &amp; test suites I've built</h3>
       <div class="gh-stats" id="ghStats">
         <span class="gh-stat"><b id="ghRepos">·</b> repos</span>
         <span class="gh-stat"><b id="ghStars">·</b> stars</span>
@@ -874,7 +885,7 @@
       <span class="tc-tag" aria-hidden="true">TC-06</span>
       <div class="label">Let's talk</div>
       <h3>Want to work together?</h3>
-      <p class="avail"><span class="avail-dot" aria-hidden="true"></span><span>Open to <strong>remote QA / Test Engineer</strong> roles</span></p>
+      <p class="avail"><span class="avail-dot" aria-hidden="true"></span><span>Open to <strong>remote QA roles</strong></span></p>
       <button class="copy-btn" id="copyBtn">
         <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
         <span id="copyText">Copy email</span>
@@ -910,7 +921,6 @@
         <div class="exp-co">Keela · Forty-two Tech</div>
         <div class="exp-yr">Apr 2023 to Feb 2024</div>
       </div>
-      <div class="exp-hint">Click for full details →</div>
     </div>
 
     <!-- LIVE CLOCK -->
@@ -954,7 +964,6 @@
         <span>Web Tech</span>
         <span>QA &amp; Automation</span>
       </div>
-      <div class="edu-hint">Click for full details →</div>
     </div>
 
     <!-- QUOTE -->
@@ -1369,6 +1378,7 @@
       modal.style.setProperty('--mc',d.c);
       mAccent.style.background=d.c;
       mEye.textContent=d.eb;mTitle.textContent=d.t;mBody.innerHTML=(typeof d.b==='function')?d.b():d.b;
+      modal.scrollTop=0;
       overlay.classList.add('open');
     }
     function close(){overlay.classList.remove('open');}
